@@ -23,8 +23,14 @@ export const metadata = {
     icon: '/assets/favicon.ico',
   },
   manifest: '/manifest.json',
+};
+
+export const viewport = {
   themeColor: '#5461c8',
-  viewport: 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no',
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
