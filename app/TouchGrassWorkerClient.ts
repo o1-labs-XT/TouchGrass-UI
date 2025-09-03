@@ -1,14 +1,14 @@
 import * as Comlink from "comlink";
 
-export default class AuthenticityWorkerClient {
+export default class TouchGrassWorkerClient {
   worker: Worker;
 
   // Proxy to interact with the worker's methods as if they were local
-  remoteApi: Comlink.Remote<typeof import('./AuthenticityWorker').api>; 
+  remoteApi: Comlink.Remote<typeof import('./TouchGrassWorker').api>; 
   
   constructor() {
     // Initialize the worker
-    const worker = new Worker(new URL('./AuthenticityWorker.ts', import.meta.url), { type: 'module' });  
+    const worker = new Worker(new URL('./TouchGrassWorker.ts', import.meta.url), { type: 'module' });  
     this.worker = worker;
     // Wrap the worker with Comlink to enable direct method invocation
     this.remoteApi = Comlink.wrap(worker);
