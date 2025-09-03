@@ -1,5 +1,6 @@
 import "../styles/globals.css";
 import { IBM_Plex_Sans, IBM_Plex_Mono } from 'next/font/google';
+import ServiceWorkerRegistration from './components/ServiceWorkerRegistration';
 
 const ibmPlexSans = IBM_Plex_Sans({
   subsets: ['latin'],
@@ -21,6 +22,9 @@ export const metadata = {
   icons: {
     icon: '/assets/favicon.ico',
   },
+  manifest: '/manifest.json',
+  themeColor: '#5461c8',
+  viewport: 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no',
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
