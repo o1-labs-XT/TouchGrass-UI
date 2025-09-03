@@ -86,6 +86,24 @@
   box-shadow: 0 2px 8px var(--mina-light-gray);
 }
 
+/* Clean variant - No underlay, for wallet buttons */
+.clean {
+  background: var(--mina-blurple);
+  color: var(--mina-white);
+  border-color: var(--mina-blurple);
+}
+
+.clean:after {
+  display: none; /* No underlay for clean variant */
+}
+
+.clean:hover:not(.disabled) {
+  background: var(--mina-purple);
+  border-color: var(--mina-purple);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px var(--mina-light-gray);
+}
+
 /* Disabled state - Brand compliant */
 .disabled {
   background: var(--mina-grey) !important;

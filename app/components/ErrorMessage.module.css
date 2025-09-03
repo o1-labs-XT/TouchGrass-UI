@@ -1,0 +1,114 @@
+.errorContainer {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 16px;
+  border-radius: 8px;
+  margin: 16px 0;
+  border: 2px solid;
+  background-color: var(--mina-white);
+  animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.content {
+  flex: 1;
+}
+
+.title {
+  margin: 0 0 4px 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--mina-black);
+}
+
+.message {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--mina-black);
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.retryButton {
+  padding: 6px 12px;
+  font-size: 14px;
+  font-weight: 500;
+  color: white;
+  background-color: var(--mina-orange, #e87a46);
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.retryButton:hover {
+  opacity: 0.9;
+}
+
+.dismissButton {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  color: var(--mina-black);
+  font-size: 18px;
+  cursor: pointer;
+  opacity: 0.7;
+  transition: opacity 0.2s;
+}
+
+.dismissButton:hover {
+  opacity: 1;
+}
+
+/* Severity variants - Brand Compliant */
+.error {
+  background-color: var(--mina-red-violet);
+  border: none;
+}
+
+.error .title {
+  color: var(--mina-white);
+}
+
+.error .message {
+  color: var(--mina-white);
+}
+
+.error .dismissButton {
+  color: var(--mina-white);
+}
+
+.error .retryButton {
+  background-color: var(--mina-white);
+  color: var(--mina-red-violet);
+}
+
+.warning {
+  background-color: var(--mina-white);
+  border-color: var(--mina-orange);
+}
+
+.info {
+  background-color: var(--mina-white);
+  border-color: var(--mina-blurple);
+}
