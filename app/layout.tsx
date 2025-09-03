@@ -30,7 +30,10 @@ export const metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className={`${ibmPlexSans.variable} ${ibmPlexMono.variable}`}>{children}</body>
+      <body className={`${ibmPlexSans.variable} ${ibmPlexMono.variable}`}>
+        <ServiceWorkerRegistration />
+        {children}
+      </body>
     </html>
   );
 }
