@@ -10,8 +10,8 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>Image Authenticity Verification</title>
-        <meta name="description" content="Prove and verify image authenticity using zero-knowledge proofs"/>
+        <title>TouchGrass - Social Photo Challenges</title>
+        <meta name="description" content="Complete daily photo challenges and compete with friends on-chain"/>
         <link rel="icon" href="/assets/favicon.ico"/>
       </Head>
       <GradientBG>
@@ -26,22 +26,22 @@ export default function Home() {
                 priority
               />
               <h1 className={styles.title}>
-                Image Authenticity Verification
+                TouchGrass
               </h1>
               <p className={styles.subtitle}>
-                Powered by Mina Protocol and Zero-Knowledge Proofs
+                Daily photo challenges on Mina blockchain
               </p>
             </div>
             
             <div className={styles.flowSelection}>
-              <Link href="/prove" className={styles.flowCard}>
-                <h2>Prove Authenticity</h2>
-                <p>Upload and certify your original images on-chain</p>
+              <Link href="/submit" className={styles.flowCard}>
+                <h2>Today's Challenge</h2>
+                <p>Complete the daily photo challenge</p>
               </Link>
               
-              <Link href="/verify" className={styles.flowCard}>
-                <h2>Verify Image</h2>
-                <p>Check if an image is authentic and unmodified</p>
+              <Link href="/dashboard" className={styles.flowCard}>
+                <h2>Dashboard</h2>
+                <p>View submissions and leaderboard</p>
               </Link>
             </div>
           </main>
