@@ -1,6 +1,7 @@
 {
-  "name": "ui",
+  "name": "touchgrass-ui",
   "version": "0.1.0",
+  "description": "TouchGrass - Social photo challenge game on Mina blockchain",
   "private": true,
   "scripts": {
     "dev": "next dev",
