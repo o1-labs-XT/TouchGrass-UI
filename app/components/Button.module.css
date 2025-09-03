@@ -1,0 +1,108 @@
+/* Base button styles */
+.button {
+  border: 1px solid var(--mina-black);
+  padding: 12px 24px;
+  border-radius: 4px 1px;
+  font-family: var(--font-ibm-plex);
+  font-weight: 600;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  transform-style: preserve-3d;
+  transition: background 200ms, border 200ms;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  position: relative;
+  text-decoration: none;
+}
+
+/* Primary button (Button 1 - Dark with gradient hover) */
+.primary {
+  background: var(--mina-black);
+  color: var(--mina-white);
+}
+
+.primary:after {
+  content: '';
+  position: absolute;
+  inset: 0.32rem -0.32rem -0.32rem 0.32rem;
+  border-radius: 4px 1px;
+  border: 1px solid var(--mina-black);
+  transform: translateZ(-1px);
+  transition: transform 200ms ease-in 0ms, border 50ms ease-in 100ms;
+}
+
+.primary:hover:not(.disabled) {
+  background: var(--mina-secondary-spectrum);
+}
+
+.primary:hover:not(.disabled):after {
+  transform: translateZ(-1px) translate(-0.32rem, -0.32rem);
+}
+
+/* Secondary button (Button 2 - Orange with black hover) */
+.secondary {
+  background: var(--mina-orange);
+  color: var(--mina-white);
+}
+
+.secondary:after {
+  content: '';
+  position: absolute;
+  inset: 0.2rem -0.2rem -0.2rem 0.2rem;
+  border-radius: 4px 1px;
+  border: 1px solid var(--mina-black);
+  background: var(--mina-white);
+  transform: translateZ(-1px);
+  transition: transform 200ms ease-in 0ms, border 50ms ease-in 100ms;
+}
+
+.secondary:hover:not(.disabled) {
+  background: var(--mina-black);
+  color: var(--mina-white);
+}
+
+.secondary:hover:not(.disabled):after {
+  transform: translateZ(-1px) translate(-0.1rem, -0.1rem);
+}
+
+/* Clean variant - No underlay, for wallet buttons */
+.clean {
+  background: var(--mina-blurple);
+  color: var(--mina-white);
+  border-color: var(--mina-blurple);
+}
+
+.clean:after {
+  display: none; /* No underlay for clean variant */
+}
+
+.clean:hover:not(.disabled) {
+  background: var(--mina-purple);
+  border-color: var(--mina-purple);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px var(--mina-light-gray);
+}
+
+/* Disabled state - Brand compliant */
+.disabled {
+  background: var(--mina-grey) !important;
+  color: var(--mina-white) !important;
+  cursor: not-allowed !important;
+  transform: none !important;
+  opacity: 0.6; /* Using opacity on entire element is acceptable */
+}
+
+.disabled:after {
+  display: none;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 640px) {
+  .button {
+    padding: 10px 20px;
+    font-size: 13px;
+  }
+}

@@ -1,0 +1,96 @@
+.statusMessage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 1rem;
+  border-radius: 8px;
+  border: 2px solid;
+  background: var(--mina-white);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.messageText {
+  font-family: var(--font-ibm-plex-mono);
+  font-weight: 400;
+  font-size: 0.9rem;
+  margin: 0;
+  color: #333;
+}
+
+/* Warning style - Orange */
+.warning {
+  border-color: var(--mina-orange);
+}
+
+.warning .messageText {
+  color: var(--mina-orange);
+  font-family: var(--font-ibm-plex);
+  font-weight: 500;
+  font-size: 0.95rem;
+}
+
+/* Info style - Blurple */
+.info {
+  border-color: var(--mina-blurple);
+}
+
+.info .messageText {
+  color: var(--mina-blurple);
+}
+
+/* Error style - Red Violet */
+.error {
+  background: var(--mina-red-violet);
+  border-color: var(--mina-red-violet);
+}
+
+.error .messageText {
+  color: var(--mina-white);
+}
+
+/* Success style - Mint */
+.success {
+  background: var(--mina-mint);
+  border-color: var(--mina-mint);
+}
+
+.success .messageText {
+  color: var(--mina-black);
+}
+
+/* Processing style - Matches original statusBar */
+.processing {
+  border-color: var(--mina-blurple);
+}
+
+.processing .messageText {
+  color: #333;
+}
+
+/* Spinner for processing state */
+.spinner {
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--mina-grey);
+  border-top: 2px solid var(--mina-blurple);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  .statusMessage {
+    padding: 0.75rem 1rem;
+  }
+  
+  .messageText {
+    font-size: 0.875rem;
+  }
+}
