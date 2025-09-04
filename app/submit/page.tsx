@@ -2,6 +2,8 @@
 import { useState, useEffect } from 'react';
 import CameraCapture from '../components/CameraCapture';
 import Button from '../components/Button';
+import GradientBG from '../components/GradientBG';
+import styles from './submit.module.css';
 
 export default function SubmitPage() {
   const [imageBlob, setImageBlob] = useState<Blob | null>(null);
@@ -26,23 +28,27 @@ export default function SubmitPage() {
   };
 
   return (
-    <div style={{ padding: '1rem' }}>
-      <h1>Submit Photo</h1>
-      {imageUrl ? (
-        <div>
-          <img 
-            src={imageUrl} 
-            alt="Captured" 
-            style={{ maxWidth: '100%', height: 'auto' }}
-          />
-          <div style={{ marginTop: '1rem', display: 'flex', gap: '1rem' }}>
-            <Button variant="primary">Submit to Blockchain</Button>
-            <Button variant="secondary" onClick={handleReset}>Retake</Button>
+    <GradientBG>
+      <div className={styles.container}>
+        <h1 className={styles.title}>Submit Photo</h1>
+        {imageUrl ? (
+          <div className={styles.previewContainer}>
+            <div className={styles.imageWrapper}>
+              <img 
+                src={imageUrl} 
+                alt="Captured photo" 
+                className={styles.capturedImage}
+              />
+            </div>
+            <div className={styles.buttonGroup}>
+              <Button variant="primary">Submit to Blockchain</Button>
+              <Button variant="secondary" onClick={handleReset}>Retake</Button>
+            </div>
           </div>
-        </div>
-      ) : (
-        <CameraCapture onCapture={handleCapture} onCancel={() => window.history.back()} />
-      )}
-    </div>
+        ) : (
+          <CameraCapture onCapture={handleCapture} onCancel={() => window.history.back()} />
+        )}
+      </div>
+    </GradientBG>
   );
 }
