@@ -3,6 +3,8 @@ import { useState, useEffect } from 'react';
 import CameraCapture from '../components/CameraCapture';
 import Button from '../components/Button';
 import BackToHomeButton from '../components/BackToHomeButton';
+import StatusMessage from '../components/StatusMessage';
+import ErrorMessage from '../components/ErrorMessage';
 import GradientBG from '../components/GradientBG';
 import styles from './submit.module.css';
 
@@ -73,10 +75,10 @@ export default function SubmitPage() {
               </Button>
             </div>
             {status && (
-              <p className={styles.status}>{status}</p>
+              <StatusMessage type="processing" message={status} showSpinner={isProcessing} />
             )}
             {error && (
-              <p className={styles.error}>{error}</p>
+              <ErrorMessage message={error} onDismiss={() => setError(null)} />
             )}
           </div>
         ) : (
