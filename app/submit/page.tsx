@@ -69,6 +69,12 @@ export default function SubmitPage() {
       formData.append('image', imageBlob);
       formData.append('publicKey', keypair.publicKeyBase58);
       formData.append('signature', signature.signatureBase58);
+      
+      // TODO: Replace with real backend endpoint when ready
+      const response = await fetch('/api/upload', {
+        method: 'POST',
+        body: formData
+      });
     } catch (err) {
       console.error('Submission failed:', err);
       setError(err instanceof Error ? err.message : 'Submission failed');
