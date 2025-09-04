@@ -56,6 +56,12 @@ export default function SubmitPage() {
       setStatus('Computing image hash...');
       const commitment = await worker.computeOnChainCommitmentWeb(imageBuffer);
       console.log('Image hash:', commitment.sha256Hash);
+      
+      setStatus('Creating signature...');
+      const signature = await worker.signSHA256Hash(
+        keypair.privateKeyBase58,
+        commitment.sha256Hash
+      );
     } catch (err) {
       console.error('Submission failed:', err);
       setError(err instanceof Error ? err.message : 'Submission failed');
