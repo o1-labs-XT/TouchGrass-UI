@@ -29,6 +29,8 @@ export default function SubmitPage() {
   const handleReset = () => {
     setImageBlob(null);
     setImageUrl(null);
+    setStatus('');
+    setError(null);
   };
 
   return (
