@@ -45,6 +45,9 @@ export default function SubmitPage() {
       setStatus('Preparing submission...');
       const TouchGrassWorkerClient = (await import('../TouchGrassWorkerClient')).default;
       const worker = new TouchGrassWorkerClient();
+      
+      setStatus('Generating keypair...');
+      const keypair = await worker.generateKeypair();
     } catch (err) {
       console.error('Submission failed:', err);
       setError(err instanceof Error ? err.message : 'Submission failed');
