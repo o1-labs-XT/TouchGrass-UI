@@ -52,6 +52,10 @@ export default function SubmitPage() {
       // Convert blob to buffer for processing
       const arrayBuffer = await imageBlob.arrayBuffer();
       const imageBuffer = new Uint8Array(arrayBuffer);
+      
+      setStatus('Computing image hash...');
+      const commitment = await worker.computeOnChainCommitmentWeb(imageBuffer);
+      console.log('Image hash:', commitment.sha256Hash);
     } catch (err) {
       console.error('Submission failed:', err);
       setError(err instanceof Error ? err.message : 'Submission failed');
