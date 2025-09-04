@@ -14,6 +14,12 @@ export default function CameraCapture({ onCapture, onCancel }: CameraCaptureProp
   const handleFileCapture = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
+      // Check file size (max 10MB)
+      const maxSize = 10 * 1024 * 1024; // 10MB in bytes
+      if (file.size > maxSize) {
+        alert('Image too large. Maximum size is 10MB.');
+        return;
+      }
       onCapture(file);
     }
   };
