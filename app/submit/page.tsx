@@ -48,6 +48,10 @@ export default function SubmitPage() {
       
       setStatus('Generating keypair...');
       const keypair = await worker.generateKeypair();
+      
+      // Convert blob to buffer for processing
+      const arrayBuffer = await imageBlob.arrayBuffer();
+      const imageBuffer = new Uint8Array(arrayBuffer);
     } catch (err) {
       console.error('Submission failed:', err);
       setError(err instanceof Error ? err.message : 'Submission failed');
