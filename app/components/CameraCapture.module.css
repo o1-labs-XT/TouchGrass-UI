@@ -10,3 +10,16 @@
   gap: 1rem;
   justify-content: center;
 }
+
+.error {
+  background: var(--mina-light-gray);
+  border: 1px solid var(--mina-red);
+  border-radius: 4px;
+  padding: 1rem;
+  color: var(--mina-red);
+  text-align: center;
+}
+
+.error p {
+  margin: 0;
+}
