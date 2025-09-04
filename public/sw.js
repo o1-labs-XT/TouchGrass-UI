@@ -4,7 +4,9 @@ const urlsToCache = [
   '/',
   '/styles/globals.css',
   '/assets/hero-mina-logo.svg',
-  '/assets/favicon.ico'
+  '/assets/favicon.ico',
+  '/assets/icon-192x192.svg',
+  '/assets/icon-512x512.svg'
 ];
 
 // Install event - cache essential files
