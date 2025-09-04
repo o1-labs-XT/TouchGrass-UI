@@ -14,6 +14,13 @@ export async function POST(request: NextRequest) {
       );
     }
     
+    console.log('Mock submission received:', {
+      imageName: image.name,
+      imageSize: image.size,
+      publicKey,
+      signature: signature.substring(0, 20) + '...'
+    });
+    
     return NextResponse.json({ message: 'Mock endpoint' });
   } catch (error) {
     console.error('Mock submission error:', error);
