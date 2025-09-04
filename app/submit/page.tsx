@@ -14,7 +14,6 @@ export default function SubmitPage() {
   const [isProcessing, setIsProcessing] = useState(false);
   const [status, setStatus] = useState<string>('');
   const [error, setError] = useState<string | null>(null);
-  const [debugLog, setDebugLog] = useState<string[]>([]);
 
   useEffect(() => {
     if (imageBlob) {
@@ -34,7 +33,6 @@ export default function SubmitPage() {
     setImageUrl(null);
     setStatus('');
     setError(null);
-    setDebugLog([]);
   };
 
   const handleSubmit = async () => {
@@ -123,14 +121,6 @@ export default function SubmitPage() {
             )}
             {error && (
               <ErrorMessage message={error} onDismiss={() => setError(null)} />
-            )}
-            {debugLog.length > 0 && (
-              <div style={{ marginTop: '1rem', padding: '1rem', background: '#f5f5f5', borderRadius: '8px', fontSize: '12px' }}>
-                <strong>Debug Log:</strong>
-                {debugLog.map((log, i) => (
-                  <div key={i}>{log}</div>
-                ))}
-              </div>
             )}
           </div>
         ) : (
