@@ -6,5 +6,12 @@ export async function POST(request: NextRequest) {
   const publicKey = formData.get('publicKey') as string;
   const signature = formData.get('signature') as string;
   
+  if (!image || !publicKey || !signature) {
+    return NextResponse.json(
+      { error: 'Missing required fields' },
+      { status: 400 }
+    );
+  }
+  
   return NextResponse.json({ message: 'Mock endpoint' });
 }
