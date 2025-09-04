@@ -1,6 +1,7 @@
 'use client';
 import { useRef } from 'react';
 import Button from './Button';
+import styles from './CameraCapture.module.css';
 
 interface CameraCaptureProps {
   onCapture: (imageBlob: Blob) => void;
@@ -18,7 +19,7 @@ export default function CameraCapture({ onCapture, onCancel }: CameraCaptureProp
   };
 
   return (
-    <div>
+    <div className={styles.container}>
       <input
         ref={fileInputRef}
         type="file"
@@ -27,12 +28,14 @@ export default function CameraCapture({ onCapture, onCancel }: CameraCaptureProp
         onChange={handleFileCapture}
         style={{ display: 'none' }}
       />
-      <Button variant="primary" onClick={() => fileInputRef.current?.click()}>
-        Take Photo
-      </Button>
-      <Button variant="secondary" onClick={onCancel}>
-        Cancel
-      </Button>
+      <div className={styles.controls}>
+        <Button variant="primary" onClick={() => fileInputRef.current?.click()}>
+          Take Photo
+        </Button>
+        <Button variant="secondary" onClick={onCancel}>
+          Cancel
+        </Button>
+      </div>
     </div>
   );
 }
