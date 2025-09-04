@@ -75,6 +75,14 @@ export default function SubmitPage() {
         method: 'POST',
         body: formData
       });
+      
+      if (!response.ok) {
+        throw new Error('Upload failed');
+      }
+      
+      const result = await response.json();
+      setStatus('Success! Your image has been submitted.');
+      console.log('Upload result:', result);
     } catch (err) {
       console.error('Submission failed:', err);
       setError(err instanceof Error ? err.message : 'Submission failed');
