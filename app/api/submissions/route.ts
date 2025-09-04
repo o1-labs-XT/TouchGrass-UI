@@ -21,7 +21,15 @@ export async function POST(request: NextRequest) {
       signature: signature.substring(0, 20) + '...'
     });
     
-    return NextResponse.json({ message: 'Mock endpoint' });
+    // Return mock Submission object
+    const submission = {
+      id: Math.random().toString(36).substring(2, 15),
+      tokenOwnerAddress: publicKey,
+      status: 'pending',
+      createdAt: new Date().toISOString()
+    };
+    
+    return NextResponse.json(submission);
   } catch (error) {
     console.error('Mock submission error:', error);
     return NextResponse.json(
