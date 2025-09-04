@@ -43,7 +43,8 @@ export default function SubmitPage() {
     
     try {
       setStatus('Preparing submission...');
-      // Implementation coming next
+      const TouchGrassWorkerClient = (await import('../TouchGrassWorkerClient')).default;
+      const worker = new TouchGrassWorkerClient();
     } catch (err) {
       console.error('Submission failed:', err);
       setError(err instanceof Error ? err.message : 'Submission failed');
