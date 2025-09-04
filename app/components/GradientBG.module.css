@@ -1,6 +1,6 @@
 .background {
   pointer-events: none;
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
@@ -128,7 +128,7 @@
 
 .container {
   position: relative;
-  height: 100vh;
+  min-height: 100vh;
 }
 
 /* Accessibility: Respect user's motion preferences */
