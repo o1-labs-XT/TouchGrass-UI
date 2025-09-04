@@ -71,7 +71,7 @@ export default function SubmitPage() {
       formData.append('signature', signature.signatureBase58);
       
       // TODO: Replace with real backend endpoint when ready
-      const response = await fetch('/api/upload', {
+      const response = await fetch('/api/submissions', {
         method: 'POST',
         body: formData
       });
