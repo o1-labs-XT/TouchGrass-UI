@@ -72,6 +72,12 @@ export default function SubmitPage() {
                 Retake
               </Button>
             </div>
+            {status && (
+              <p className={styles.status}>{status}</p>
+            )}
+            {error && (
+              <p className={styles.error}>{error}</p>
+            )}
           </div>
         ) : (
           <>
