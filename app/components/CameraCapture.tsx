@@ -29,6 +29,9 @@ export default function CameraCapture({ onCapture, onCancel }: CameraCaptureProp
       <button onClick={() => fileInputRef.current?.click()}>
         Take Photo
       </button>
+      <button onClick={onCancel}>
+        Cancel
+      </button>
     </div>
   );
 }
