@@ -65,8 +65,12 @@ export default function SubmitPage() {
               />
             </div>
             <div className={styles.buttonGroup}>
-              <Button variant="primary">Submit to Blockchain</Button>
-              <Button variant="primary" onClick={handleReset}>Retake</Button>
+              <Button variant="primary" onClick={handleSubmit} disabled={isProcessing}>
+                {isProcessing ? 'Processing...' : 'Submit to Blockchain'}
+              </Button>
+              <Button variant="primary" onClick={handleReset} disabled={isProcessing}>
+                Retake
+              </Button>
             </div>
           </div>
         ) : (
