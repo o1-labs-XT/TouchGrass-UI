@@ -47,7 +47,10 @@ export default function SubmitPage() {
             </div>
           </div>
         ) : (
-          <CameraCapture onCapture={handleCapture} onCancel={() => window.history.back()} />
+          <>
+            <CameraCapture onCapture={handleCapture} />
+            <BackToHomeButton />
+          </>
         )}
       </div>
     </GradientBG>

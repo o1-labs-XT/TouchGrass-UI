@@ -5,10 +5,9 @@ import styles from './CameraCapture.module.css';
 
 interface CameraCaptureProps {
   onCapture: (imageBlob: Blob) => void;
-  onCancel: () => void;
 }
 
-export default function CameraCapture({ onCapture, onCancel }: CameraCaptureProps) {
+export default function CameraCapture({ onCapture }: CameraCaptureProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [error, setError] = useState<string | null>(null);
   
@@ -48,9 +47,6 @@ export default function CameraCapture({ onCapture, onCancel }: CameraCaptureProp
       <div className={styles.controls}>
         <Button variant="primary" onClick={() => fileInputRef.current?.click()}>
           Take Photo
-        </Button>
-        <Button variant="secondary" onClick={onCancel}>
-          Cancel
         </Button>
       </div>
     </div>
