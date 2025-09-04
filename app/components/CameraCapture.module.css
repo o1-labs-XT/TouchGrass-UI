@@ -13,6 +13,8 @@
   gap: 1rem;
   justify-content: center;
   flex-wrap: wrap;
+  max-width: 200px;
+  margin: 0 auto;
 }
 
 .error {
@@ -34,10 +36,5 @@
 @media (max-width: 480px) {
   .controls {
     flex-direction: column;
-    width: 100%;
-  }
-  
-  .controls button {
-    width: 100%;
   }
 }
