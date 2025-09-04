@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react';
 import CameraCapture from '../components/CameraCapture';
 import Button from '../components/Button';
+import BackToHomeButton from '../components/BackToHomeButton';
 import GradientBG from '../components/GradientBG';
 import styles from './submit.module.css';
 

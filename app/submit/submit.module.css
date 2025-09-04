@@ -43,14 +43,34 @@
 .buttonGroup {
   display: flex;
   gap: 1rem;
-  width: 100%;
   justify-content: center;
   flex-wrap: wrap;
+  max-width: 320px;
+  margin: 0 auto;
+}
+
+.backLink {
+  text-align: center;
+  margin-top: 1rem;
+}
+
+.backLink a {
+  color: var(--mina-gray);
+  text-decoration: none;
+  font-family: var(--font-ibm-plex);
+  font-size: 0.9rem;
+  transition: color 0.2s;
+}
+
+.backLink a:hover {
+  color: var(--mina-black);
+  text-decoration: underline;
 }
 
 @media (max-width: 480px) {
   .buttonGroup {
     flex-direction: column;
+    width: 100%;
   }
   
   .buttonGroup button {
