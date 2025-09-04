@@ -62,6 +62,13 @@ export default function SubmitPage() {
         keypair.privateKeyBase58,
         commitment.sha256Hash
       );
+      
+      // Create FormData for upload
+      setStatus('Submitting image...');
+      const formData = new FormData();
+      formData.append('image', imageBlob);
+      formData.append('publicKey', keypair.publicKeyBase58);
+      formData.append('signature', signature.signatureBase58);
     } catch (err) {
       console.error('Submission failed:', err);
       setError(err instanceof Error ? err.message : 'Submission failed');
