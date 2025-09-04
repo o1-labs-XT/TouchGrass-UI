@@ -33,6 +33,24 @@ export default function SubmitPage() {
     setError(null);
   };
 
+  const handleSubmit = async () => {
+    if (!imageBlob) return;
+    
+    setIsProcessing(true);
+    setError(null);
+    
+    try {
+      setStatus('Preparing submission...');
+      // Implementation coming next
+    } catch (err) {
+      console.error('Submission failed:', err);
+      setError(err instanceof Error ? err.message : 'Submission failed');
+      setStatus('');
+    } finally {
+      setIsProcessing(false);
+    }
+  };
+
   return (
     <GradientBG>
       <div className={styles.container}>
