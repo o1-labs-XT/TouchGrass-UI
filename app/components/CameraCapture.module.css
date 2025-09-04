@@ -17,6 +17,10 @@
   margin: 0 auto;
 }
 
+.controls button {
+  min-width: 240px;
+}
+
 .error {
   background: rgba(255, 255, 255, 0.9);
   border: 2px solid var(--mina-red);
