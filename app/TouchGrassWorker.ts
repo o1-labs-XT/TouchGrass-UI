@@ -185,6 +185,6 @@ export const api = {
   }
 };
 
-export type AuthenticityWorker = typeof api;
+export type TouchGrassWorker = typeof api;
 
 Comlink.expose(api);
