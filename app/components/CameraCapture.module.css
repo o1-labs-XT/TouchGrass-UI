@@ -1,0 +1,44 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding: 2rem 1rem;
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.controls {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  max-width: 280px;
+  margin: 0 auto;
+}
+
+.controls button {
+  min-width: 200px;
+}
+
+.error {
+  background: rgba(255, 255, 255, 0.9);
+  border: 2px solid var(--mina-red);
+  border-radius: 8px;
+  padding: 1rem;
+  color: var(--mina-red);
+  text-align: center;
+  font-weight: 500;
+  backdrop-filter: blur(10px);
+}
+
+.error p {
+  margin: 0;
+  font-family: var(--font-ibm-plex);
+}
+
+@media (max-width: 480px) {
+  .controls {
+    flex-direction: column;
+  }
+}
