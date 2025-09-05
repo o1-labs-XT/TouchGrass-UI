@@ -83,9 +83,6 @@ export default function SubmitPage() {
       const result = await response.json();
       setStatus('Success! Your image has been submitted.');
       console.log('Upload result:', result);
-      
-      // Display result for debugging
-      setStatus(`Success! ID: ${result.id}, Status: ${result.status}`);
     } catch (err) {
       console.error('Submission failed:', err);
       setError(err instanceof Error ? err.message : 'Submission failed');
