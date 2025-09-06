@@ -20,7 +20,7 @@
 
 /* Primary button (Button 1 - Dark with gradient hover) */
 .primary {
-  background: var(--mina-black) !important;
+  background: var(--mina-black);
   color: var(--mina-white);
 }
 
@@ -34,15 +34,21 @@
   transition: transform 200ms ease-in 0ms, border 50ms ease-in 100ms;
 }
 
-/* Only show hover effects on devices with actual hover capability */
-@media (hover: hover) and (pointer: fine) {
-  .primary:hover:not(.disabled) {
-    background: var(--mina-secondary-spectrum) !important;
-  }
-  
-  .primary:hover:not(.disabled):after {
-    transform: translateZ(-1px) translate(-0.32rem, -0.32rem);
-  }
+.primary:hover:not(.disabled) {
+  background: var(--mina-secondary-spectrum);
+}
+
+.primary:hover:not(.disabled):after {
+  transform: translateZ(-1px) translate(-0.32rem, -0.32rem);
+}
+
+/* Active state for press feedback */
+.primary:active:not(.disabled) {
+  background: var(--mina-secondary-spectrum);
+}
+
+.primary:active:not(.disabled):after {
+  transform: translateZ(-1px);
 }
 
 /* Secondary button (Button 2 - Orange with black hover) */
