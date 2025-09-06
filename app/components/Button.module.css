@@ -24,13 +24,6 @@
   color: var(--mina-white);
 }
 
-/* Only show hover on actual hover, not on focus */
-@media (hover: hover) and (pointer: fine) {
-  .primary:hover:not(.disabled) {
-    background: var(--mina-secondary-spectrum) !important;
-  }
-}
-
 .primary:after {
   content: '';
   position: absolute;
@@ -41,10 +34,15 @@
   transition: transform 200ms ease-in 0ms, border 50ms ease-in 100ms;
 }
 
-/* Removed - hover is now in media query above */
-
-.primary:hover:not(.disabled):after {
-  transform: translateZ(-1px) translate(-0.32rem, -0.32rem);
+/* Only show hover effects on devices with actual hover capability */
+@media (hover: hover) and (pointer: fine) {
+  .primary:hover:not(.disabled) {
+    background: var(--mina-secondary-spectrum) !important;
+  }
+  
+  .primary:hover:not(.disabled):after {
+    transform: translateZ(-1px) translate(-0.32rem, -0.32rem);
+  }
 }
 
 /* Secondary button (Button 2 - Orange with black hover) */
