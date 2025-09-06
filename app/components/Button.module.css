@@ -42,15 +42,6 @@
   transform: translateZ(-1px) translate(-0.32rem, -0.32rem);
 }
 
-/* Active state for press feedback */
-.primary:active:not(.disabled) {
-  background: var(--mina-secondary-spectrum);
-}
-
-.primary:active:not(.disabled):after {
-  transform: translateZ(-1px);
-}
-
 /* Secondary button (Button 2 - Orange with black hover) */
 .secondary {
   background: var(--mina-orange);
