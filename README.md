@@ -1,6 +1,6 @@
 # TouchGrass UI
 
-Social photo challenge game on the Mina blockchain where users submit outdoor photos with zero-knowledge proofs for authenticity.
+A social photo challenge game where users complete daily challenges by submitting verified selfies to earn rewards on the Mina blockchain. Players can chain submissions together for bonus rewards, creating a social competition with cryptographic proof of authenticity.
 
 ## Features
 
