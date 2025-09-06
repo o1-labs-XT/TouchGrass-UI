@@ -24,16 +24,6 @@
   color: var(--mina-white);
 }
 
-/* Remove default focus outline and use focus-visible for keyboard nav only */
-.primary:focus {
-  outline: none;
-}
-
-.primary:focus-visible {
-  outline: 2px solid var(--mina-orange);
-  outline-offset: 2px;
-}
-
 .primary:after {
   content: '';
   position: absolute;
@@ -44,40 +34,18 @@
   transition: transform 200ms ease-in 0ms, border 50ms ease-in 100ms;
 }
 
-/* Only apply hover styles on devices that support hover (not touch) */
-@media (hover: hover) {
-  .primary:hover:not(.disabled) {
-    background: var(--mina-secondary-spectrum);
-  }
-
-  .primary:hover:not(.disabled):after {
-    transform: translateZ(-1px) translate(-0.32rem, -0.32rem);
-  }
+.primary:hover:not(.disabled) {
+  background: var(--mina-secondary-spectrum);
 }
 
-/* Active state for actual button press */
-.primary:active:not(.disabled) {
-  background: var(--mina-black);
-  transform: translateY(1px);
-}
-
-.primary:active:not(.disabled):after {
-  transform: translateZ(-1px);
+.primary:hover:not(.disabled):after {
+  transform: translateZ(-1px) translate(-0.32rem, -0.32rem);
 }
 
 /* Secondary button (Button 2 - Orange with black hover) */
 .secondary {
   background: var(--mina-orange);
   color: var(--mina-white);
-}
-
-.secondary:focus {
-  outline: none;
-}
-
-.secondary:focus-visible {
-  outline: 2px solid var(--mina-black);
-  outline-offset: 2px;
 }
 
 .secondary:after {
@@ -91,24 +59,13 @@
   transition: transform 200ms ease-in 0ms, border 50ms ease-in 100ms;
 }
 
-@media (hover: hover) {
-  .secondary:hover:not(.disabled) {
-    background: var(--mina-black);
-    color: var(--mina-white);
-  }
-
-  .secondary:hover:not(.disabled):after {
-    transform: translateZ(-1px) translate(-0.1rem, -0.1rem);
-  }
+.secondary:hover:not(.disabled) {
+  background: var(--mina-black);
+  color: var(--mina-white);
 }
 
-.secondary:active:not(.disabled) {
-  background: var(--mina-orange);
-  transform: translateY(1px);
-}
-
-.secondary:active:not(.disabled):after {
-  transform: translateZ(-1px);
+.secondary:hover:not(.disabled):after {
+  transform: translateZ(-1px) translate(-0.1rem, -0.1rem);
 }
 
 /* Clean variant - No underlay, for wallet buttons */
@@ -118,31 +75,15 @@
   border-color: var(--mina-blurple);
 }
 
-.clean:focus {
-  outline: none;
-}
-
-.clean:focus-visible {
-  outline: 2px solid var(--mina-purple);
-  outline-offset: 2px;
-}
-
 .clean:after {
   display: none; /* No underlay for clean variant */
 }
 
-@media (hover: hover) {
-  .clean:hover:not(.disabled) {
-    background: var(--mina-purple);
-    border-color: var(--mina-purple);
-    transform: translateY(-1px);
-    box-shadow: 0 2px 8px var(--mina-light-gray);
-  }
-}
-
-.clean:active:not(.disabled) {
-  background: var(--mina-blurple);
-  transform: translateY(1px);
+.clean:hover:not(.disabled) {
+  background: var(--mina-purple);
+  border-color: var(--mina-purple);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px var(--mina-light-gray);
 }
 
 /* Disabled state - Brand compliant */
