@@ -93,10 +93,10 @@ export default function SubmitPage() {
   };
 
   return (
-    <GradientBG>
-      <div className={styles.container}>
-        <h1 className={styles.title}>Submit Photo</h1>
-        {imageUrl ? (
+    <>
+      {imageUrl ? (
+        <div className={styles.container}>
+          <h1 className={styles.title}>Submit Photo</h1>
           <div className={styles.previewContainer}>
             <div className={styles.imageWrapper}>
               <img 
@@ -105,28 +105,33 @@ export default function SubmitPage() {
                 className={styles.capturedImage}
               />
             </div>
-            <div className={styles.buttonGroup}>
-              <Button variant="primary" onClick={handleSubmit} disabled={isProcessing}>
-                {isProcessing ? 'Processing...' : 'Submit to Blockchain'}
-              </Button>
-              <Button variant="primary" onClick={handleReset} disabled={isProcessing}>
-                Retake
-              </Button>
-            </div>
-            {status && (
+            {!isProcessing && !status && (
+              <div className={styles.buttonGroup}>
+                <Button variant="primary" onClick={handleSubmit}>
+                  Submit
+                </Button>
+                <Button variant="primary" onClick={handleReset}>
+                  Retake
+                </Button>
+              </div>
+            )}
+            {(isProcessing || status) && (
               <StatusMessage type="processing" message={status} showSpinner={isProcessing} />
             )}
             {error && (
               <ErrorMessage message={error} onDismiss={() => setError(null)} />
             )}
           </div>
-        ) : (
-          <>
+        </div>
+      ) : (
+        <GradientBG>
+          <div className={styles.cameraContainer}>
+            <h1 className={styles.title}>Submit Photo</h1>
             <CameraCapture onCapture={handleCapture} />
             <BackToHomeButton />
-          </>
-        )}
-      </div>
-    </GradientBG>
+          </div>
+        </GradientBG>
+      )}
+    </>
   );
 }
