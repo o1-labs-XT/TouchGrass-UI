@@ -5,6 +5,7 @@ import Button from '../components/Button';
 import BackToHomeButton from '../components/BackToHomeButton';
 import StatusMessage from '../components/StatusMessage';
 import ErrorMessage from '../components/ErrorMessage';
+import GradientBG from '../components/GradientBG';
 import styles from './submit.module.css';
 
 export default function SubmitPage() {
@@ -92,9 +93,10 @@ export default function SubmitPage() {
   };
 
   return (
-    <div className={styles.container}>
-      <h1 className={styles.title}>Submit Photo</h1>
-        {imageUrl ? (
+    <>
+      {imageUrl ? (
+        <div className={styles.container}>
+          <h1 className={styles.title}>Submit Photo</h1>
           <div className={styles.previewContainer}>
             <div className={styles.imageWrapper}>
               <img 
@@ -120,12 +122,16 @@ export default function SubmitPage() {
               <ErrorMessage message={error} onDismiss={() => setError(null)} />
             )}
           </div>
-        ) : (
-          <>
+        </div>
+      ) : (
+        <GradientBG>
+          <div className={styles.cameraContainer}>
+            <h1 className={styles.title}>Submit Photo</h1>
             <CameraCapture onCapture={handleCapture} />
             <BackToHomeButton />
-          </>
-        )}
-      </div>
+          </div>
+        </GradientBG>
+      )}
+    </>
   );
 }
