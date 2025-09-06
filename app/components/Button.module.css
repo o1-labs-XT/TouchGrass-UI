@@ -58,6 +58,15 @@
   color: var(--mina-white);
 }
 
+.secondary:focus {
+  outline: none;
+}
+
+.secondary:focus-visible {
+  outline: 2px solid var(--mina-black);
+  outline-offset: 2px;
+}
+
 .secondary:after {
   content: '';
   position: absolute;
@@ -85,22 +94,13 @@
   border-color: var(--mina-blurple);
 }
 
-.clean:after {
-  display: none; /* No underlay for clean variant */
+.clean:focus {
+  outline: none;
 }
 
-.clean:hover:not(.disabled) {
-  background: var(--mina-purple);
-  border-color: var(--mina-purple);
-  transform: translateY(-1px);
-  box-shadow: 0 2px 8px var(--mina-light-gray);
-}
-
-/* Clean variant - No underlay, for wallet buttons */
-.clean {
-  background: var(--mina-blurple);
-  color: var(--mina-white);
-  border-color: var(--mina-blurple);
+.clean:focus-visible {
+  outline: 2px solid var(--mina-purple);
+  outline-offset: 2px;
 }
 
 .clean:after {
