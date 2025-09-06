@@ -1,12 +1,14 @@
-# Authenticity UI
+# TouchGrass UI
 
-Web interface for proving and verifying image authenticity using zero-knowledge proofs on the Mina blockchain.
+Social photo challenge game on the Mina blockchain where users submit outdoor photos with zero-knowledge proofs for authenticity.
 
 ## Features
 
-- Drag-and-drop image upload with preview
-- Zero-knowledge proof generation for image authenticity
-- On-chain verification against Mina blockchain
+- Progressive Web App (PWA) - installable on mobile devices
+- Native camera capture interface optimized for mobile
+- Real-time photo preview and submission
+- Zero-knowledge proof generation for photo authenticity
+- Signature-based verification using Mina keypairs
 - Non-blocking operations using Web Workers
 - Real-time proof generation status
 
@@ -20,8 +22,8 @@ Web interface for proving and verifying image authenticity using zero-knowledge 
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/o1-labs-XT/Authenticity-UI.git
-cd ui/authenticity-ui/ui
+git clone https://github.com/o1-labs-XT/TouchGrass-UI.git
+cd touchgrass/ui
 ```
 
 2. Install dependencies:
