@@ -91,13 +91,24 @@
   transition: transform 200ms ease-in 0ms, border 50ms ease-in 100ms;
 }
 
-.secondary:hover:not(.disabled) {
-  background: var(--mina-black);
-  color: var(--mina-white);
+@media (hover: hover) {
+  .secondary:hover:not(.disabled) {
+    background: var(--mina-black);
+    color: var(--mina-white);
+  }
+
+  .secondary:hover:not(.disabled):after {
+    transform: translateZ(-1px) translate(-0.1rem, -0.1rem);
+  }
 }
 
-.secondary:hover:not(.disabled):after {
-  transform: translateZ(-1px) translate(-0.1rem, -0.1rem);
+.secondary:active:not(.disabled) {
+  background: var(--mina-orange);
+  transform: translateY(1px);
+}
+
+.secondary:active:not(.disabled):after {
+  transform: translateZ(-1px);
 }
 
 /* Clean variant - No underlay, for wallet buttons */
@@ -120,11 +131,18 @@
   display: none; /* No underlay for clean variant */
 }
 
-.clean:hover:not(.disabled) {
-  background: var(--mina-purple);
-  border-color: var(--mina-purple);
-  transform: translateY(-1px);
-  box-shadow: 0 2px 8px var(--mina-light-gray);
+@media (hover: hover) {
+  .clean:hover:not(.disabled) {
+    background: var(--mina-purple);
+    border-color: var(--mina-purple);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px var(--mina-light-gray);
+  }
+}
+
+.clean:active:not(.disabled) {
+  background: var(--mina-blurple);
+  transform: translateY(1px);
 }
 
 /* Disabled state - Brand compliant */
