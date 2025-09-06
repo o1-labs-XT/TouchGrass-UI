@@ -24,6 +24,16 @@
   color: var(--mina-white);
 }
 
+/* Remove default focus outline and use focus-visible for keyboard nav only */
+.primary:focus {
+  outline: none;
+}
+
+.primary:focus-visible {
+  outline: 2px solid var(--mina-orange);
+  outline-offset: 2px;
+}
+
 .primary:after {
   content: '';
   position: absolute;
