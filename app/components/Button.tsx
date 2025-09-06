@@ -41,10 +41,21 @@ export default function Button({
     );
   }
 
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    // Call the original onClick if it exists
+    if (onClick) {
+      onClick();
+    }
+    // Remove focus after click to prevent stuck appearance
+    setTimeout(() => {
+      e.currentTarget.blur();
+    }, 100);
+  };
+
   return (
     <button
       type={type}
-      onClick={onClick}
+      onClick={handleClick}
       disabled={disabled}
       className={buttonClasses}
     >
