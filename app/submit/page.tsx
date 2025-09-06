@@ -106,7 +106,7 @@ export default function SubmitPage() {
             {!isProcessing && !status && (
               <div className={styles.buttonGroup}>
                 <Button variant="primary" onClick={handleSubmit}>
-                  Submit to Blockchain
+                  Submit
                 </Button>
                 <Button variant="primary" onClick={handleReset}>
                   Retake
