@@ -21,11 +21,15 @@ export async function POST(request: NextRequest) {
       signature: signature.substring(0, 20) + '...'
     });
     
-    // Return mock Submission object
+    // Return mock Submission object matching FRONTEND_SPEC.md
     const submission = {
-      id: Math.random().toString(36).substring(2, 15),
+      id: `sub-${Math.random().toString(36).substring(2, 15)}`,
       tokenOwnerAddress: publicKey,
-      status: 'pending',
+      challengeId: 'challenge-001',
+      imageUrl: `/api/mock/image/${Date.now()}`,
+      isPublic: false,
+      votes: 0,
+      status: 'uploading' as const,
       createdAt: new Date().toISOString()
     };
     
