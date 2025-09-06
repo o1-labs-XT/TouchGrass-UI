@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(request: NextRequest) {
   try {
+    // MVP mock endpoint - receives image, publicKey, signature
+    // Full spec expects: image, tagline?, socialLink?, chainId?, isPublic, signedTransaction
     const formData = await request.formData();
     const image = formData.get('image') as File;
     const publicKey = formData.get('publicKey') as string;
