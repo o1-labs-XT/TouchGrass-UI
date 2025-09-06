@@ -103,15 +103,17 @@ export default function SubmitPage() {
                 className={styles.capturedImage}
               />
             </div>
-            <div className={styles.buttonGroup}>
-              <Button variant="primary" onClick={handleSubmit} disabled={isProcessing}>
-                {isProcessing ? 'Processing...' : 'Submit to Blockchain'}
-              </Button>
-              <Button variant="primary" onClick={handleReset} disabled={isProcessing}>
-                Retake
-              </Button>
-            </div>
-            {status && (
+            {!isProcessing && !status && (
+              <div className={styles.buttonGroup}>
+                <Button variant="primary" onClick={handleSubmit}>
+                  Submit to Blockchain
+                </Button>
+                <Button variant="primary" onClick={handleReset}>
+                  Retake
+                </Button>
+              </div>
+            )}
+            {(isProcessing || status) && (
               <StatusMessage type="processing" message={status} showSpinner={isProcessing} />
             )}
             {error && (
