@@ -33,6 +33,10 @@ export async function POST(request: NextRequest) {
       createdAt: new Date().toISOString()
     };
     
+    // Simulate status progression (for demo purposes)
+    // In real backend, this would be tracked server-side
+    console.log('Mock submission will progress through states: uploading -> proving -> publishing -> verified');
+    
     return NextResponse.json(submission);
   } catch (error) {
     console.error('Mock submission error:', error);
