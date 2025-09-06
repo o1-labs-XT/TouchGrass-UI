@@ -44,12 +44,25 @@
   transition: transform 200ms ease-in 0ms, border 50ms ease-in 100ms;
 }
 
-.primary:hover:not(.disabled) {
-  background: var(--mina-secondary-spectrum);
+/* Only apply hover styles on devices that support hover (not touch) */
+@media (hover: hover) {
+  .primary:hover:not(.disabled) {
+    background: var(--mina-secondary-spectrum);
+  }
+
+  .primary:hover:not(.disabled):after {
+    transform: translateZ(-1px) translate(-0.32rem, -0.32rem);
+  }
 }
 
-.primary:hover:not(.disabled):after {
-  transform: translateZ(-1px) translate(-0.32rem, -0.32rem);
+/* Active state for actual button press */
+.primary:active:not(.disabled) {
+  background: var(--mina-black);
+  transform: translateY(1px);
+}
+
+.primary:active:not(.disabled):after {
+  transform: translateZ(-1px);
 }
 
 /* Secondary button (Button 2 - Orange with black hover) */
