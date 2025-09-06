@@ -20,8 +20,15 @@
 
 /* Primary button (Button 1 - Dark with gradient hover) */
 .primary {
-  background: var(--mina-black);
+  background: var(--mina-black) !important;
   color: var(--mina-white);
+}
+
+/* Only show hover on actual hover, not on focus */
+@media (hover: hover) and (pointer: fine) {
+  .primary:hover:not(.disabled) {
+    background: var(--mina-secondary-spectrum) !important;
+  }
 }
 
 .primary:after {
@@ -34,9 +41,7 @@
   transition: transform 200ms ease-in 0ms, border 50ms ease-in 100ms;
 }
 
-.primary:hover:not(.disabled) {
-  background: var(--mina-secondary-spectrum);
-}
+/* Removed - hover is now in media query above */
 
 .primary:hover:not(.disabled):after {
   transform: translateZ(-1px) translate(-0.32rem, -0.32rem);
