@@ -198,3 +198,16 @@ export async function getChain(chainId: string): Promise<Chain> {
 
   return response.json();
 }
+
+/**
+ * Get all submissions
+ */
+export async function getSubmissions(): Promise<Submission[]> {
+  const response = await fetch(`${BACKEND_URL}/submissions`);
+
+  if (!response.ok) {
+    throw new Error(`Failed to fetch submissions: ${response.statusText}`);
+  }
+
+  return response.json();
+}
