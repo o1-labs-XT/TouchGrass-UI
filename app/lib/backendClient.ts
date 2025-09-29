@@ -25,6 +25,38 @@ export interface TokenOwnerResponse {
   found: boolean;
 }
 
+// TouchGrass Types
+export interface Challenge {
+  id: string;
+  title: string;
+  description: string;
+  startTime: string;
+  endTime: string;
+  participantCount: number;
+  chainCount: number;
+}
+
+export interface Chain {
+  id: string;
+  name: string;
+  challengeId: string;
+  length: number;
+  createdAt: string;
+  lastActivityAt: string;
+}
+
+export interface Submission {
+  id: string;
+  tokenOwnerAddress: string;
+  challengeId: string;
+  chainId: string;
+  imageUrl: string;
+  tagline?: string;
+  chainPosition: number;
+  status: "uploading" | "proving" | "publishing" | "verified" | "failed";
+  createdAt: string;
+}
+
 /**
  * Upload an image with signature for authentication
  */
