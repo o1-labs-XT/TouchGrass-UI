@@ -1,12 +1,9 @@
 /**
  * Backend API client utilities
- * Handles communication with the authenticity backend, including response format conversions
+ * Handles communication with the TouchGrass backend API
  */
 
-const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
-if (!BACKEND_URL) {
-  throw new Error("NEXT_PUBLIC_BACKEND_URL environment variable is required");
-}
+const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || "https://authenticity-api-staging.up.railway.app/api";
 console.log("Backend URL:", BACKEND_URL);
 
 export interface UploadResponse {
