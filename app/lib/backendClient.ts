@@ -182,3 +182,19 @@ export async function getCurrentChallenge(): Promise<Challenge> {
 
   return response.json();
 }
+
+/**
+ * Get chain details
+ */
+export async function getChain(chainId: string): Promise<Chain> {
+  const response = await fetch(`${BACKEND_URL}/chains/${chainId}`);
+
+  if (!response.ok) {
+    if (response.status === 404) {
+      throw new Error("Chain not found");
+    }
+    throw new Error(`Failed to fetch chain: ${response.statusText}`);
+  }
+
+  return response.json();
+}
