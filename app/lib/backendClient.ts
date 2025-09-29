@@ -211,3 +211,16 @@ export async function getSubmissions(): Promise<Submission[]> {
 
   return response.json();
 }
+
+/**
+ * Get single submission
+ */
+export async function getSubmission(submissionId: string): Promise<Submission> {
+  const response = await fetch(`${BACKEND_URL}/submissions/${submissionId}`);
+
+  if (!response.ok) {
+    throw new Error(`Failed to fetch submission: ${response.statusText}`);
+  }
+
+  return response.json();
+}
