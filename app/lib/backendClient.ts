@@ -169,3 +169,16 @@ export async function checkBackendHealth(): Promise<boolean> {
     return false;
   }
 }
+
+/**
+ * Get current challenge
+ */
+export async function getCurrentChallenge(): Promise<Challenge> {
+  const response = await fetch(`${BACKEND_URL}/challenges/current`);
+
+  if (!response.ok) {
+    throw new Error(`Failed to fetch current challenge: ${response.statusText}`);
+  }
+
+  return response.json();
+}
