@@ -1,10 +1,12 @@
+'use client';
+
 interface ChallengePageProps {
   params: {
     id: string;
   };
 }
 
-export default async function ChallengePage({ params }: ChallengePageProps) {
+export default function ChallengePage({ params }: ChallengePageProps) {
   return (
     <main>
       <h1>Challenge Page</h1>
