@@ -4,13 +4,7 @@ import { useState, useEffect } from 'react';
 import { getCurrentChallenge, getChain } from '../../lib/backendClient';
 import type { Challenge, Chain } from '../../lib/backendClient';
 
-interface ChallengePageProps {
-  params: {
-    id: string;
-  };
-}
-
-export default function ChallengePage({ params }: ChallengePageProps) {
+export default function ChallengePage() {
   const [challenge, setChallenge] = useState<Challenge | null>(null);
   const [chain, setChain] = useState<Chain | null>(null);
   const [loading, setLoading] = useState(true);
@@ -21,11 +15,6 @@ export default function ChallengePage({ params }: ChallengePageProps) {
       try {
         setLoading(true);
         setError(null);
-
-        // MVP: only support "current" challenge
-        if (params.id !== 'current') {
-          throw new Error('Invalid challenge ID');
-        }
 
         const challengeData = await getCurrentChallenge();
         setChallenge(challengeData);
@@ -45,7 +34,7 @@ export default function ChallengePage({ params }: ChallengePageProps) {
     }
 
     fetchData();
-  }, [params.id]);
+  }, []);
 
   if (loading) {
     return (
