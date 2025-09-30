@@ -34,7 +34,7 @@ export default function Home() {
             </div>
             
             <div className={styles.flowSelection}>
-              <Link href="/submit" className={styles.flowCard}>
+              <Link href="/challenge/current" className={styles.flowCard}>
                 <h2>Today's Challenge</h2>
                 <p>Complete the daily photo challenge</p>
               </Link>
