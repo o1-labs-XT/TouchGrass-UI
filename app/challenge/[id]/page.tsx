@@ -1,8 +1,13 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import { getCurrentChallenge, getChain } from '../../lib/backendClient';
 import type { Challenge, Chain } from '../../lib/backendClient';
+import Button from '../../components/Button';
+import Card from '../../components/Card';
+import StatBox from '../../components/StatBox';
+import styles from './Challenge.module.css';
 
 export default function ChallengePage() {
   const [challenge, setChallenge] = useState<Challenge | null>(null);
