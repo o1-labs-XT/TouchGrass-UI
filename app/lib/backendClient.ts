@@ -3,7 +3,9 @@
  * Handles communication with the TouchGrass backend API
  */
 
-const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || "https://authenticity-api-staging.up.railway.app/api";
+const BACKEND_URL =
+  process.env.NEXT_PUBLIC_BACKEND_URL ||
+  "https://authenticity-api-staging.up.railway.app/api";
 console.log("Backend URL:", BACKEND_URL);
 
 export interface UploadResponse {
@@ -151,7 +153,6 @@ export async function getTokenOwner(
 
   const data = await response.json();
 
-  // Backend returns {found: false} for non-existent images
   return data;
 }
 
@@ -177,7 +178,9 @@ export async function getCurrentChallenge(): Promise<Challenge> {
   const response = await fetch(`${BACKEND_URL}/challenges/current`);
 
   if (!response.ok) {
-    throw new Error(`Failed to fetch current challenge: ${response.statusText}`);
+    throw new Error(
+      `Failed to fetch current challenge: ${response.statusText}`
+    );
   }
 
   return response.json();
