@@ -1,6 +1,8 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { getCurrentChallenge, getChain } from '../../lib/backendClient';
+import type { Challenge, Chain } from '../../lib/backendClient';
 
 interface ChallengePageProps {
   params: {
