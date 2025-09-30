@@ -4,7 +4,7 @@ interface ChallengePageProps {
   };
 }
 
-export default function ChallengePage({ params }: ChallengePageProps) {
+export default async function ChallengePage({ params }: ChallengePageProps) {
   return (
     <main>
       <h1>Challenge Page</h1>
