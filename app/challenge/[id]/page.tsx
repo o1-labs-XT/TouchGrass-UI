@@ -47,6 +47,22 @@ export default function ChallengePage({ params }: ChallengePageProps) {
     fetchData();
   }, [params.id]);
 
+  if (loading) {
+    return (
+      <main>
+        <p>Loading challenge...</p>
+      </main>
+    );
+  }
+
+  if (error) {
+    return (
+      <main>
+        <p>Error: {error}</p>
+      </main>
+    );
+  }
+
   return (
     <main>
       <h1>Challenge Page</h1>
