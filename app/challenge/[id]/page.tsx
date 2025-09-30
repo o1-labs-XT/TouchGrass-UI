@@ -62,19 +62,34 @@ export default function ChallengePage() {
   }
 
   return (
-    <main>
-      {challenge && (
-        <div>
-          <h1>{challenge.title}</h1>
-          <p>{challenge.description}</p>
-        </div>
-      )}
-      {chain && (
-        <div>
-          <h2>Chain: {chain.name}</h2>
-          <p>Length: {chain.length}</p>
-        </div>
-      )}
+    <main className={styles.container}>
+      <div className={styles.wrapper}>
+        {challenge && (
+          <>
+            <header className={styles.header}>
+              <h1 className={styles.pageTitle}>Today's Challenge</h1>
+            </header>
+
+            <Card centered className={styles.challengeCard}>
+              <div className={styles.icon}>🌱</div>
+              <h2 className={styles.title}>{challenge.title}</h2>
+              <p className={styles.description}>{challenge.description}</p>
+
+              <div className={styles.statsGrid}>
+                <StatBox value={challenge.participantCount} label="Participants" />
+                <StatBox value={chain?.length || 0} label="Chain Length" />
+              </div>
+
+              <Button
+                variant="primary"
+                onClick={() => router.push('/submit')}
+              >
+                Join Chain
+              </Button>
+            </Card>
+          </>
+        )}
+      </div>
     </main>
   );
 }
