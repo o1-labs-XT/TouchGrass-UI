@@ -11,6 +11,11 @@ interface ChallengePageProps {
 }
 
 export default function ChallengePage({ params }: ChallengePageProps) {
+  const [challenge, setChallenge] = useState<Challenge | null>(null);
+  const [chain, setChain] = useState<Chain | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
   return (
     <main>
       <h1>Challenge Page</h1>
