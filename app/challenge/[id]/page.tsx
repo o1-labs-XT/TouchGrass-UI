@@ -44,7 +44,7 @@ export default function ChallengePage() {
 
   if (loading) {
     return (
-      <main>
+      <main className={styles.loading}>
         <p>Loading challenge...</p>
       </main>
     );
