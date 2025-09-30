@@ -52,8 +52,11 @@ export default function ChallengePage() {
 
   if (error) {
     return (
-      <main>
-        <p>Error: {error}</p>
+      <main className={styles.error}>
+        <p className={styles.errorMessage}>Error: {error}</p>
+        <Button variant="primary" onClick={() => window.location.reload()}>
+          Try Again
+        </Button>
       </main>
     );
   }
