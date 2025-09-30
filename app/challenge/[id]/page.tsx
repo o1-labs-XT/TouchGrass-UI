@@ -10,6 +10,7 @@ import StatBox from '../../components/StatBox';
 import styles from './Challenge.module.css';
 
 export default function ChallengePage() {
+  const router = useRouter();
   const [challenge, setChallenge] = useState<Challenge | null>(null);
   const [chain, setChain] = useState<Chain | null>(null);
   const [loading, setLoading] = useState(true);
