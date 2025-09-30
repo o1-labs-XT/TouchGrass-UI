@@ -16,6 +16,37 @@ export default function ChallengePage({ params }: ChallengePageProps) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        setLoading(true);
+        setError(null);
+
+        // MVP: only support "current" challenge
+        if (params.id !== 'current') {
+          throw new Error('Invalid challenge ID');
+        }
+
+        const challengeData = await getCurrentChallenge();
+        setChallenge(challengeData);
+
+        // Try to get default chain, don't fail if it doesn't exist
+        try {
+          const chainData = await getChain('1');
+          setChain(chainData);
+        } catch {
+          console.log('Chain not found - will be created on first submission');
+        }
+      } catch (err) {
+        setError(err instanceof Error ? err.message : 'Failed to load challenge');
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchData();
+  }, [params.id]);
+
   return (
     <main>
       <h1>Challenge Page</h1>
