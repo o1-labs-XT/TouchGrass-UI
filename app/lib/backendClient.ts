@@ -36,6 +36,8 @@ export interface Challenge {
   endTime: string;
   participantCount: number;
   chainCount: number;
+  createdAt?: string;
+  updatedAt?: string;
 }
 
 export interface Chain {
@@ -45,17 +47,21 @@ export interface Chain {
   length: number;
   createdAt: string;
   lastActivityAt: string;
+  updatedAt?: string;
 }
 
 export interface Submission {
   id: string;
+  sha256Hash?: string;
   tokenOwnerAddress: string;
+  userWalletAddress?: string;
   challengeId: string;
   chainId: string;
   imageUrl: string;
   tagline?: string;
   chainPosition: number;
-  status: "uploading" | "proving" | "publishing" | "verified" | "failed";
+  status: string;
+  transactionId?: string;
   createdAt: string;
 }
 
