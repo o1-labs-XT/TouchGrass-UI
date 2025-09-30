@@ -1,12 +1,11 @@
 /**
  * Backend API client utilities
- * Handles communication with the authenticity backend, including response format conversions
+ * Handles communication with the TouchGrass backend API
  */
 
-const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
-if (!BACKEND_URL) {
-  throw new Error("NEXT_PUBLIC_BACKEND_URL environment variable is required");
-}
+const BACKEND_URL =
+  process.env.NEXT_PUBLIC_BACKEND_URL ||
+  "https://authenticity-api-staging.up.railway.app/api";
 console.log("Backend URL:", BACKEND_URL);
 
 export interface UploadResponse {
@@ -26,6 +25,38 @@ export interface TokenOwnerResponse {
   tokenOwnerAddress?: string;
   status?: "pending" | "verified";
   found: boolean;
+}
+
+// TouchGrass Types
+export interface Challenge {
+  id: string;
+  title: string;
+  description: string;
+  startTime: string;
+  endTime: string;
+  participantCount: number;
+  chainCount: number;
+}
+
+export interface Chain {
+  id: string;
+  name: string;
+  challengeId: string;
+  length: number;
+  createdAt: string;
+  lastActivityAt: string;
+}
+
+export interface Submission {
+  id: string;
+  tokenOwnerAddress: string;
+  challengeId: string;
+  chainId: string;
+  imageUrl: string;
+  tagline?: string;
+  chainPosition: number;
+  status: "uploading" | "proving" | "publishing" | "verified" | "failed";
+  createdAt: string;
 }
 
 /**
@@ -122,7 +153,6 @@ export async function getTokenOwner(
 
   const data = await response.json();
 
-  // Backend returns {found: false} for non-existent images
   return data;
 }
 
@@ -139,4 +169,61 @@ export async function checkBackendHealth(): Promise<boolean> {
   } catch {
     return false;
   }
+}
+
+/**
+ * Get current challenge
+ */
+export async function getCurrentChallenge(): Promise<Challenge> {
+  const response = await fetch(`${BACKEND_URL}/challenges/current`);
+
+  if (!response.ok) {
+    throw new Error(
+      `Failed to fetch current challenge: ${response.statusText}`
+    );
+  }
+
+  return response.json();
+}
+
+/**
+ * Get chain details
+ */
+export async function getChain(chainId: string): Promise<Chain> {
+  const response = await fetch(`${BACKEND_URL}/chains/${chainId}`);
+
+  if (!response.ok) {
+    if (response.status === 404) {
+      throw new Error("Chain not found");
+    }
+    throw new Error(`Failed to fetch chain: ${response.statusText}`);
+  }
+
+  return response.json();
+}
+
+/**
+ * Get all submissions
+ */
+export async function getSubmissions(): Promise<Submission[]> {
+  const response = await fetch(`${BACKEND_URL}/submissions`);
+
+  if (!response.ok) {
+    throw new Error(`Failed to fetch submissions: ${response.statusText}`);
+  }
+
+  return response.json();
+}
+
+/**
+ * Get single submission
+ */
+export async function getSubmission(submissionId: string): Promise<Submission> {
+  const response = await fetch(`${BACKEND_URL}/submissions/${submissionId}`);
+
+  if (!response.ok) {
+    throw new Error(`Failed to fetch submission: ${response.statusText}`);
+  }
+
+  return response.json();
 }
