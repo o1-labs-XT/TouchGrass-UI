@@ -65,8 +65,18 @@ export default function ChallengePage({ params }: ChallengePageProps) {
 
   return (
     <main>
-      <h1>Challenge Page</h1>
-      <p>Challenge ID: {params.id}</p>
+      {challenge && (
+        <div>
+          <h1>{challenge.title}</h1>
+          <p>{challenge.description}</p>
+        </div>
+      )}
+      {chain && (
+        <div>
+          <h2>Chain: {chain.name}</h2>
+          <p>Length: {chain.length}</p>
+        </div>
+      )}
     </main>
   );
 }
