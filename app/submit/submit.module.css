@@ -1,24 +1,76 @@
 .container {
   min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 2rem 1rem;
-  max-width: 600px;
-  margin: 0 auto;
-  position: relative;
+  padding: 1rem;
+  background: linear-gradient(to bottom, var(--mina-light-gray), var(--mina-white));
 }
 
-.container::before {
-  content: '';
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: var(--mina-light-gray);
-  z-index: -1;
-  pointer-events: none;
+.wrapper {
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+.header {
+  margin-bottom: 1rem;
+  padding: 0 0.5rem;
+}
+
+.pageTitle {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--mina-black);
+  margin-top: 0.5rem;
+}
+
+.challengeCard {
+  margin-bottom: 1rem;
+}
+
+.challengeTitle {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--mina-black);
+  margin-bottom: 0.75rem;
+}
+
+.challengeDescription {
+  font-size: 1rem;
+  color: var(--color-text-muted);
+  line-height: 1.5;
+}
+
+.cameraCard {
+  margin-bottom: 2rem;
+}
+
+.cameraIconWrapper {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background-color: #e8f5e9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1rem;
+}
+
+.cameraIcon {
+  width: 40px;
+  height: 40px;
+}
+
+.cameraTitle {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--mina-black);
+  margin-bottom: 0.75rem;
+}
+
+.cameraDescription {
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
+  line-height: 1.5;
+  margin-bottom: 1.5rem;
+  text-align: center;
 }
 
 .title {

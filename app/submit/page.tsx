@@ -1,19 +1,36 @@
 'use client';
 import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import { getCurrentChallenge } from '../lib/backendClient';
+import type { Challenge } from '../lib/backendClient';
 import CameraCapture from '../components/CameraCapture';
 import Button from '../components/Button';
-import BackToHomeButton from '../components/BackToHomeButton';
+import BackButton from '../components/BackButton';
+import Card from '../components/Card';
 import StatusMessage from '../components/StatusMessage';
 import ErrorMessage from '../components/ErrorMessage';
-import GradientBG from '../components/GradientBG';
 import styles from './submit.module.css';
 
 export default function SubmitPage() {
+  const router = useRouter();
+  const [challenge, setChallenge] = useState<Challenge | null>(null);
   const [imageBlob, setImageBlob] = useState<Blob | null>(null);
   const [imageUrl, setImageUrl] = useState<string | null>(null);
   const [isProcessing, setIsProcessing] = useState(false);
   const [status, setStatus] = useState<string>('');
   const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    async function fetchChallenge() {
+      try {
+        const challengeData = await getCurrentChallenge();
+        setChallenge(challengeData);
+      } catch (err) {
+        console.error('Failed to load challenge:', err);
+      }
+    }
+    fetchChallenge();
+  }, []);
 
   useEffect(() => {
     if (imageBlob) {
@@ -83,6 +100,11 @@ export default function SubmitPage() {
       const result = await response.json();
       setStatus('Success! Your image has been submitted.');
       console.log('Upload result:', result);
+
+      // Redirect to chain detail page after success
+      setTimeout(() => {
+        router.push('/chain/1');
+      }, 2000);
     } catch (err) {
       console.error('Submission failed:', err);
       setError(err instanceof Error ? err.message : 'Submission failed');
@@ -124,13 +146,35 @@ export default function SubmitPage() {
           </div>
         </div>
       ) : (
-        <GradientBG>
-          <div className={styles.cameraContainer}>
-            <h1 className={styles.title}>Submit Photo</h1>
-            <CameraCapture onCapture={handleCapture} />
-            <BackToHomeButton />
+        <main className={styles.container}>
+          <div className={styles.wrapper}>
+            <header className={styles.header}>
+              <BackButton onClick={() => router.back()} />
+              <h1 className={styles.pageTitle}>Capture Your Challenge Photo</h1>
+            </header>
+
+            {challenge && (
+              <Card className={styles.challengeCard}>
+                <h2 className={styles.challengeTitle}>{challenge.title}</h2>
+                <p className={styles.challengeDescription}>{challenge.description}</p>
+              </Card>
+            )}
+
+            <Card centered className={styles.cameraCard}>
+              <div className={styles.cameraIconWrapper}>
+                <svg className={styles.cameraIcon} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M9 3L7.17 5H4C2.9 5 2 5.9 2 7V19C2 20.1 2.9 21 4 21H20C21.1 21 22 20.1 22 19V7C22 5.9 21.1 5 20 5H16.83L15 3H9Z" stroke="#4CAF50" strokeWidth="1.5" fill="none"/>
+                  <circle cx="12" cy="13" r="3.5" stroke="#4CAF50" strokeWidth="1.5" fill="none"/>
+                </svg>
+              </div>
+              <h2 className={styles.cameraTitle}>Take Your Photo</h2>
+              <p className={styles.cameraDescription}>
+                Use your device's camera to capture an authentic photo for this challenge
+              </p>
+              <CameraCapture onCapture={handleCapture} />
+            </Card>
           </div>
-        </GradientBG>
+        </main>
       )}
     </>
   );
