@@ -7,6 +7,7 @@ export default function Home() {
   const router = useRouter();
 
   useEffect(() => {
+    // Redirect to current challenge
     router.push('/challenge/1');
   }, [router]);
 
