@@ -7,7 +7,7 @@ import type { Challenge, Chain, Submission } from './backendClient';
 
 // Current active challenge
 export const mockCurrentChallenge: Challenge = {
-  id: "550e8400-e29b-41d4-a716-446655440000",
+  id: "1",
   title: "Touch Grass Challenge",
   description: "Take a selfie of yourself touching grass in nature. Get outside and connect with nature! 🌱",
   startTime: new Date().toISOString(),
@@ -22,7 +22,7 @@ export const mockCurrentChallenge: Challenge = {
 export const mockChallenges: Challenge[] = [
   mockCurrentChallenge,
   {
-    id: "550e8400-e29b-41d4-a716-446655440001",
+    id: "2",
     title: "Sunrise Photography",
     description: "Capture the beauty of sunrise from your location",
     startTime: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString(),

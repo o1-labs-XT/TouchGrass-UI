@@ -76,7 +76,7 @@ export default function ChainDetailPage({ params }: { params: Promise<{ id: stri
             <StatBox value={submissions.length} label="Submissions" />
           </div>
           <Button variant="primary" onClick={() => router.push('/submit')}>
-            Extend This Chain
+            Extend Chain
           </Button>
         </Card>
       )}
