@@ -100,6 +100,11 @@ export default function SubmitPage() {
       const result = await response.json();
       setStatus('Success! Your image has been submitted.');
       console.log('Upload result:', result);
+
+      // Redirect to home after success
+      setTimeout(() => {
+        router.push('/');
+      }, 2000);
     } catch (err) {
       console.error('Submission failed:', err);
       setError(err instanceof Error ? err.message : 'Submission failed');
