@@ -7,7 +7,7 @@ export default function Home() {
   const router = useRouter();
 
   useEffect(() => {
-    router.push('/challenge/550e8400-e29b-41d4-a716-446655440000');
+    router.push('/challenge/1');
   }, [router]);
 
   return null;
