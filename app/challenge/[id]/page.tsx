@@ -80,12 +80,23 @@ export default function ChallengePage() {
                 <StatBox value={chain?.length || 0} label="Chain Length" />
               </div>
 
-              <Button
-                variant="primary"
-                onClick={() => router.push('/submit')}
-              >
-                Join Chain
-              </Button>
+              <div className={styles.buttonGroup}>
+                {chain && (
+                  <Button
+                    variant="primary"
+                    onClick={() => router.push(`/chain/${chain.id}`)}
+                  >
+                    View Chain
+                  </Button>
+                )}
+
+                <Button
+                  variant="primary"
+                  onClick={() => router.push('/submit')}
+                >
+                  Join Chain
+                </Button>
+              </div>
             </Card>
           </>
         )}

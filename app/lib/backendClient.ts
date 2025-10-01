@@ -223,6 +223,19 @@ export async function getSubmissions(): Promise<Submission[]> {
 }
 
 /**
+ * Get submissions filtered by chain ID
+ */
+export async function getSubmissionsByChain(chainId: string): Promise<Submission[]> {
+  const response = await fetch(`${BACKEND_URL}/submissions?chainId=${chainId}`);
+
+  if (!response.ok) {
+    throw new Error(`Failed to fetch submissions: ${response.statusText}`);
+  }
+
+  return response.json();
+}
+
+/**
  * Get single submission
  */
 export async function getSubmission(submissionId: string): Promise<Submission> {

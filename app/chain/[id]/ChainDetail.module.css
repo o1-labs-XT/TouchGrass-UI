@@ -10,36 +10,31 @@
 }
 
 .header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   margin-bottom: 1rem;
   padding: 0 0.5rem;
+}
+
+.backButton {
+  background: none;
+  border: none;
+  color: var(--mina-black);
+  font-size: 0.875rem;
+  padding: 0.5rem 0;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.backButton:hover {
+  text-decoration: underline;
 }
 
 .pageTitle {
   font-size: 1.25rem;
   font-weight: 600;
   color: var(--mina-black);
-}
-
-.icon {
-  font-size: 3rem;
-  margin-bottom: 1rem;
-}
-
-.title {
-  font-size: 1.5rem;
-  font-weight: 600;
-  color: var(--mina-black);
-  margin-bottom: 0.75rem;
-}
-
-.description {
-  font-size: 1rem;
-  color: var(--color-text-muted);
-  line-height: 1.5;
-  margin-bottom: 1.5rem;
+  margin-top: 0.5rem;
 }
 
 .statsGrid {
@@ -49,15 +44,31 @@
   margin-bottom: 1.5rem;
 }
 
-.challengeCard {
-  margin-bottom: 2rem;
+.submissions {
+  margin-top: 2rem;
 }
 
-.buttonGroup {
-  display: flex;
-  gap: 4rem;
+.submissions h2 {
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
+}
+
+.grid {
+  display: grid;
+  gap: 1rem;
+}
+
+.position {
+  font-weight: 600;
+  color: var(--mina-purple);
+  margin-bottom: 0.5rem;
+}
+
+.image {
   width: 100%;
-  justify-content: center;
+  height: auto;
+  border-radius: 8px;
+  margin-bottom: 0.5rem;
 }
 
 .loading {
@@ -65,7 +76,6 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 2rem;
 }
 
 .error {
@@ -74,22 +84,12 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: 1rem;
   padding: 2rem;
-  text-align: center;
-}
-
-.errorMessage {
-  color: var(--mina-red-violet);
-  margin-bottom: 1rem;
 }
 
 @media (min-width: 768px) {
   .container {
     padding: 2rem;
-  }
-
-  .statsGrid {
-    max-width: 400px;
-    margin: 0 auto 1.5rem;
   }
 }
