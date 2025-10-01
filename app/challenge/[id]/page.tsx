@@ -86,7 +86,7 @@ export default function ChallengePage() {
                     variant="primary"
                     onClick={() => router.push(`/chain/${chain.id}`)}
                   >
-                    View Chain
+                    View
                   </Button>
                 )}
 
@@ -94,7 +94,7 @@ export default function ChallengePage() {
                   variant="primary"
                   onClick={() => router.push('/submit')}
                 >
-                  Join Chain
+                  Join
                 </Button>
               </div>
             </Card>
