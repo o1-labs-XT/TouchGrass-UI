@@ -145,7 +145,7 @@ export default function SubmitPage() {
           <div className={styles.wrapper}>
             <header className={styles.header}>
               <BackButton onClick={() => router.back()} />
-              <h1 className={styles.pageTitle}>📷 Capture Your Challenge Photo</h1>
+              <h1 className={styles.pageTitle}>Capture Your Challenge Photo</h1>
             </header>
 
             {challenge && (
