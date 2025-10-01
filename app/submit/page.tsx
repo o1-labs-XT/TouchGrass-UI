@@ -1,19 +1,35 @@
 'use client';
 import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import { getCurrentChallenge } from '../lib/backendClient';
+import type { Challenge } from '../lib/backendClient';
 import CameraCapture from '../components/CameraCapture';
 import Button from '../components/Button';
-import BackToHomeButton from '../components/BackToHomeButton';
+import Card from '../components/Card';
 import StatusMessage from '../components/StatusMessage';
 import ErrorMessage from '../components/ErrorMessage';
-import GradientBG from '../components/GradientBG';
 import styles from './submit.module.css';
 
 export default function SubmitPage() {
+  const router = useRouter();
+  const [challenge, setChallenge] = useState<Challenge | null>(null);
   const [imageBlob, setImageBlob] = useState<Blob | null>(null);
   const [imageUrl, setImageUrl] = useState<string | null>(null);
   const [isProcessing, setIsProcessing] = useState(false);
   const [status, setStatus] = useState<string>('');
   const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    async function fetchChallenge() {
+      try {
+        const challengeData = await getCurrentChallenge();
+        setChallenge(challengeData);
+      } catch (err) {
+        console.error('Failed to load challenge:', err);
+      }
+    }
+    fetchChallenge();
+  }, []);
 
   useEffect(() => {
     if (imageBlob) {
