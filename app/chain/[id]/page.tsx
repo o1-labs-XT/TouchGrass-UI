@@ -86,7 +86,12 @@ export default function ChainDetailPage({ params }: { params: Promise<{ id: stri
             {submissions.map((submission) => (
               <Card key={submission.id}>
                 <div className={styles.position}>#{submission.chainPosition}</div>
-                <p>{submission.tagline || 'No caption'}</p>
+                <img
+                  src={submission.imageUrl}
+                  alt={submission.tagline || `Position ${submission.chainPosition}`}
+                  className={styles.image}
+                />
+                {submission.tagline && <p>{submission.tagline}</p>}
               </Card>
             ))}
           </div>
