@@ -7,6 +7,7 @@ const __dirname = path.dirname(__filename);
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: false,
+  // TODO: Remove these image domains in production - only needed for mock API
   images: {
     remotePatterns: [
       {
