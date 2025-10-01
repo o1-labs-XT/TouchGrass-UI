@@ -58,13 +58,14 @@ export default function ChainDetailPage({ params }: { params: Promise<{ id: stri
   }
 
   return (
-    <div>
-      <div>
-        <Button variant="secondary" onClick={() => router.back()}>
-          ← Back
-        </Button>
-        <h1>{chain?.name}</h1>
-      </div>
+    <div className={styles.container}>
+      <div className={styles.wrapper}>
+        <div className={styles.header}>
+          <Button variant="secondary" onClick={() => router.back()}>
+            ← Back
+          </Button>
+          <h1>{chain?.name}</h1>
+        </div>
 
       {chain && (
         <div>
@@ -89,6 +90,7 @@ export default function ChainDetailPage({ params }: { params: Promise<{ id: stri
             ))}
           </div>
         )}
+      </div>
       </div>
     </div>
   );
