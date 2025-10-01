@@ -3,10 +3,11 @@
  * Handles communication with the TouchGrass backend API
  */
 
-const BACKEND_URL =
-  process.env.NEXT_PUBLIC_BACKEND_URL ||
-  "https://authenticity-api-staging.up.railway.app/api";
-console.log("Backend URL:", BACKEND_URL);
+const USE_MOCK_API = process.env.NEXT_PUBLIC_USE_MOCK_API === 'true';
+const BACKEND_URL = USE_MOCK_API
+  ? '/api/mock'
+  : (process.env.NEXT_PUBLIC_BACKEND_URL || "https://authenticity-api-staging.up.railway.app/api");
+console.log("Backend URL:", BACKEND_URL, "Mock mode:", USE_MOCK_API);
 
 export interface UploadResponse {
   tokenOwnerAddress: string;
@@ -36,6 +37,8 @@ export interface Challenge {
   endTime: string;
   participantCount: number;
   chainCount: number;
+  createdAt?: string;
+  updatedAt?: string;
 }
 
 export interface Chain {
@@ -45,17 +48,21 @@ export interface Chain {
   length: number;
   createdAt: string;
   lastActivityAt: string;
+  updatedAt?: string;
 }
 
 export interface Submission {
   id: string;
+  sha256Hash?: string;
   tokenOwnerAddress: string;
+  userWalletAddress?: string;
   challengeId: string;
   chainId: string;
   imageUrl: string;
   tagline?: string;
   chainPosition: number;
-  status: "uploading" | "proving" | "publishing" | "verified" | "failed";
+  status: string;
+  transactionId?: string;
   createdAt: string;
 }
 
