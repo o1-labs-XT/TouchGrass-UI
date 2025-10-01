@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { getChain, getSubmissionsByChain } from '../../lib/backendClient';
 import type { Chain, Submission } from '../../lib/backendClient';
 import Button from '../../components/Button';
+import BackButton from '../../components/BackButton';
 import Card from '../../components/Card';
 import StatBox from '../../components/StatBox';
 import styles from './ChainDetail.module.css';
@@ -63,9 +64,7 @@ export default function ChainDetailPage({ params }: { params: Promise<{ id: stri
     <div className={styles.container}>
       <div className={styles.wrapper}>
         <div className={styles.header}>
-          <button onClick={() => router.push(`/challenge/${chain?.challengeId}`)} className={styles.backButton}>
-            ← Back
-          </button>
+          <BackButton onClick={() => router.push(`/challenge/${chain?.challengeId}`)} />
           <h1 className={styles.pageTitle}>{chain?.name}</h1>
         </div>
 
