@@ -9,6 +9,59 @@
   margin: 0 auto;
 }
 
+.header {
+  margin-bottom: 1rem;
+  padding: 0 0.5rem;
+}
+
+.pageTitle {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--mina-black);
+  margin-top: 0.5rem;
+}
+
+.challengeCard {
+  margin-bottom: 1rem;
+}
+
+.challengeTitle {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--mina-black);
+  margin-bottom: 0.75rem;
+}
+
+.challengeDescription {
+  font-size: 1rem;
+  color: var(--color-text-muted);
+  line-height: 1.5;
+}
+
+.cameraCard {
+  margin-bottom: 2rem;
+}
+
+.cameraIcon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.cameraTitle {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--mina-black);
+  margin-bottom: 0.75rem;
+}
+
+.cameraDescription {
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
+  line-height: 1.5;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
 .title {
   font-family: var(--font-ibm-plex);
   font-size: 2rem;
