@@ -1,0 +1,16 @@
+.backButton {
+  background: none;
+  border: none;
+  color: var(--mina-black);
+  font-size: 0.875rem;
+  padding: 0.5rem 0;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-family: var(--font-ibm-plex);
+}
+
+.backButton:hover {
+  text-decoration: underline;
+}
