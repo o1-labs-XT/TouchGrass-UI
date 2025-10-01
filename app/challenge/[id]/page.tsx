@@ -83,7 +83,7 @@ export default function ChallengePage() {
               <div className={styles.buttonGroup}>
                 {chain && (
                   <Button
-                    variant="secondary"
+                    variant="primary"
                     onClick={() => router.push(`/chain/${chain.id}`)}
                   >
                     View Chain
