@@ -10,11 +10,12 @@ import { mockSubmissions, simulateApiDelay } from '../../../../lib/mockData';
  */
 export async function GET(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
+  const { id } = await params;
   await simulateApiDelay();
 
-  const submission = mockSubmissions.find(sub => sub.id === params.id);
+  const submission = mockSubmissions.find(sub => sub.id === id);
 
   if (!submission) {
     return NextResponse.json(

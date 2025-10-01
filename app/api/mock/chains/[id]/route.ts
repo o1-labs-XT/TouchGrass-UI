@@ -3,12 +3,14 @@ import { mockChain } from '../../../../lib/mockData';
 
 export async function GET(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
+  const { id } = await params;
+
   // Simulate API delay
   await new Promise(resolve => setTimeout(resolve, 200));
 
-  if (params.id === '1') {
+  if (id === '1') {
     return NextResponse.json(mockChain);
   }
 
