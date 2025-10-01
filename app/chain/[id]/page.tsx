@@ -43,12 +43,12 @@ export default function ChainDetailPage({ params }: { params: Promise<{ id: stri
   }, [chainId]);
 
   if (loading) {
-    return <div><p>Loading chain...</p></div>;
+    return <div className={styles.loading}><p>Loading chain...</p></div>;
   }
 
   if (error) {
     return (
-      <div>
+      <div className={styles.error}>
         <p>Error: {error}</p>
         <Button variant="primary" onClick={() => window.location.reload()}>
           Try Again
