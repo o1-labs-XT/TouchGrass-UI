@@ -6,6 +6,7 @@ import { getChain, getSubmissionsByChain } from '../../lib/backendClient';
 import type { Chain, Submission } from '../../lib/backendClient';
 import Button from '../../components/Button';
 import Card from '../../components/Card';
+import StatBox from '../../components/StatBox';
 import styles from './ChainDetail.module.css';
 
 export default function ChainDetailPage({ params }: { params: Promise<{ id: string }> }) {
@@ -65,12 +66,15 @@ export default function ChainDetailPage({ params }: { params: Promise<{ id: stri
           <Button variant="secondary" onClick={() => router.back()}>
             ← Back
           </Button>
-          <h1>{chain?.name}</h1>
+          <h1 className={styles.pageTitle}>{chain?.name}</h1>
         </div>
 
       {chain && (
-        <Card>
-          <p>{chain.length} images in chain</p>
+        <Card centered>
+          <div className={styles.statsGrid}>
+            <StatBox value={chain.length} label="Images" />
+            <StatBox value={submissions.length} label="Submissions" />
+          </div>
           <Button variant="primary" onClick={() => router.push('/submit')}>
             Extend This Chain
           </Button>
