@@ -101,9 +101,9 @@ export default function SubmitPage() {
       setStatus('Success! Your image has been submitted.');
       console.log('Upload result:', result);
 
-      // Redirect to home after success
+      // Redirect to chain detail page after success
       setTimeout(() => {
-        router.push('/');
+        router.push('/chain/1');
       }, 2000);
     } catch (err) {
       console.error('Submission failed:', err);
