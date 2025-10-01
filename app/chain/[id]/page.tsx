@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { getChain, getSubmissionsByChain } from '../../lib/backendClient';
 import type { Chain, Submission } from '../../lib/backendClient';
 import Button from '../../components/Button';
+import styles from './ChainDetail.module.css';
 
 export default function ChainDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const router = useRouter();
