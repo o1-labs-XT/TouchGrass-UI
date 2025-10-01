@@ -14,6 +14,22 @@
   padding: 0 0.5rem;
 }
 
+.backButton {
+  background: none;
+  border: none;
+  color: var(--mina-black);
+  font-size: 0.875rem;
+  padding: 0.5rem 0;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.backButton:hover {
+  text-decoration: underline;
+}
+
 .pageTitle {
   font-size: 1.25rem;
   font-weight: 600;
