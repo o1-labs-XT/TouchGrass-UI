@@ -77,17 +77,17 @@ export default function ChainDetailPage({ params }: { params: Promise<{ id: stri
         </Card>
       )}
 
-      <div>
+      <div className={styles.submissions}>
         <h2>Chain Images ({submissions.length})</h2>
         {submissions.length === 0 ? (
           <p>No submissions yet</p>
         ) : (
-          <div>
+          <div className={styles.grid}>
             {submissions.map((submission) => (
-              <div key={submission.id}>
-                <p>#{submission.chainPosition}</p>
+              <Card key={submission.id}>
+                <div className={styles.position}>#{submission.chainPosition}</div>
                 <p>{submission.tagline || 'No caption'}</p>
-              </div>
+              </Card>
             ))}
           </div>
         )}
