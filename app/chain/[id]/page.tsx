@@ -63,9 +63,9 @@ export default function ChainDetailPage({ params }: { params: Promise<{ id: stri
     <div className={styles.container}>
       <div className={styles.wrapper}>
         <div className={styles.header}>
-          <Button variant="secondary" onClick={() => router.back()}>
+          <button onClick={() => router.back()} className={styles.backButton}>
             ← Back
-          </Button>
+          </button>
           <h1 className={styles.pageTitle}>{chain?.name}</h1>
         </div>
 
