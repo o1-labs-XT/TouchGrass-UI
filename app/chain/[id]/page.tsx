@@ -90,6 +90,7 @@ export default function ChainDetailPage({ params }: { params: Promise<{ id: stri
                   src={submission.imageUrl}
                   alt={submission.tagline || `Position ${submission.chainPosition}`}
                   className={styles.image}
+                  crossOrigin="anonymous"
                 />
                 {submission.tagline && <p>{submission.tagline}</p>}
               </Card>
