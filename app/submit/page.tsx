@@ -140,13 +140,32 @@ export default function SubmitPage() {
           </div>
         </div>
       ) : (
-        <GradientBG>
-          <div className={styles.cameraContainer}>
-            <h1 className={styles.title}>Submit Photo</h1>
-            <CameraCapture onCapture={handleCapture} />
-            <BackToHomeButton />
+        <main className={styles.container}>
+          <div className={styles.wrapper}>
+            <header className={styles.header}>
+              <button onClick={() => router.back()} className={styles.backButton}>
+                ← Back
+              </button>
+              <h1 className={styles.pageTitle}>📷 Capture Your Challenge Photo</h1>
+            </header>
+
+            {challenge && (
+              <Card className={styles.challengeCard}>
+                <h2 className={styles.challengeTitle}>{challenge.title}</h2>
+                <p className={styles.challengeDescription}>{challenge.description}</p>
+              </Card>
+            )}
+
+            <Card centered className={styles.cameraCard}>
+              <div className={styles.cameraIcon}>📷</div>
+              <h2 className={styles.cameraTitle}>Take Your Photo</h2>
+              <p className={styles.cameraDescription}>
+                Use your device's camera to capture an authentic photo for this challenge
+              </p>
+              <CameraCapture onCapture={handleCapture} />
+            </Card>
           </div>
-        </GradientBG>
+        </main>
       )}
     </>
   );
