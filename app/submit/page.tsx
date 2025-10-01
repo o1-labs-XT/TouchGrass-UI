@@ -5,6 +5,7 @@ import { getCurrentChallenge } from '../lib/backendClient';
 import type { Challenge } from '../lib/backendClient';
 import CameraCapture from '../components/CameraCapture';
 import Button from '../components/Button';
+import BackButton from '../components/BackButton';
 import Card from '../components/Card';
 import StatusMessage from '../components/StatusMessage';
 import ErrorMessage from '../components/ErrorMessage';
@@ -143,9 +144,7 @@ export default function SubmitPage() {
         <main className={styles.container}>
           <div className={styles.wrapper}>
             <header className={styles.header}>
-              <button onClick={() => router.back()} className={styles.backButton}>
-                ← Back
-              </button>
+              <BackButton onClick={() => router.back()} />
               <h1 className={styles.pageTitle}>📷 Capture Your Challenge Photo</h1>
             </header>
 
