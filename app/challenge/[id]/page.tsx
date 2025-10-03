@@ -92,7 +92,7 @@ export default function ChallengePage() {
 
                 <Button
                   variant="primary"
-                  onClick={() => router.push('/submit')}
+                  onClick={() => router.push(`/submit?chainId=${chain?.id || '1'}`)}
                 >
                   Join
                 </Button>
