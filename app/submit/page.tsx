@@ -86,9 +86,12 @@ export default function SubmitPage() {
       formData.append('image', imageBlob);
       formData.append('publicKey', keypair.publicKeyBase58);
       formData.append('signature', signature.signatureBase58);
-      
-      // TODO: Replace with real backend endpoint when ready
-      const response = await fetch('/api/submissions', {
+
+      // Use mock API if enabled, otherwise use real backend
+      const useMockApi = process.env.NEXT_PUBLIC_USE_MOCK_API === 'true';
+      const apiEndpoint = useMockApi ? '/api/mock/submissions' : '/api/submissions';
+
+      const response = await fetch(apiEndpoint, {
         method: 'POST',
         body: formData
       });
