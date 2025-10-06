@@ -92,7 +92,7 @@ export default function SubmitPage() {
       setStatus('Submitting image...');
       const formData = new FormData();
       formData.append('image', imageBlob);
-      formData.append('publicKey', keypair.publicKeyBase58);
+      formData.append('walletAddress', keypair.publicKeyBase58);
       formData.append('signature', signature.signatureBase58);
       formData.append('chainId', chainId);
 
