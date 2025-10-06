@@ -70,6 +70,10 @@ export interface Submission {
   updatedAt: string;
 }
 
+export function getImageUrl(submissionId: string): string {
+  return `${BACKEND_URL}/submissions/${submissionId}/image`;
+}
+
 /**
  * Upload an image with signature for authentication
  */
