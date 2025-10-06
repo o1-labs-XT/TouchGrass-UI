@@ -14,6 +14,7 @@ import styles from './submit.module.css';
 export default function SubmitPage() {
   const router = useRouter();
   const [challenge, setChallenge] = useState<Challenge | null>(null);
+  const [chainId, setChainId] = useState<string>('1');
   const [imageBlob, setImageBlob] = useState<Blob | null>(null);
   const [imageUrl, setImageUrl] = useState<string | null>(null);
   const [isProcessing, setIsProcessing] = useState(false);
@@ -21,6 +22,13 @@ export default function SubmitPage() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    // Get chainId from URL params
+    const params = new URLSearchParams(window.location.search);
+    const chainIdParam = params.get('chainId');
+    if (chainIdParam) {
+      setChainId(chainIdParam);
+    }
+
     async function fetchChallenge() {
       try {
         const challengeData = await getCurrentChallenge();
@@ -86,9 +94,13 @@ export default function SubmitPage() {
       formData.append('image', imageBlob);
       formData.append('publicKey', keypair.publicKeyBase58);
       formData.append('signature', signature.signatureBase58);
-      
-      // TODO: Replace with real backend endpoint when ready
-      const response = await fetch('/api/submissions', {
+      formData.append('chainId', chainId);
+
+      // Use mock API if enabled, otherwise use real backend
+      const useMockApi = process.env.NEXT_PUBLIC_USE_MOCK_API === 'true';
+      const apiEndpoint = useMockApi ? '/api/mock/submissions' : '/api/submissions';
+
+      const response = await fetch(apiEndpoint, {
         method: 'POST',
         body: formData
       });
@@ -103,7 +115,7 @@ export default function SubmitPage() {
 
       // Redirect to chain detail page after success
       setTimeout(() => {
-        router.push('/chain/1');
+        router.push(`/chain/${chainId}`);
       }, 2000);
     } catch (err) {
       console.error('Submission failed:', err);
