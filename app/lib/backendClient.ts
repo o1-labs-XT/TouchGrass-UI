@@ -53,17 +53,21 @@ export interface Chain {
 
 export interface Submission {
   id: string;
-  sha256Hash?: string;
-  tokenOwnerAddress: string;
-  userWalletAddress?: string;
+  sha256Hash: string;
+  walletAddress: string;
+  signature: string;
   challengeId: string;
   chainId: string;
-  imageUrl: string;
+  storageKey: string;
   tagline?: string;
   chainPosition: number;
-  status: string;
+  status: "uploading" | "uploaded" | "proving" | "publishing" | "verified" | "failed";
   transactionId?: string;
+  failureReason?: string;
+  retryCount: number;
+  challengeVerified: boolean;
   createdAt: string;
+  updatedAt: string;
 }
 
 /**
