@@ -45,12 +45,33 @@ NEXT_PUBLIC_MINA_NETWORK=devnet
 
 ## Development
 
-Run development server:
+### Mock Mode (Default)
+
+Run development server with mock data:
 ```bash
 npm run dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000)
+
+### With Local Backend
+
+If you have the backend running locally on port 4000:
+
+1. Update `.env.local`:
+```env
+NEXT_PUBLIC_USE_MOCK_API=false
+NEXT_PUBLIC_BACKEND_URL=http://localhost:4000/api
+```
+
+2. Start frontend:
+```bash
+npm run dev
+```
+
+3. Verify backend connection at [http://localhost:3000](http://localhost:3000)
+
+**Note:** Ensure `NEXT_PUBLIC_ZKAPP_ADDRESS` matches the backend's `ZKAPP_ADDRESS`
 
 ## Build
 
