@@ -61,7 +61,7 @@ export interface Submission {
   storageKey: string;
   tagline?: string;
   chainPosition: number;
-  status: "uploading" | "uploaded" | "proving" | "publishing" | "verified" | "failed";
+  status: "awaiting_review" | "rejected" | "processing" | "complete";
   transactionId?: string;
   failureReason?: string;
   retryCount: number;
