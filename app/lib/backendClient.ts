@@ -190,15 +190,19 @@ export async function checkBackendHealth(): Promise<boolean> {
  * Get current challenge
  */
 export async function getCurrentChallenge(): Promise<Challenge> {
-  const response = await fetch(`${BACKEND_URL}/challenges/current`);
+  const response = await fetch(`${BACKEND_URL}/challenges/active`);
 
   if (!response.ok) {
-    throw new Error(
-      `Failed to fetch current challenge: ${response.statusText}`
-    );
+    throw new Error(`Failed to fetch active challenges: ${response.statusText}`);
   }
 
-  return response.json();
+  const challenges = await response.json();
+
+  if (!challenges || challenges.length === 0) {
+    throw new Error('No active challenges found');
+  }
+
+  return challenges[0];
 }
 
 /**
