@@ -222,6 +222,19 @@ export async function getChain(chainId: string): Promise<Chain> {
 }
 
 /**
+ * Get chains for a specific challenge
+ */
+export async function getChainsByChallenge(challengeId: string): Promise<Chain[]> {
+  const response = await fetch(`${BACKEND_URL}/chains?challengeId=${challengeId}`);
+
+  if (!response.ok) {
+    throw new Error(`Failed to fetch chains: ${response.statusText}`);
+  }
+
+  return response.json();
+}
+
+/**
  * Get all submissions
  */
 export async function getSubmissions(): Promise<Submission[]> {
