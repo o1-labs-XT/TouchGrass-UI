@@ -1,7 +1,7 @@
 'use client';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { getCurrentChallenge, getChainsByChallenge } from '../lib/backendClient';
+import { getCurrentChallenge, getChainsByChallenge, BACKEND_URL } from '../lib/backendClient';
 import type { Challenge } from '../lib/backendClient';
 import CameraCapture from '../components/CameraCapture';
 import Button from '../components/Button';
@@ -108,11 +108,7 @@ export default function SubmitPage() {
       formData.append('signature', signature.signatureBase58);
       formData.append('chainId', chainId);
 
-      // Use mock API if enabled, otherwise use real backend
-      const useMockApi = process.env.NEXT_PUBLIC_USE_MOCK_API === 'true';
-      const apiEndpoint = useMockApi ? '/api/mock/submissions' : '/api/submissions';
-
-      const response = await fetch(apiEndpoint, {
+      const response = await fetch(`${BACKEND_URL}/submissions`, {
         method: 'POST',
         body: formData
       });

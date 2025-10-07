@@ -4,7 +4,7 @@
  */
 
 const USE_MOCK_API = process.env.NEXT_PUBLIC_USE_MOCK_API === 'true';
-const BACKEND_URL = USE_MOCK_API
+export const BACKEND_URL = USE_MOCK_API
   ? '/api/mock'
   : (process.env.NEXT_PUBLIC_BACKEND_URL || "https://authenticity-api-staging.up.railway.app/api");
 console.log("Backend URL:", BACKEND_URL, "Mock mode:", USE_MOCK_API);
