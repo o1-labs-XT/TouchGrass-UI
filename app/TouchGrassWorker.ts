@@ -67,7 +67,7 @@ export const api = {
     console.log("Generating ECDSA keypair...");
 
     try {
-      const keyPair = await generateECKeypairWeb();
+      const keyPair = await generateECKeypairCrossPlatform();
 
       console.log("ECDSA keypair generated successfully");
       return {
