@@ -121,14 +121,14 @@ export const api = {
     try {
       // Import Bytes to create Bytes32
       const { Bytes } = await import("o1js");
-      class Bytes32Local extends Bytes(32) {}
+      class Bytes32 extends Bytes(32) {}
 
       const privateKey = PrivateKey.fromBase58(privateKeyBase58);
       const publicKey = privateKey.toPublicKey();
 
       // Convert SHA256 hex string to Bytes32 representation
       // This matches what the backend expects for signature validation
-      const commitment = Bytes32Local.fromHex(sha256Hex);
+      const commitment = Bytes32.fromHex(sha256Hex);
 
       // The backend's verifySignature expects this format
       const signature = Signature.create(privateKey, commitment.toFields());
@@ -152,6 +152,10 @@ export const api = {
     console.log("Signing with ECDSA...");
 
     try {
+      // Import Bytes to create Bytes32
+      const { Bytes } = await import("o1js");
+      class Bytes32 extends Bytes(32) {}
+
       // Convert sha256 hex to Bytes32
       const hashBytes = Bytes32.fromHex(sha256Hex);
 
