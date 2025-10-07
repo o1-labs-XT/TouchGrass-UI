@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { getCurrentChallenge, getChain } from '../../lib/backendClient';
+import { getCurrentChallenge, getChainsByChallenge } from '../../lib/backendClient';
 import type { Challenge, Chain } from '../../lib/backendClient';
 import Button from '../../components/Button';
 import Card from '../../components/Card';
@@ -25,12 +25,14 @@ export default function ChallengePage() {
         const challengeData = await getCurrentChallenge();
         setChallenge(challengeData);
 
-        // Try to get default chain, don't fail if it doesn't exist
+        // Try to get chains for this challenge
         try {
-          const chainData = await getChain('1');
-          setChain(chainData);
+          const chains = await getChainsByChallenge(challengeData.id);
+          if (chains.length > 0) {
+            setChain(chains[0]);
+          }
         } catch {
-          console.log('Chain not found - will be created on first submission');
+          console.log('No chains found - will be created on first submission');
         }
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Failed to load challenge');

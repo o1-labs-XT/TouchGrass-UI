@@ -1,7 +1,7 @@
 'use client';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { getCurrentChallenge } from '../lib/backendClient';
+import { getCurrentChallenge, getChainsByChallenge, BACKEND_URL } from '../lib/backendClient';
 import type { Challenge } from '../lib/backendClient';
 import CameraCapture from '../components/CameraCapture';
 import Button from '../components/Button';
@@ -14,7 +14,7 @@ import styles from './submit.module.css';
 export default function SubmitPage() {
   const router = useRouter();
   const [challenge, setChallenge] = useState<Challenge | null>(null);
-  const [chainId, setChainId] = useState<string>('1');
+  const [chainId, setChainId] = useState<string | null>(null);
   const [imageBlob, setImageBlob] = useState<Blob | null>(null);
   const [imageUrl, setImageUrl] = useState<string | null>(null);
   const [isProcessing, setIsProcessing] = useState(false);
@@ -29,15 +29,23 @@ export default function SubmitPage() {
       setChainId(chainIdParam);
     }
 
-    async function fetchChallenge() {
+    async function fetchChallengeAndChain() {
       try {
         const challengeData = await getCurrentChallenge();
         setChallenge(challengeData);
+
+        // If no chainId from URL, fetch the default chain for this challenge
+        if (!chainIdParam && challengeData) {
+          const chains = await getChainsByChallenge(challengeData.id);
+          if (chains.length > 0) {
+            setChainId(chains[0].id);
+          }
+        }
       } catch (err) {
         console.error('Failed to load challenge:', err);
       }
     }
-    fetchChallenge();
+    fetchChallengeAndChain();
   }, []);
 
   useEffect(() => {
@@ -62,45 +70,45 @@ export default function SubmitPage() {
 
   const handleSubmit = async () => {
     if (!imageBlob) return;
-    
+    if (!chainId) {
+      setError('Chain ID not available. Please try refreshing the page.');
+      return;
+    }
+
     setIsProcessing(true);
     setError(null);
-    
+
     try {
       setStatus('Preparing submission...');
       const TouchGrassWorkerClient = (await import('../TouchGrassWorkerClient')).default;
       const worker = new TouchGrassWorkerClient();
-      
+
       setStatus('Generating keypair...');
       const keypair = await worker.generateKeypair();
-      
+
       // Convert blob to buffer for processing
       const arrayBuffer = await imageBlob.arrayBuffer();
       const imageBuffer = new Uint8Array(arrayBuffer);
-      
+
       setStatus('Computing image hash...');
       const commitment = await worker.computeOnChainCommitmentWeb(imageBuffer);
       console.log('Image hash:', commitment.sha256Hash);
-      
+
       setStatus('Creating signature...');
       const signature = await worker.signSHA256Hash(
         keypair.privateKeyBase58,
         commitment.sha256Hash
       );
-      
+
       // Create FormData for upload
       setStatus('Submitting image...');
       const formData = new FormData();
       formData.append('image', imageBlob);
-      formData.append('publicKey', keypair.publicKeyBase58);
+      formData.append('walletAddress', keypair.publicKeyBase58);
       formData.append('signature', signature.signatureBase58);
       formData.append('chainId', chainId);
 
-      // Use mock API if enabled, otherwise use real backend
-      const useMockApi = process.env.NEXT_PUBLIC_USE_MOCK_API === 'true';
-      const apiEndpoint = useMockApi ? '/api/mock/submissions' : '/api/submissions';
-
-      const response = await fetch(apiEndpoint, {
+      const response = await fetch(`${BACKEND_URL}/submissions`, {
         method: 'POST',
         body: formData
       });

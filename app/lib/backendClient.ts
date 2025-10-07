@@ -4,7 +4,7 @@
  */
 
 const USE_MOCK_API = process.env.NEXT_PUBLIC_USE_MOCK_API === 'true';
-const BACKEND_URL = USE_MOCK_API
+export const BACKEND_URL = USE_MOCK_API
   ? '/api/mock'
   : (process.env.NEXT_PUBLIC_BACKEND_URL || "https://authenticity-api-staging.up.railway.app/api");
 console.log("Backend URL:", BACKEND_URL, "Mock mode:", USE_MOCK_API);
@@ -53,17 +53,25 @@ export interface Chain {
 
 export interface Submission {
   id: string;
-  sha256Hash?: string;
-  tokenOwnerAddress: string;
-  userWalletAddress?: string;
+  sha256Hash: string;
+  walletAddress: string;
+  signature: string;
   challengeId: string;
   chainId: string;
-  imageUrl: string;
+  storageKey: string;
   tagline?: string;
   chainPosition: number;
-  status: string;
+  status: "awaiting_review" | "rejected" | "processing" | "complete";
   transactionId?: string;
+  failureReason?: string;
+  retryCount: number;
+  challengeVerified: boolean;
   createdAt: string;
+  updatedAt: string;
+}
+
+export function getImageUrl(submissionId: string): string {
+  return `${BACKEND_URL}/submissions/${submissionId}/image`;
 }
 
 /**
@@ -182,15 +190,19 @@ export async function checkBackendHealth(): Promise<boolean> {
  * Get current challenge
  */
 export async function getCurrentChallenge(): Promise<Challenge> {
-  const response = await fetch(`${BACKEND_URL}/challenges/current`);
+  const response = await fetch(`${BACKEND_URL}/challenges/active`);
 
   if (!response.ok) {
-    throw new Error(
-      `Failed to fetch current challenge: ${response.statusText}`
-    );
+    throw new Error(`Failed to fetch active challenges: ${response.statusText}`);
   }
 
-  return response.json();
+  const challenges = await response.json();
+
+  if (!challenges || challenges.length === 0) {
+    throw new Error('No active challenges found');
+  }
+
+  return challenges[0];
 }
 
 /**
@@ -204,6 +216,19 @@ export async function getChain(chainId: string): Promise<Chain> {
       throw new Error("Chain not found");
     }
     throw new Error(`Failed to fetch chain: ${response.statusText}`);
+  }
+
+  return response.json();
+}
+
+/**
+ * Get chains for a specific challenge
+ */
+export async function getChainsByChallenge(challengeId: string): Promise<Chain[]> {
+  const response = await fetch(`${BACKEND_URL}/chains?challengeId=${challengeId}`);
+
+  if (!response.ok) {
+    throw new Error(`Failed to fetch chains: ${response.statusText}`);
   }
 
   return response.json();

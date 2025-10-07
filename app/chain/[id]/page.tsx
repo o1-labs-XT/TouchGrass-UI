@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { getChain, getSubmissionsByChain } from '../../lib/backendClient';
+import { getChain, getSubmissionsByChain, getImageUrl } from '../../lib/backendClient';
 import type { Chain, Submission } from '../../lib/backendClient';
 import Button from '../../components/Button';
 import BackButton from '../../components/BackButton';
@@ -90,7 +90,7 @@ export default function ChainDetailPage({ params }: { params: Promise<{ id: stri
               <Card key={submission.id}>
                 <div className={styles.position}>#{submission.chainPosition}</div>
                 <img
-                  src={submission.imageUrl}
+                  src={getImageUrl(submission.id)}
                   alt={submission.tagline || `Position ${submission.chainPosition}`}
                   className={styles.image}
                   crossOrigin="anonymous"
