@@ -6,18 +6,20 @@ import {
   Field,
   fetchAccount
 } from "o1js";
-import { computeOnChainCommitmentCrossPlatform } from "authenticity-zkapp/browser";
+import { computeOnChainCommitmentCrossPlatform, generateECKeypairCrossPlatform } from "authenticity-zkapp/browser";
+import { Secp256r1, Ecdsa, Bytes32 } from "authenticity-zkapp";
 import * as Comlink from "comlink";
 
 export const api = {
   /**
    * Computes the on-chain commitment using the official zkapp implementation
-   * Returns both SHA256 hash (for API calls) and Poseidon commitment (for on-chain verification)
-   * Adapted from authenticity-zkapp v0.1.3 computeOnChainCommitmentCrossPlatform
+   * Returns SHA256 hash (for signing) and Field representation (for on-chain storage)
+   * Uses authenticity-zkapp v0.1.5 computeOnChainCommitmentCrossPlatform
    */
   async computeOnChainCommitmentWeb(imageBuffer: Uint8Array): Promise<{
     sha256Hash: string;
-    poseidonCommitmentString: string;
+    high128String: string;
+    low128String: string;
   }> {
     console.log("Computing commitment using authenticity-zkapp...");
 
@@ -27,7 +29,8 @@ export const api = {
       console.log("Commitment computed successfully");
       return {
         sha256Hash: result.sha256,
-        poseidonCommitmentString: result.poseidon.toString()
+        high128String: result.high128.toString(),
+        low128String: result.low128.toString()
       };
     } catch (error) {
       console.error("Failed to compute commitment:", error);
@@ -36,7 +39,7 @@ export const api = {
   },
 
   /**
-   * Generate a random keypair for browser-based signing
+   * Generate a random Mina keypair for browser-based signing
    */
   generateKeypair: async () => {
     console.log("Generating random keypair...");
@@ -57,7 +60,32 @@ export const api = {
   },
 
   /**
-   * Sign an image commitment with a private key
+   * Generate a random ECDSA keypair for browser-based signing
+   * Uses P-256 curve (same as prime256v1 in Node.js)
+   */
+  generateECKeypair: async () => {
+    console.log("Generating ECDSA keypair...");
+
+    try {
+      const keyPair = await generateECKeypairCrossPlatform();
+
+      console.log("ECDSA keypair generated successfully");
+      return {
+        privateKeyHex: keyPair.privateKeyHex,
+        publicKeyXHex: keyPair.publicKeyXHex,
+        publicKeyYHex: keyPair.publicKeyYHex,
+        privateKeyBigInt: keyPair.privateKeyBigInt.toString(), // Serialize for Comlink
+        publicKeyXBigInt: keyPair.publicKeyXBigInt.toString(),
+        publicKeyYBigInt: keyPair.publicKeyYBigInt.toString(),
+      };
+    } catch (error) {
+      console.error("Failed to generate ECDSA keypair:", error);
+      throw error;
+    }
+  },
+
+  /**
+   * Sign an image commitment with a Mina private key
    */
   signCommitment: async (
     privateKeyBase58: string,
@@ -85,7 +113,7 @@ export const api = {
   },
 
   /**
-   * Sign a SHA256 hash with a private key (for backend compatibility)
+   * Sign a SHA256 hash with a Mina private key (for backend compatibility)
    */
   signSHA256Hash: async (privateKeyBase58: string, sha256Hex: string) => {
     console.log("Signing SHA256 hash...");
@@ -112,6 +140,46 @@ export const api = {
       };
     } catch (error) {
       console.error("Failed to sign SHA256 hash:", error);
+      throw error;
+    }
+  },
+
+  /**
+   * Sign a SHA256 hash with ECDSA private key
+   * Matches the backend signature format (signatureR, signatureS)
+   */
+  signECDSA: async (privateKeyHex: string, sha256Hex: string) => {
+    console.log("Signing with ECDSA...");
+
+    try {
+      // Import Bytes to create Bytes32
+      const { Bytes } = await import("o1js");
+      class Bytes32 extends Bytes(32) {}
+
+      // Convert sha256 hex to Bytes32
+      const hashBytes = Bytes32.fromHex(sha256Hex);
+
+      // Convert private key hex to bigint
+      const privateKeyBigInt = BigInt('0x' + privateKeyHex);
+
+      // Create Secp256r1 scalar from private key
+      const creatorKey = Secp256r1.Scalar.from(privateKeyBigInt);
+
+      // Sign the hash using ECDSA
+      const signature = Ecdsa.signHash(hashBytes, creatorKey.toBigInt());
+
+      // Extract r and s components as hex strings (64 chars each)
+      const signatureData = signature.toBigInt();
+      const signatureR = signatureData.r.toString(16).padStart(64, '0');
+      const signatureS = signatureData.s.toString(16).padStart(64, '0');
+
+      console.log("ECDSA signature created successfully");
+      return {
+        signatureR,
+        signatureS
+      };
+    } catch (error) {
+      console.error("Failed to sign with ECDSA:", error);
       throw error;
     }
   },

@@ -16,7 +16,8 @@ export default class TouchGrassWorkerClient {
 
   async computeOnChainCommitmentWeb(imageBuffer: Uint8Array): Promise<{
     sha256Hash: string;
-    poseidonCommitmentString: string;
+    high128String: string;
+    low128String: string;
   }> {
     return this.remoteApi.computeOnChainCommitmentWeb(imageBuffer);
   }
@@ -26,6 +27,17 @@ export default class TouchGrassWorkerClient {
     publicKeyBase58: string;
   }> {
     return this.remoteApi.generateKeypair();
+  }
+
+  async generateECKeypair(): Promise<{
+    privateKeyHex: string;
+    publicKeyXHex: string;
+    publicKeyYHex: string;
+    privateKeyBigInt: string;
+    publicKeyXBigInt: string;
+    publicKeyYBigInt: string;
+  }> {
+    return this.remoteApi.generateECKeypair();
   }
 
   async signCommitment(privateKeyBase58: string, commitmentString: string): Promise<{
@@ -40,6 +52,13 @@ export default class TouchGrassWorkerClient {
     publicKeyBase58: string;
   }> {
     return this.remoteApi.signSHA256Hash(privateKeyBase58, sha256Hex);
+  }
+
+  async signECDSA(privateKeyHex: string, sha256Hex: string): Promise<{
+    signatureR: string;
+    signatureS: string;
+  }> {
+    return this.remoteApi.signECDSA(privateKeyHex, sha256Hex);
   }
 
   async readContractState(tokenOwnerAddress: string) {

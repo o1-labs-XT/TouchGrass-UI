@@ -83,8 +83,13 @@ export default function SubmitPage() {
       const TouchGrassWorkerClient = (await import('../TouchGrassWorkerClient')).default;
       const worker = new TouchGrassWorkerClient();
 
-      setStatus('Generating keypair...');
-      const keypair = await worker.generateKeypair();
+      // Generate Mina keypair for wallet address (user identity)
+      setStatus('Generating wallet address...');
+      const walletKeypair = await worker.generateKeypair();
+
+      // Generate ECDSA keypair for image signing
+      setStatus('Generating signing keypair...');
+      const ecKeypair = await worker.generateECKeypair();
 
       // Convert blob to buffer for processing
       const arrayBuffer = await imageBlob.arrayBuffer();
@@ -94,29 +99,32 @@ export default function SubmitPage() {
       const commitment = await worker.computeOnChainCommitmentWeb(imageBuffer);
       console.log('Image hash:', commitment.sha256Hash);
 
-      setStatus('Creating signature...');
-      const signature = await worker.signSHA256Hash(
-        keypair.privateKeyBase58,
+      setStatus('Creating ECDSA signature...');
+      const signature = await worker.signECDSA(
+        ecKeypair.privateKeyHex,
         commitment.sha256Hash
       );
 
-      // Create FormData for upload
+      // Create FormData for upload with ECDSA signature components
       setStatus('Submitting image...');
       const formData = new FormData();
       formData.append('image', imageBlob);
-      formData.append('walletAddress', keypair.publicKeyBase58);
-      formData.append('signature', signature.signatureBase58);
+      formData.append('walletAddress', walletKeypair.publicKeyBase58);
+      formData.append('signatureR', signature.signatureR);
+      formData.append('signatureS', signature.signatureS);
+      formData.append('publicKeyX', ecKeypair.publicKeyXHex);
+      formData.append('publicKeyY', ecKeypair.publicKeyYHex);
       formData.append('chainId', chainId);
 
       const response = await fetch(`${BACKEND_URL}/submissions`, {
         method: 'POST',
         body: formData
       });
-      
+
       if (!response.ok) {
         throw new Error('Upload failed');
       }
-      
+
       const result = await response.json();
       setStatus('Success! Your image has been submitted.');
       console.log('Upload result:', result);
