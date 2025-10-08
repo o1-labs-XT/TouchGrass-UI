@@ -13,13 +13,14 @@ export default function CameraCapture({ onCapture }: CameraCaptureProps) {
   const streamRef = useRef<MediaStream | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [isCameraActive, setIsCameraActive] = useState(false);
+  const [facingMode, setFacingMode] = useState<'user' | 'environment'>('environment');
 
   const startCamera = async () => {
     try {
       setError(null);
       const stream = await navigator.mediaDevices.getUserMedia({
         video: {
-          facingMode: 'environment',
+          facingMode: facingMode,
           width: { ideal: 1920 },
           height: { ideal: 1080 }
         }
