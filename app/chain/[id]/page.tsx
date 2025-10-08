@@ -8,6 +8,7 @@ import Button from '../../components/Button';
 import BackButton from '../../components/BackButton';
 import Card from '../../components/Card';
 import StatBox from '../../components/StatBox';
+import TransactionDisplay from '../../components/TransactionDisplay';
 import styles from './ChainDetail.module.css';
 
 export default function ChainDetailPage({ params }: { params: Promise<{ id: string }> }) {
@@ -95,7 +96,10 @@ export default function ChainDetailPage({ params }: { params: Promise<{ id: stri
                   className={styles.image}
                   crossOrigin="anonymous"
                 />
-                {submission.tagline && <p>{submission.tagline}</p>}
+                {submission.tagline && <p className={styles.tagline}>{submission.tagline}</p>}
+                <div className={styles.transactionStatus}>
+                  <TransactionDisplay submission={submission} compact />
+                </div>
               </Card>
             ))}
           </div>
