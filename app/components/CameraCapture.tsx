@@ -8,8 +8,11 @@ interface CameraCaptureProps {
 }
 
 export default function CameraCapture({ onCapture }: CameraCaptureProps) {
-  const fileInputRef = useRef<HTMLInputElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const streamRef = useRef<MediaStream | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [isCameraActive, setIsCameraActive] = useState(false);
   
   const handleFileCapture = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
