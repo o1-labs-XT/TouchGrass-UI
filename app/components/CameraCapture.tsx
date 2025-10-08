@@ -9,11 +9,11 @@ interface CameraCaptureProps {
 
 export default function CameraCapture({ onCapture }: CameraCaptureProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
-  const canvasRef = useRef<HTMLCanvasElement>(null);
   const streamRef = useRef<MediaStream | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [isCameraActive, setIsCameraActive] = useState(false);
   const [facingMode, setFacingMode] = useState<'user' | 'environment'>('environment');
+  const [isCapturing, setIsCapturing] = useState(false);
 
   const startCamera = async () => {
     try {
@@ -64,6 +64,39 @@ export default function CameraCapture({ onCapture }: CameraCaptureProps) {
     if (isCameraActive) {
       stopCamera();
       await startCamera();
+    }
+  };
+
+  const capturePhoto = async () => {
+    if (!streamRef.current) return;
+
+    setIsCapturing(true);
+    setError(null);
+
+    try {
+      const videoTrack = streamRef.current.getVideoTracks()[0];
+
+      if (!('ImageCapture' in window)) {
+        throw new Error('ImageCapture API not supported. Please use a modern browser.');
+      }
+
+      const imageCapture = new (window as any).ImageCapture(videoTrack);
+      const blob = await imageCapture.takePhoto();
+
+      // Check file size (max 10MB)
+      const maxSize = 10 * 1024 * 1024;
+      if (blob.size > maxSize) {
+        setError(`Image too large (${(blob.size / 1024 / 1024).toFixed(1)}MB). Maximum size is 10MB.`);
+        setIsCapturing(false);
+        return;
+      }
+
+      stopCamera();
+      onCapture(blob);
+    } catch (err) {
+      console.error('Failed to capture photo:', err);
+      setError(err instanceof Error ? err.message : 'Failed to capture photo. Please try again.');
+      setIsCapturing(false);
     }
   };
 
