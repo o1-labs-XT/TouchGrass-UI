@@ -8,17 +8,33 @@
   margin: 0 auto;
 }
 
+.videoContainer {
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #000;
+}
+
+.video {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
 .controls {
   display: flex;
   gap: 1rem;
   justify-content: center;
-  flex-wrap: wrap;
-  max-width: 280px;
+  flex-wrap: nowrap;
+  max-width: 500px;
   margin: 0 auto;
 }
 
 .controls button {
-  min-width: 200px;
+  flex: 1;
+  min-width: 150px;
 }
 
 .error {
