@@ -122,6 +122,23 @@ export default function CameraCapture({ onCapture }: CameraCaptureProps) {
     }
   };
 
+  const handleFileCapture = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      // Check file size (max 10MB)
+      const maxSize = 10 * 1024 * 1024;
+      if (file.size > maxSize) {
+        setError(`Image too large (${(file.size / 1024 / 1024).toFixed(1)}MB). Maximum size is 10MB.`);
+        if (fileInputRef.current) {
+          fileInputRef.current.value = '';
+        }
+        return;
+      }
+      setError(null);
+      onCapture(file);
+    }
+  };
+
   // Cleanup on unmount
   useEffect(() => {
     return () => {
