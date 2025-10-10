@@ -39,7 +39,6 @@ export default function CameraCapture({ onCapture }: CameraCaptureProps) {
 
   const startCamera = async () => {
     try {
-      console.log('startCamera called');
       setError(null);
       const stream = await navigator.mediaDevices.getUserMedia({
         video: {
@@ -48,16 +47,11 @@ export default function CameraCapture({ onCapture }: CameraCaptureProps) {
           height: { ideal: 1080 }
         }
       });
-      console.log('Stream obtained:', stream);
 
       if (videoRef.current) {
-        console.log('Setting video srcObject');
         videoRef.current.srcObject = stream;
         streamRef.current = stream;
         setIsCameraActive(true);
-        console.log('Camera active state set to true');
-      } else {
-        console.error('videoRef.current is null');
       }
     } catch (err) {
       console.error('Failed to access camera:', err);
