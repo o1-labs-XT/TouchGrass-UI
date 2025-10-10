@@ -27,13 +27,14 @@
   display: flex;
   gap: 1rem;
   justify-content: center;
-  flex-wrap: wrap;
-  max-width: 280px;
+  flex-wrap: nowrap;
+  max-width: 500px;
   margin: 0 auto;
 }
 
 .controls button {
-  min-width: 200px;
+  flex: 1;
+  min-width: 150px;
 }
 
 .error {
