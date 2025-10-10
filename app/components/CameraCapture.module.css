@@ -8,6 +8,21 @@
   margin: 0 auto;
 }
 
+.videoContainer {
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #000;
+}
+
+.video {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
 .controls {
   display: flex;
   gap: 1rem;
