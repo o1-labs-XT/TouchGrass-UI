@@ -25,10 +25,17 @@ const isMobileDevice = (): boolean => {
 export default function CameraCapture({ onCapture }: CameraCaptureProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const streamRef = useRef<MediaStream | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [isMobile, setIsMobile] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [isCameraActive, setIsCameraActive] = useState(false);
   const [facingMode, setFacingMode] = useState<'user' | 'environment'>('environment');
   const [isCapturing, setIsCapturing] = useState(false);
+
+  // Detect device type on mount
+  useEffect(() => {
+    setIsMobile(isMobileDevice());
+  }, []);
 
   const startCamera = async () => {
     try {
