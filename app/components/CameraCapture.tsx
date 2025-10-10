@@ -187,17 +187,15 @@ export default function CameraCapture({ onCapture }: CameraCaptureProps) {
         </div>
       )}
 
-      {isCameraActive && (
-        <div className={styles.videoContainer}>
-          <video
-            ref={videoRef}
-            autoPlay
-            playsInline
-            muted
-            className={styles.video}
-          />
-        </div>
-      )}
+      <div className={styles.videoContainer} style={{ display: isCameraActive ? 'block' : 'none' }}>
+        <video
+          ref={videoRef}
+          autoPlay
+          playsInline
+          muted
+          className={styles.video}
+        />
+      </div>
 
       <div className={styles.controls}>
         {!isCameraActive ? (
