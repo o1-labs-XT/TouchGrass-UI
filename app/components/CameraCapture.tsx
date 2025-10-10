@@ -209,7 +209,7 @@ export default function CameraCapture({ onCapture }: CameraCaptureProps) {
               onClick={capturePhoto}
               disabled={isCapturing}
             >
-              {isCapturing ? 'Capturing...' : 'Capture Photo'}
+              {isCapturing ? 'Capturing...' : 'Capture'}
             </Button>
             <Button variant="primary" onClick={stopCamera}>
               Cancel
