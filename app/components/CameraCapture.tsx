@@ -211,9 +211,6 @@ export default function CameraCapture({ onCapture }: CameraCaptureProps) {
             >
               {isCapturing ? 'Capturing...' : 'Capture Photo'}
             </Button>
-            <Button variant="secondary" onClick={toggleCamera}>
-              Flip Camera
-            </Button>
             <Button variant="secondary" onClick={stopCamera}>
               Cancel
             </Button>
