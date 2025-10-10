@@ -146,6 +146,33 @@ export default function CameraCapture({ onCapture }: CameraCaptureProps) {
     };
   }, []);
 
+  // Mobile: Use native camera input
+  if (isMobile) {
+    return (
+      <div className={styles.container}>
+        <input
+          ref={fileInputRef}
+          type="file"
+          accept="image/*"
+          capture="environment"
+          onChange={handleFileCapture}
+          style={{ display: 'none' }}
+        />
+        {error && (
+          <div className={styles.error}>
+            <p>{error}</p>
+          </div>
+        )}
+        <div className={styles.controls}>
+          <Button variant="primary" onClick={() => fileInputRef.current?.click()}>
+            Take Photo
+          </Button>
+        </div>
+      </div>
+    );
+  }
+
+  // Desktop: Use getUserMedia to prevent file uploads
   return (
     <div className={styles.container}>
       {error && (
