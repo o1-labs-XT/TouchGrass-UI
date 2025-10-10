@@ -7,6 +7,21 @@ interface CameraCaptureProps {
   onCapture: (imageBlob: Blob) => void;
 }
 
+const isMobileDevice = (): boolean => {
+  // Strongest signal: cannot hover + coarse pointer = definitely mobile
+  const cannotHover = window.matchMedia('(hover: none)').matches;
+  const hasCoarsePointer = window.matchMedia('(pointer: coarse)').matches;
+
+  // Backup detection for edge cases
+  const mobileUA = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+  const hasTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+  const isSmallScreen = window.innerWidth < 1024;
+
+  // Mobile if strong signal OR backup signals align
+  return (cannotHover && hasCoarsePointer) ||
+         (mobileUA && hasTouch && isSmallScreen);
+};
+
 export default function CameraCapture({ onCapture }: CameraCaptureProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const streamRef = useRef<MediaStream | null>(null);
