@@ -8,6 +8,10 @@ declare global {
       getAccounts?: () => Promise<string[]>;
       on?: (event: string, handler: (accounts: string[]) => void) => void;
       off?: (event: string, handler: (accounts: string[]) => void) => void;
+      signFields: (params: { message: (string | number)[] }) => Promise<{
+        data: (string | number)[];
+        signature: string;
+      }>;
     };
   }
 }
@@ -138,8 +142,21 @@ export function useAuroWallet() {
     }
   };
 
+  const signFields = async (fields: (string | number)[]) => {
+    if (!window.mina || !walletState.isConnected) {
+      throw new Error('Wallet not connected');
+    }
+
+    if (!window.mina.signFields) {
+      throw new Error('signFields not supported by this wallet version');
+    }
+
+    return await window.mina.signFields({ message: fields });
+  };
+
   return {
     ...walletState,
     reconnect,
+    signFields,
   };
 }
