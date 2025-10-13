@@ -113,5 +113,33 @@ export function useAuroWallet() {
     };
   }, []);
 
-  return walletState;
+  const reconnect = async () => {
+    if (!window.mina) return;
+
+    setWalletState(prev => ({ ...prev, isConnecting: true, error: null }));
+
+    try {
+      const accounts = await window.mina.requestAccounts();
+      if (accounts.length > 0) {
+        setWalletState({
+          isInstalled: true,
+          isConnecting: false,
+          isConnected: true,
+          address: accounts[0],
+          error: null,
+        });
+      }
+    } catch (error: any) {
+      setWalletState(prev => ({
+        ...prev,
+        isConnecting: false,
+        error: error.message || 'Failed to reconnect',
+      }));
+    }
+  };
+
+  return {
+    ...walletState,
+    reconnect,
+  };
 }
