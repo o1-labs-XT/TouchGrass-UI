@@ -9,10 +9,13 @@ import BackButton from '../components/BackButton';
 import Card from '../components/Card';
 import StatusMessage from '../components/StatusMessage';
 import ErrorMessage from '../components/ErrorMessage';
+import WalletStatus from '../components/WalletStatus';
+import { useAuroWallet } from '../hooks/useAuroWallet';
 import styles from './submit.module.css';
 
 export default function SubmitPage() {
   const router = useRouter();
+  const { isConnected, address, signFields } = useAuroWallet();
   const [challenge, setChallenge] = useState<Challenge | null>(null);
   const [chainId, setChainId] = useState<string | null>(null);
   const [imageBlob, setImageBlob] = useState<Blob | null>(null);
@@ -75,6 +78,12 @@ export default function SubmitPage() {
       return;
     }
 
+    // Check wallet connection
+    if (!isConnected || !address) {
+      setError('Please connect your Auro Wallet first');
+      return;
+    }
+
     setIsProcessing(true);
     setError(null);
 
@@ -82,10 +91,6 @@ export default function SubmitPage() {
       setStatus('Preparing submission...');
       const TouchGrassWorkerClient = (await import('../TouchGrassWorkerClient')).default;
       const worker = new TouchGrassWorkerClient();
-
-      // Generate Mina keypair for wallet address (user identity)
-      setStatus('Generating wallet address...');
-      const walletKeypair = await worker.generateKeypair();
 
       // Generate ECDSA keypair for image signing
       setStatus('Generating signing keypair...');
@@ -105,11 +110,23 @@ export default function SubmitPage() {
         commitment.sha256Hash
       );
 
-      // Create FormData for upload with ECDSA signature components
+      // Sign Field elements with Auro Wallet
+      setStatus('Please approve signature in Auro Wallet...');
+      const fieldMessage = [commitment.high128String, commitment.low128String];
+      let walletSignResult;
+      try {
+        walletSignResult = await signFields(fieldMessage);
+        console.log('Auro signature:', walletSignResult);
+      } catch (err: any) {
+        throw new Error(err.message || 'Wallet signature rejected');
+      }
+
+      // Create FormData for upload with both ECDSA and Auro wallet signatures
       setStatus('Submitting image...');
       const formData = new FormData();
       formData.append('image', imageBlob);
-      formData.append('walletAddress', walletKeypair.publicKeyBase58);
+      formData.append('walletAddress', address);
+      formData.append('walletSignature', walletSignResult.signature);
       formData.append('signatureR', signature.signatureR);
       formData.append('signatureS', signature.signatureS);
       formData.append('publicKeyX', ecKeypair.publicKeyXHex);
@@ -179,6 +196,7 @@ export default function SubmitPage() {
             <header className={styles.header}>
               <BackButton onClick={() => router.back()} />
               <h1 className={styles.pageTitle}>Capture Your Challenge Photo</h1>
+              <WalletStatus />
             </header>
 
             {challenge && (
