@@ -6,6 +6,8 @@ declare global {
     mina?: {
       requestAccounts: () => Promise<string[]>;
       getAccounts?: () => Promise<string[]>;
+      on?: (event: string, handler: (accounts: string[]) => void) => void;
+      off?: (event: string, handler: (accounts: string[]) => void) => void;
     };
   }
 }
@@ -81,7 +83,34 @@ export function useAuroWallet() {
     };
 
     const timer = setTimeout(checkAndConnect, 100);
-    return () => clearTimeout(timer);
+
+    const handleAccountsChanged = (accounts: string[]) => {
+      if (accounts.length > 0) {
+        setWalletState(prev => ({
+          ...prev,
+          isConnected: true,
+          address: accounts[0],
+          error: null,
+        }));
+      } else {
+        setWalletState(prev => ({
+          ...prev,
+          isConnected: false,
+          address: null,
+        }));
+      }
+    };
+
+    if (window.mina?.on) {
+      window.mina.on('accountsChanged', handleAccountsChanged);
+    }
+
+    return () => {
+      clearTimeout(timer);
+      if (window.mina?.off) {
+        window.mina.off('accountsChanged', handleAccountsChanged);
+      }
+    };
   }, []);
 
   return walletState;
