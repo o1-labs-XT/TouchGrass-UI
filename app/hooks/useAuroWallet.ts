@@ -1,10 +1,11 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 declare global {
   interface Window {
     mina?: {
       requestAccounts: () => Promise<string[]>;
+      getAccounts?: () => Promise<string[]>;
     };
   }
 }
@@ -25,6 +26,63 @@ export function useAuroWallet() {
     address: null,
     error: null,
   });
+
+  useEffect(() => {
+    const checkAndConnect = async () => {
+      if (typeof window.mina === 'undefined') {
+        setWalletState(prev => ({
+          ...prev,
+          isInstalled: false,
+          error: 'Auro wallet not installed',
+        }));
+        return;
+      }
+
+      setWalletState(prev => ({
+        ...prev,
+        isInstalled: true,
+        isConnecting: true,
+      }));
+
+      try {
+        let accounts: string[] = [];
+
+        if (window.mina.getAccounts) {
+          accounts = await window.mina.getAccounts();
+        }
+
+        if (accounts.length === 0) {
+          accounts = await window.mina.requestAccounts();
+        }
+
+        if (accounts.length > 0) {
+          setWalletState({
+            isInstalled: true,
+            isConnecting: false,
+            isConnected: true,
+            address: accounts[0],
+            error: null,
+          });
+        } else {
+          setWalletState(prev => ({
+            ...prev,
+            isConnecting: false,
+            error: 'No accounts available',
+          }));
+        }
+      } catch (error: any) {
+        setWalletState(prev => ({
+          ...prev,
+          isConnecting: false,
+          isConnected: false,
+          error: error.message || 'Failed to connect wallet',
+        }));
+      }
+    };
+
+    const timer = setTimeout(checkAndConnect, 100);
+    return () => clearTimeout(timer);
+  }, []);
 
   return walletState;
 }
