@@ -6,7 +6,7 @@ import type { Challenge } from '../lib/backendClient';
 import CameraCapture from '../components/CameraCapture';
 import Button from '../components/Button';
 import BackButton from '../components/BackButton';
-import Card from '../components/Card';
+import SubmissionCard from '../components/SubmissionCard';
 import StatusMessage from '../components/StatusMessage';
 import ErrorMessage from '../components/ErrorMessage';
 import styles from './submit.module.css';
@@ -182,13 +182,13 @@ export default function SubmitPage() {
             </header>
 
             {challenge && (
-              <Card className={styles.challengeCard}>
+              <SubmissionCard className={styles.challengeCard}>
                 <h2 className={styles.challengeTitle}>{challenge.title}</h2>
                 <p className={styles.challengeDescription}>{challenge.description}</p>
-              </Card>
+              </SubmissionCard>
             )}
 
-            <Card centered className={styles.cameraCard}>
+            <SubmissionCard centered className={styles.cameraCard}>
               <div className={styles.cameraIconWrapper}>
                 <svg className={styles.cameraIcon} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M9 3L7.17 5H4C2.9 5 2 5.9 2 7V19C2 20.1 2.9 21 4 21H20C21.1 21 22 20.1 22 19V7C22 5.9 21.1 5 20 5H16.83L15 3H9Z" stroke="#4CAF50" strokeWidth="1.5" fill="none"/>
@@ -200,7 +200,7 @@ export default function SubmitPage() {
                 Use your device's camera to capture an authentic photo for this challenge
               </p>
               <CameraCapture onCapture={handleCapture} />
-            </Card>
+            </SubmissionCard>
           </div>
         </main>
       )}

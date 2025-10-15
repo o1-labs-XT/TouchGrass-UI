@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { getCurrentChallenge, getChainsByChallenge } from '../../lib/backendClient';
 import type { Challenge, Chain } from '../../lib/backendClient';
 import Button from '../../components/Button';
-import Card from '../../components/Card';
+import SubmissionCard from '../../components/SubmissionCard';
 import StatBox from '../../components/StatBox';
 import styles from './Challenge.module.css';
 
@@ -72,7 +72,7 @@ export default function ChallengePage() {
               <h1 className={styles.pageTitle}>Today's Challenge</h1>
             </header>
 
-            <Card centered className={styles.challengeCard}>
+            <SubmissionCard centered className={styles.challengeCard}>
               <div className={styles.icon}>🌱</div>
               <h2 className={styles.title}>{challenge.title}</h2>
               <p className={styles.description}>{challenge.description}</p>
@@ -99,7 +99,7 @@ export default function ChallengePage() {
                   Join
                 </Button>
               </div>
-            </Card>
+            </SubmissionCard>
           </>
         )}
       </div>
