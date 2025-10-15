@@ -61,6 +61,28 @@ const setupEventListeners = (client: WalletConnectClient) => {
     console.log("Session disconnected:", event);
     window.dispatchEvent(new CustomEvent("sessionDeleted"));
   });
+
+  client.on("session_request_sent", (event: any) => {
+    console.log("Session request sent:", event);
+    if (
+      [
+        "mina_sendPayment",
+        "mina_sendStakeDelegation",
+        "mina_sendTransaction",
+        "mina_signMessage",
+        "mina_sign_JsonMessage",
+        "mina_signFields",
+        "mina_createNullifier",
+      ].includes(event?.request?.method)
+    ) {
+      const deepLink = `aurowallet://`;
+      console.log("Auro Wallet Deep Link for request:", deepLink);
+      const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+      if (isMobile) {
+        openDeepLink(deepLink);
+      }
+    }
+  });
 };
 
 export const getCurrentSession = (client: WalletConnectClient) => {
