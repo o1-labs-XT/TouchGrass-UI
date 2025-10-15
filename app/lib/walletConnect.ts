@@ -31,6 +31,38 @@ const openDeepLink = (deepLink: string) => {
   document.body.removeChild(link);
 };
 
+const setupEventListeners = (client: WalletConnectClient) => {
+  console.log("Setting up event listeners...");
+
+  client.on("session_event", (event: SessionEvent) => {
+    console.log("Session event:", event);
+    const eventName = event.params.event.name;
+    const eventData = event.params.event.data;
+
+    if (eventName === "accountsChanged") {
+      console.log("Accounts changed:", eventData);
+      window.dispatchEvent(
+        new CustomEvent("accountsChanged", { detail: eventData })
+      );
+    } else if (eventName === "chainChanged") {
+      console.log("Chain changed:", eventData);
+      window.dispatchEvent(
+        new CustomEvent("chainChanged", { detail: eventData })
+      );
+    }
+  });
+
+  client.on("session_update", (event: any) => {
+    console.log("Session updated:", event);
+    window.dispatchEvent(new CustomEvent("sessionUpdated", { detail: event }));
+  });
+
+  client.on("session_delete", (event: any) => {
+    console.log("Session disconnected:", event);
+    window.dispatchEvent(new CustomEvent("sessionDeleted"));
+  });
+};
+
 export const getCurrentSession = (client: WalletConnectClient) => {
   const sessions = client.session.getAll();
   return sessions.length > 0 ? sessions[0] : null;
