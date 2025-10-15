@@ -16,24 +16,28 @@ export default function TestWalletConnect() {
       const result = await signFields(testFields);
 
       // Build detailed response info to display
+      const resultType = typeof result;
+      const isObject = result && typeof result === "object";
+      const keys = isObject ? Object.keys(result as object) : [];
+      const hasSignature = isObject && "signature" in (result as object);
+      const hasData = isObject && "data" in (result as object);
+
       const info = [
         "=== WalletConnect Response ===",
         "",
         "Full JSON:",
         JSON.stringify(result, null, 2),
         "",
-        `Type: ${typeof result}`,
-        `Keys: [${Object.keys(result).join(", ")}]`,
+        `Type: ${resultType}`,
+        `Keys: [${keys.join(", ")}]`,
         "",
-        `Has 'signature' key? ${result && "signature" in result}`,
-        `Has 'data' key? ${result && "data" in result}`,
+        `Has 'signature' key? ${hasSignature}`,
+        `Has 'data' key? ${hasData}`,
         "",
-        result && "signature" in result
+        hasSignature
           ? `signature type: ${typeof (result as any).signature}`
           : "",
-        result && "data" in result
-          ? `data type: ${typeof (result as any).data}`
-          : "",
+        hasData ? `data type: ${typeof (result as any).data}` : "",
       ].join("\n");
 
       setResponseData(info);
