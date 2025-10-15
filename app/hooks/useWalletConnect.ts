@@ -102,6 +102,46 @@ export function useWalletConnect() {
     [client, session, account, chromeScheme, selectedChain]
   );
 
+  useEffect(() => {
+    if (!client) return;
+
+    const handleSessionUpdated = (event: CustomEvent) => {
+      const updatedSession = getCurrentSession(client);
+      updateSessionState(updatedSession);
+    };
+
+    const handleAccountsChanged = (event: CustomEvent) => {
+      const newAccounts = event.detail || [];
+      if (newAccounts.length > 0) {
+        const newAddress = newAccounts[0].split(":")[2];
+        setAccount(newAddress);
+        console.log("Account changed to:", newAddress);
+      } else {
+        setAccount(null);
+        setError("No accounts available after change");
+      }
+    };
+
+    const handleSessionDeleted = () => {
+      setAccount(null);
+      setSession(null);
+      setClient(null);
+      setIsConnected(false);
+      setError("Session disconnected by wallet");
+      console.log("Session deleted");
+    };
+
+    window.addEventListener("sessionUpdated", handleSessionUpdated as EventListener);
+    window.addEventListener("accountsChanged", handleAccountsChanged as EventListener);
+    window.addEventListener("sessionDeleted", handleSessionDeleted);
+
+    return () => {
+      window.removeEventListener("sessionUpdated", handleSessionUpdated as EventListener);
+      window.removeEventListener("accountsChanged", handleAccountsChanged as EventListener);
+      window.removeEventListener("sessionDeleted", handleSessionDeleted);
+    };
+  }, [client, updateSessionState]);
+
   return {
     isConnected,
     address: account,
