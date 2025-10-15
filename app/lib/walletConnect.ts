@@ -132,11 +132,18 @@ export const initWalletConnect = async (): Promise<WalletConnectClient> => {
     const { uri, approval } = await client.connect(connectParams);
 
     if (uri) {
-      const scheme = "com.android.chrome";
-      const deepLink = `aurowallet://wc?uri=${encodeURIComponent(uri)}&scheme=${encodeURIComponent(scheme)}`;
+      const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+      const isAndroid = /Android/i.test(navigator.userAgent);
+
+      // iOS Safari auto-returns without scheme parameter
+      // Android Chrome needs explicit scheme
+      const scheme = isAndroid ? "com.android.chrome" : "";
+      const deepLink = scheme
+        ? `aurowallet://wc?uri=${encodeURIComponent(uri)}&scheme=${encodeURIComponent(scheme)}`
+        : `aurowallet://wc?uri=${encodeURIComponent(uri)}`;
+
       console.log("Auro Wallet Deep Link:", deepLink);
 
-      const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
       if (isMobile) {
         openDeepLink(deepLink);
       } else {
