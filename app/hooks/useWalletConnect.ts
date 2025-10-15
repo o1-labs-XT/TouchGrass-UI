@@ -17,7 +17,13 @@ export function useWalletConnect() {
     setIsMobile(/iPhone|iPad|iPod|Android/i.test(navigator.userAgent));
   }, []);
 
-  const chromeScheme = isMobile ? "com.android.chrome" : "";
+  // Detect iOS vs Android for correct return scheme
+  const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+  const isAndroid = /Android/i.test(navigator.userAgent);
+
+  // iOS Safari doesn't need scheme parameter (auto-returns)
+  // Android Chrome needs com.android.chrome to return to browser
+  const chromeScheme = isAndroid ? "com.android.chrome" : "";
   const selectedChain = "mina:devnet";
 
   const updateSessionState = useCallback((currentSession: any) => {
