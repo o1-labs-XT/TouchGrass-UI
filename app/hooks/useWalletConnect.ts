@@ -49,4 +49,26 @@ export function useWalletConnect() {
       console.error("Connection error:", error);
     }
   }, [updateSessionState]);
+
+  const disconnect = useCallback(async () => {
+    if (!client || !session) {
+      setError("No active connection to disconnect");
+      return;
+    }
+    try {
+      await client.disconnect({
+        topic: session.topic,
+        reason: { code: 6000, message: "User disconnected" },
+      });
+      setAccount(null);
+      setSession(null);
+      setClient(null);
+      setIsConnected(false);
+      setError(null);
+      console.log("Disconnected from Auro Wallet");
+    } catch (error: any) {
+      setError(error.message || "Failed to disconnect");
+      console.error("Disconnect error:", error);
+    }
+  }, [client, session]);
 }
