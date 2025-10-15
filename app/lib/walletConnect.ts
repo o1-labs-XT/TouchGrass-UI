@@ -85,6 +85,77 @@ const setupEventListeners = (client: WalletConnectClient) => {
   });
 };
 
+export const initWalletConnect = async (): Promise<WalletConnectClient> => {
+  try {
+    console.log("Initializing WalletConnect...");
+
+    const client = await SignClient.init({
+      projectId: process.env.NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID,
+      metadata: {
+        name: "TouchGrass",
+        description: "Photo authenticity challenges",
+        url: typeof window !== "undefined" ? window.location.origin : "",
+        icons: [typeof window !== "undefined" ? window.location.origin + "/icon-512.png" : ""],
+      },
+      logger: "warn",
+    });
+
+    const existingSessions = client.session.getAll();
+    if (existingSessions.length > 0) {
+      console.log("Using cached session:", existingSessions[0]);
+      setupEventListeners(client);
+      return client;
+    }
+
+    const connectParams = {
+      requiredNamespaces: {
+        mina: {
+          chains: ["mina:mainnet", "mina:devnet", "zeko:testnet"],
+          methods: [
+            "mina_sendPayment",
+            "mina_sendStakeDelegation",
+            "mina_sendTransaction",
+            "mina_signMessage",
+            "mina_sign_JsonMessage",
+            "mina_signFields",
+            "mina_createNullifier",
+            "mina_verifyMessage",
+            "mina_verify_JsonMessage",
+            "mina_verifyFields",
+            "wallet_info",
+          ],
+          events: ["accountsChanged", "chainChanged"],
+        },
+      },
+    };
+
+    const { uri, approval } = await client.connect(connectParams);
+
+    if (uri) {
+      const scheme = "com.android.chrome";
+      const deepLink = `aurowallet://wc?uri=${encodeURIComponent(uri)}&scheme=${encodeURIComponent(scheme)}`;
+      console.log("Auro Wallet Deep Link:", deepLink);
+
+      const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+      if (isMobile) {
+        openDeepLink(deepLink);
+      } else {
+        web3Modal.openModal({ uri });
+      }
+    }
+
+    const session = await approval();
+    console.log("New session established:", JSON.stringify(session, null, 2));
+    web3Modal.closeModal();
+
+    setupEventListeners(client);
+    return client;
+  } catch (error) {
+    console.error("WalletConnect initialization failed:", error);
+    throw error;
+  }
+};
+
 export const getCurrentSession = (client: WalletConnectClient) => {
   const sessions = client.session.getAll();
   return sessions.length > 0 ? sessions[0] : null;
