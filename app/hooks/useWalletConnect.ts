@@ -36,4 +36,17 @@ export function useWalletConnect() {
       setError("No session established");
     }
   }, []);
+
+  const connect = useCallback(async () => {
+    setError(null);
+    try {
+      const walletClient = await initWalletConnect();
+      setClient(walletClient);
+      const currentSession = getCurrentSession(walletClient);
+      updateSessionState(currentSession);
+    } catch (error: any) {
+      setError(error.message || "Failed to connect to Auro Wallet");
+      console.error("Connection error:", error);
+    }
+  }, [updateSessionState]);
 }
