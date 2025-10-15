@@ -71,4 +71,43 @@ export function useWalletConnect() {
       console.error("Disconnect error:", error);
     }
   }, [client, session]);
+
+  const signFields = useCallback(
+    async (fields: (string | number)[]) => {
+      if (!client || !session || !account) {
+        throw new Error("Please connect wallet first");
+      }
+
+      try {
+        const request = {
+          topic: session.topic,
+          chainId: selectedChain,
+          request: {
+            method: "mina_signFields",
+            params: {
+              scheme: chromeScheme,
+              from: account,
+              message: fields,
+            },
+          },
+        };
+        const result = await client.request(request);
+        console.log("Sign fields result:", result);
+        return result;
+      } catch (error: any) {
+        console.error("Failed to sign fields:", error);
+        throw error;
+      }
+    },
+    [client, session, account, chromeScheme, selectedChain]
+  );
+
+  return {
+    isConnected,
+    address: account,
+    error,
+    connect,
+    disconnect,
+    signFields,
+  };
 }
