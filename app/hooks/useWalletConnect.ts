@@ -19,4 +19,21 @@ export function useWalletConnect() {
 
   const chromeScheme = isMobile ? "com.android.chrome" : "";
   const selectedChain = "mina:devnet";
+
+  const updateSessionState = useCallback((currentSession: any) => {
+    if (currentSession) {
+      setSession(currentSession);
+      const minaAccounts = currentSession.namespaces?.mina?.accounts || [];
+      if (minaAccounts.length > 0) {
+        const minaAddress = minaAccounts[0].split(":")[2];
+        setAccount(minaAddress);
+        setIsConnected(true);
+        console.log("Connected with account:", minaAddress);
+      } else {
+        setError("No accounts found in session");
+      }
+    } else {
+      setError("No session established");
+    }
+  }, []);
 }
