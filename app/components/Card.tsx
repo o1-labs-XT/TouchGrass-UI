@@ -6,15 +6,28 @@ interface CardProps {
   children: React.ReactNode;
   centered?: boolean;
   className?: string;
+  onClick?: () => void;
 }
 
 export default function Card({
   children,
   centered = false,
-  className = ''
+  className = '',
+  onClick
 }: CardProps) {
   return (
-    <div className={`${styles.card} ${centered ? styles.centered : ''} ${className}`}>
+    <div 
+      className={`${styles.card} ${centered ? styles.centered : ''} ${onClick ? styles.clickable : ''} ${className}`}
+      onClick={onClick}
+      role={onClick ? 'button' : undefined}
+      tabIndex={onClick ? 0 : undefined}
+      onKeyDown={onClick ? (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          onClick();
+        }
+      } : undefined}
+    >
       {children}
     </div>
   );
