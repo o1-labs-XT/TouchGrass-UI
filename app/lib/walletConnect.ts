@@ -21,3 +21,17 @@ interface SessionEvent {
   topic: string;
   params: SessionEventParams;
 }
+
+const openDeepLink = (deepLink: string) => {
+  const link = document.createElement("a");
+  link.href = deepLink;
+  link.style.display = "none";
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+};
+
+export const getCurrentSession = (client: WalletConnectClient) => {
+  const sessions = client.session.getAll();
+  return sessions.length > 0 ? sessions[0] : null;
+};
