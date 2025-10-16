@@ -215,6 +215,35 @@ export async function checkBackendHealth(): Promise<boolean> {
 }
 
 /**
+ * Get all challenges (active and completed)
+ */
+export async function getAllChallenges(): Promise<Challenge[]> {
+  const response = await fetch(`${BACKEND_URL}/challenges`);
+
+  if (!response.ok) {
+    throw new Error(`Failed to fetch challenges: ${response.statusText}`);
+  }
+
+  return response.json();
+}
+
+/**
+ * Get specific challenge by ID
+ */
+export async function getChallenge(challengeId: string): Promise<Challenge> {
+  const response = await fetch(`${BACKEND_URL}/challenges/${challengeId}`);
+
+  if (!response.ok) {
+    if (response.status === 404) {
+      throw new Error("Challenge not found");
+    }
+    throw new Error(`Failed to fetch challenge: ${response.statusText}`);
+  }
+
+  return response.json();
+}
+
+/**
  * Get current challenge
  */
 export async function getCurrentChallenge(): Promise<Challenge> {
@@ -231,6 +260,25 @@ export async function getCurrentChallenge(): Promise<Challenge> {
   }
 
   return challenges[0];
+}
+
+/**
+ * Get active challenges (non-throwing version)
+ */
+export async function getActiveChallenges(): Promise<Challenge[]> {
+  try {
+    const response = await fetch(`${BACKEND_URL}/challenges/active`);
+    
+    if (!response.ok) {
+      return [];
+    }
+    
+    const challenges = await response.json();
+    return challenges || [];
+  } catch (err) {
+    console.error('Failed to fetch active challenges:', err);
+    return [];
+  }
 }
 
 /**
