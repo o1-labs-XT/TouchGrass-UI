@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { getSubmission, getImageUrl } from '../../lib/backendClient';
+import { getSubmission, getImageUrl, getCachedSubmissionSync } from '../../lib/backendClient';
 import type { Submission } from '../../lib/backendClient';
 import BackButton from '../../components/BackButton';
 import SubmissionCard from '../../components/SubmissionCard';
@@ -52,9 +52,20 @@ export default function SubmissionDetailClient({ params }: SubmissionDetailClien
   useEffect(() => {
     if (!submissionId) return;
 
+    // Check for cached data first
+    const cachedSubmission = getCachedSubmissionSync(submissionId);
+    if (cachedSubmission) {
+      setSubmission(cachedSubmission);
+      setLoading(false);
+      setError(null);
+    }
+
     async function fetchSubmission() {
       try {
-        setLoading(true);
+        // Only show loading if we don't have cached data
+        if (!cachedSubmission) {
+          setLoading(true);
+        }
         setError(null);
 
         const submissionData = await getSubmission(submissionId);
@@ -211,6 +222,8 @@ export default function SubmissionDetailClient({ params }: SubmissionDetailClien
                 alt={submission.tagline || `Submission ${submission.chainPosition}`}
                 className={styles.image}
                 crossOrigin="anonymous"
+                loading="eager"
+                decoding="sync"
               />
             </div>
             

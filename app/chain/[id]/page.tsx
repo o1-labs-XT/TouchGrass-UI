@@ -18,6 +18,17 @@ export default function ChainDetailPage({ params }: { params: Promise<{ id: stri
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
+  // Preload images for better navigation performance
+  useEffect(() => {
+    if (submissions.length > 0) {
+      submissions.forEach(submission => {
+        const img = new Image();
+        img.src = getImageUrl(submission.id);
+        // Images are now in browser cache for instant loading
+      });
+    }
+  }, [submissions]);
+
   useEffect(() => {
     params.then(p => setChainId(p.id));
   }, [params]);
@@ -98,6 +109,8 @@ export default function ChainDetailPage({ params }: { params: Promise<{ id: stri
                   alt={submission.tagline || `Position ${submission.chainPosition}`}
                   className={styles.image}
                   crossOrigin="anonymous"
+                  loading="lazy"
+                  decoding="async"
                 />
                 {submission.tagline && <p className={styles.tagline}>{submission.tagline}</p>}
               </SubmissionCard>

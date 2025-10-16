@@ -1,11 +1,11 @@
 .container {
   min-height: 100vh;
   padding: 1rem;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(to bottom, var(--mina-light-gray), var(--mina-white));
 }
 
 .wrapper {
-  max-width: 800px;
+  max-width: 640px;
   margin: 0 auto;
 }
 
@@ -18,7 +18,7 @@
 }
 
 .pageTitle {
-  color: white;
+  color: var(--mina-black);
   font-size: 1.5rem;
   font-weight: 600;
   margin: 0;
@@ -27,11 +27,11 @@
 }
 
 .shareButton {
-  background: rgba(255, 255, 255, 0.2);
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: var(--mina-white);
+  border: 1px solid var(--mina-black);
   border-radius: 8px;
   padding: 8px;
-  color: white;
+  color: var(--mina-black);
   cursor: pointer;
   transition: all 0.2s ease;
   display: flex;
@@ -40,8 +40,8 @@
 }
 
 .shareButton:hover {
-  background: rgba(255, 255, 255, 0.3);
-  border-color: rgba(255, 255, 255, 0.5);
+  background: var(--mina-blurple);
+  color: var(--mina-white);
   transform: translateY(-1px);
 }
 
@@ -137,7 +137,7 @@
   justify-content: center;
   align-items: center;
   min-height: 50vh;
-  color: white;
+  color: var(--mina-black);
   font-size: 1.1rem;
 }
 
@@ -147,25 +147,25 @@
   justify-content: center;
   align-items: center;
   min-height: 50vh;
-  color: white;
+  color: var(--mina-black);
   text-align: center;
   gap: 1rem;
 }
 
 .error button {
-  background: rgba(255, 255, 255, 0.2);
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: var(--mina-white);
+  border: 1px solid var(--mina-black);
   border-radius: 8px;
   padding: 0.75rem 1.5rem;
-  color: white;
+  color: var(--mina-black);
   cursor: pointer;
   font-size: 1rem;
   transition: all 0.2s ease;
 }
 
 .error button:hover {
-  background: rgba(255, 255, 255, 0.3);
-  border-color: rgba(255, 255, 255, 0.5);
+  background: var(--mina-blurple);
+  color: var(--mina-white);
 }
 
 /* Mobile responsiveness */

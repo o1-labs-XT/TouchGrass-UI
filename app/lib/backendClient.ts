@@ -3,6 +3,11 @@
  * Handles communication with the TouchGrass backend API
  */
 
+// Simple in-memory cache for submissions
+const submissionCache = new Map<string, Submission>();
+const cacheTimestamps = new Map<string, number>();
+const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes
+
 const USE_MOCK_API = process.env.NEXT_PUBLIC_USE_MOCK_API === 'true';
 export const BACKEND_URL = USE_MOCK_API
   ? '/api/mock'
@@ -72,6 +77,29 @@ export interface Submission {
 
 export function getImageUrl(submissionId: string): string {
   return `${BACKEND_URL}/submissions/${submissionId}/image`;
+}
+
+// Cache utility functions
+function isCacheValid(submissionId: string): boolean {
+  const timestamp = cacheTimestamps.get(submissionId);
+  if (!timestamp) return false;
+  return Date.now() - timestamp < CACHE_DURATION;
+}
+
+function getCachedSubmission(submissionId: string): Submission | null {
+  if (isCacheValid(submissionId)) {
+    return submissionCache.get(submissionId) || null;
+  }
+  return null;
+}
+
+function setCachedSubmission(submission: Submission): void {
+  submissionCache.set(submission.id, submission);
+  cacheTimestamps.set(submission.id, Date.now());
+}
+
+export function getCachedSubmissionSync(submissionId: string): Submission | null {
+  return getCachedSubmission(submissionId);
 }
 
 /**
@@ -257,18 +285,45 @@ export async function getSubmissionsByChain(chainId: string): Promise<Submission
     throw new Error(`Failed to fetch submissions: ${response.statusText}`);
   }
 
-  return response.json();
+  const submissions = await response.json();
+  
+  // Cache all submissions for faster access later
+  submissions.forEach((submission: Submission) => {
+    setCachedSubmission(submission);
+  });
+
+  return submissions;
 }
 
 /**
- * Get single submission
+ * Get single submission with cache support
  */
 export async function getSubmission(submissionId: string): Promise<Submission> {
+  // Check cache first
+  const cached = getCachedSubmission(submissionId);
+  if (cached) {
+    // Return cached data immediately, but still fetch fresh data in background
+    fetchSubmissionFresh(submissionId).catch(() => {
+      // Silently handle background refresh errors
+    });
+    return cached;
+  }
+
+  // No cache, fetch fresh data
+  return fetchSubmissionFresh(submissionId);
+}
+
+/**
+ * Fetch submission from API and update cache
+ */
+async function fetchSubmissionFresh(submissionId: string): Promise<Submission> {
   const response = await fetch(`${BACKEND_URL}/submissions/${submissionId}`);
 
   if (!response.ok) {
     throw new Error(`Failed to fetch submission: ${response.statusText}`);
   }
 
-  return response.json();
+  const submission = await response.json();
+  setCachedSubmission(submission);
+  return submission;
 }
