@@ -34,8 +34,19 @@ export function useAuroWallet() {
   });
 
   useEffect(() => {
+    let retryCount = 0;
+    const maxRetries = 20; // Try for ~2 seconds (20 * 100ms)
+    let retryTimer: NodeJS.Timeout;
+
     const checkAndConnect = async () => {
       if (typeof window.mina === 'undefined') {
+        // Retry if we haven't exceeded max retries
+        if (retryCount < maxRetries) {
+          retryCount++;
+          retryTimer = setTimeout(checkAndConnect, 100);
+          return;
+        }
+
         setWalletState(prev => ({
           ...prev,
           isInstalled: false,
@@ -111,6 +122,9 @@ export function useAuroWallet() {
 
     return () => {
       clearTimeout(timer);
+      if (retryTimer) {
+        clearTimeout(retryTimer);
+      }
       if (window.mina?.off) {
         window.mina.off('accountsChanged', handleAccountsChanged);
       }
