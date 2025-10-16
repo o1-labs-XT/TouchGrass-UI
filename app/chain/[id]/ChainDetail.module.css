@@ -78,8 +78,8 @@
   font-size: 0.875rem;
 }
 
-.transactionStatus {
-  margin-top: 0.75rem;
+.submissionCard {
+  position: relative;
 }
 
 .loading {
