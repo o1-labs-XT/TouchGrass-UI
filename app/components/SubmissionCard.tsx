@@ -1,20 +1,20 @@
 'use client';
 import React from 'react';
-import styles from './Card.module.css';
+import styles from './SubmissionCard.module.css';
 
-interface CardProps {
+interface SubmissionCardProps {
   children: React.ReactNode;
   centered?: boolean;
   className?: string;
   onClick?: () => void;
 }
 
-export default function Card({
+export default function SubmissionCard({
   children,
   centered = false,
   className = '',
   onClick
-}: CardProps) {
+}: SubmissionCardProps) {
   return (
     <div 
       className={`${styles.card} ${centered ? styles.centered : ''} ${onClick ? styles.clickable : ''} ${className}`}

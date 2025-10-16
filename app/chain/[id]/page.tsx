@@ -6,9 +6,8 @@ import { getChain, getSubmissionsByChain, getImageUrl } from '../../lib/backendC
 import type { Chain, Submission } from '../../lib/backendClient';
 import Button from '../../components/Button';
 import BackButton from '../../components/BackButton';
-import Card from '../../components/Card';
+import SubmissionCard from '../../components/SubmissionCard';
 import StatBox from '../../components/StatBox';
-import TransactionDisplay from '../../components/TransactionDisplay';
 import styles from './ChainDetail.module.css';
 
 export default function ChainDetailPage({ params }: { params: Promise<{ id: string }> }) {
@@ -18,6 +17,17 @@ export default function ChainDetailPage({ params }: { params: Promise<{ id: stri
   const [submissions, setSubmissions] = useState<Submission[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+
+  // Preload images for better navigation performance
+  useEffect(() => {
+    if (submissions.length > 0) {
+      submissions.forEach(submission => {
+        const img = new Image();
+        img.src = getImageUrl(submission.id);
+        // Images are now in browser cache for instant loading
+      });
+    }
+  }, [submissions]);
 
   useEffect(() => {
     params.then(p => setChainId(p.id));
@@ -70,7 +80,7 @@ export default function ChainDetailPage({ params }: { params: Promise<{ id: stri
         </div>
 
       {chain && (
-        <Card centered>
+        <SubmissionCard centered>
           <div className={styles.statsGrid}>
             <StatBox value={chain.length} label="Images" />
             <StatBox value={submissions.length} label="Submissions" />
@@ -78,7 +88,7 @@ export default function ChainDetailPage({ params }: { params: Promise<{ id: stri
           <Button variant="primary" onClick={() => router.push(`/submit?chainId=${chainId}`)}>
             Extend Chain
           </Button>
-        </Card>
+        </SubmissionCard>
       )}
 
       <div className={styles.submissions}>
@@ -88,19 +98,22 @@ export default function ChainDetailPage({ params }: { params: Promise<{ id: stri
         ) : (
           <div className={styles.grid}>
             {submissions.map((submission) => (
-              <Card key={submission.id}>
+              <SubmissionCard 
+                key={submission.id}
+                onClick={() => router.push(`/submission/${submission.id}`)}
+                className={styles.submissionCard}
+              >
                 <div className={styles.position}>#{submission.chainPosition}</div>
                 <img
                   src={getImageUrl(submission.id)}
                   alt={submission.tagline || `Position ${submission.chainPosition}`}
                   className={styles.image}
                   crossOrigin="anonymous"
+                  loading="lazy"
+                  decoding="async"
                 />
                 {submission.tagline && <p className={styles.tagline}>{submission.tagline}</p>}
-                <div className={styles.transactionStatus}>
-                  <TransactionDisplay submission={submission} compact />
-                </div>
-              </Card>
+              </SubmissionCard>
             ))}
           </div>
         )}
