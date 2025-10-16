@@ -89,40 +89,49 @@ export default function SubmitPage() {
 
     try {
       setStatus('Preparing submission...');
+      console.log('[1/7] Preparing submission');
       const TouchGrassWorkerClient = (await import('../TouchGrassWorkerClient')).default;
       const worker = new TouchGrassWorkerClient();
 
       // Generate ECDSA keypair for image signing
       setStatus('Generating signing keypair...');
+      console.log('[2/7] Generating ECDSA keypair');
       const ecKeypair = await worker.generateECKeypair();
+      console.log('[2/7] Keypair generated');
 
       // Convert blob to buffer for processing
       const arrayBuffer = await imageBlob.arrayBuffer();
       const imageBuffer = new Uint8Array(arrayBuffer);
 
       setStatus('Computing image hash...');
+      console.log('[3/7] Computing image hash');
       const commitment = await worker.computeOnChainCommitmentWeb(imageBuffer);
-      console.log('Image hash:', commitment.sha256Hash);
+      console.log('[3/7] Image hash:', commitment.sha256Hash);
 
       setStatus('Creating ECDSA signature...');
+      console.log('[4/7] Creating ECDSA signature');
       const signature = await worker.signECDSA(
         ecKeypair.privateKeyHex,
         commitment.sha256Hash
       );
+      console.log('[4/7] ECDSA signature created');
 
       // Sign Field elements with Auro Wallet
       setStatus('Please approve signature in Auro Wallet...');
+      console.log('[5/7] Requesting Auro wallet signature');
       const fieldMessage = [commitment.high128String, commitment.low128String];
       let walletSignResult;
       try {
         walletSignResult = await signFields(fieldMessage);
-        console.log('Auro signature:', walletSignResult);
+        console.log('[5/7] Auro signature received:', walletSignResult);
       } catch (err: any) {
+        console.error('[5/7] Wallet signature failed:', err);
         throw new Error(err.message || 'Wallet signature rejected');
       }
 
       // Create FormData for upload with both ECDSA and Auro wallet signatures
       setStatus('Submitting image...');
+      console.log('[6/7] Building form data');
       const formData = new FormData();
       formData.append('image', imageBlob);
       formData.append('walletAddress', address);
@@ -132,6 +141,7 @@ export default function SubmitPage() {
       formData.append('publicKeyX', ecKeypair.publicKeyXHex);
       formData.append('publicKeyY', ecKeypair.publicKeyYHex);
       formData.append('chainId', chainId);
+      console.log('[6/7] Form data ready, uploading to:', BACKEND_URL);
 
       const response = await fetch(`${BACKEND_URL}/submissions`, {
         method: 'POST',
@@ -139,12 +149,14 @@ export default function SubmitPage() {
       });
 
       if (!response.ok) {
-        throw new Error('Upload failed');
+        const errorText = await response.text();
+        console.error('[6/7] Upload failed:', { status: response.status, body: errorText });
+        throw new Error(`Upload failed (${response.status}): ${errorText}`);
       }
 
       const result = await response.json();
+      console.log('[7/7] Upload successful!', result);
       setStatus('Success! Your image has been submitted.');
-      console.log('Upload result:', result);
 
       // Redirect to chain detail page after success
       setTimeout(() => {
@@ -152,7 +164,9 @@ export default function SubmitPage() {
       }, 2000);
     } catch (err) {
       console.error('Submission failed:', err);
-      setError(err instanceof Error ? err.message : 'Submission failed');
+      const errorMessage = err instanceof Error ? err.message : 'Submission failed';
+      const stackTrace = err instanceof Error && err.stack ? `\n\nStack:\n${err.stack}` : '';
+      setError(errorMessage + stackTrace);
       setStatus('');
     } finally {
       setIsProcessing(false);
