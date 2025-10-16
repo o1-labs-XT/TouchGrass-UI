@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { getAllChallenges, getActiveChallenges, getChainsByChallenge } from '../lib/backendClient';
 import type { Challenge } from '../lib/backendClient';
 import Button from '../components/Button';
-import Card from '../components/Card';
+import SubmissionCard from '../components/SubmissionCard';
 import StatBox from '../components/StatBox';
 import styles from './challenges.module.css';
 
@@ -92,15 +92,15 @@ export default function ChallengesPage() {
           </h2>
           
           {activeChallenges.length === 0 ? (
-            <Card centered className={styles.emptyState}>
+            <SubmissionCard centered className={styles.emptyState}>
               <div className={styles.emptyIcon}>📅</div>
               <h3>No Active Challenges</h3>
               <p>Check back soon for new challenges! Previous challenges are available below.</p>
-            </Card>
+            </SubmissionCard>
           ) : (
             <div className={styles.challengesGrid}>
               {activeChallenges.map((challenge) => (
-                <Card 
+                <SubmissionCard 
                   key={challenge.id} 
                   className={styles.challengeCard}
                   onClick={() => handleChallengeClick(challenge.id)}
@@ -114,12 +114,12 @@ export default function ChallengesPage() {
                     <StatBox value={challenge.chainCount} label="Chains" />
                   </div>
                   
-                  <div className={styles.challengeMeta}>
-                    <p className={styles.timeRemaining}>
-                      Ends: {new Date(challenge.endTime).toLocaleDateString()}
+                  <div className={styles.challengeStatus}>
+                    <p className={styles.activeStatus}>
+                      🟢 Active until {new Date(challenge.endTime).toLocaleDateString()}
                     </p>
                   </div>
-                </Card>
+                </SubmissionCard>
               ))}
             </div>
           )}
@@ -145,7 +145,7 @@ export default function ChallengesPage() {
             {showCompleted && (
               <div className={styles.challengesGrid}>
                 {completedChallenges.map((challenge) => (
-                  <Card 
+                  <SubmissionCard 
                     key={challenge.id} 
                     className={`${styles.challengeCard} ${styles.completedCard}`}
                     onClick={() => handleChallengeClick(challenge.id)}
@@ -159,12 +159,12 @@ export default function ChallengesPage() {
                       <StatBox value={challenge.chainCount} label="Chains" />
                     </div>
                     
-                    <div className={styles.challengeMeta}>
-                      <p className={styles.completedDate}>
-                        Completed: {new Date(challenge.endTime).toLocaleDateString()}
+                    <div className={styles.challengeStatus}>
+                      <p className={styles.completedStatus}>
+                        ✅ Completed on {new Date(challenge.endTime).toLocaleDateString()}
                       </p>
                     </div>
-                  </Card>
+                  </SubmissionCard>
                 ))}
               </div>
             )}

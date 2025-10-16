@@ -1,7 +1,7 @@
 .container {
   min-height: 100vh;
   padding: 1rem;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(to bottom, var(--mina-light-gray), var(--mina-white));
 }
 
 .wrapper {
@@ -12,7 +12,7 @@
 .header {
   text-align: center;
   margin-bottom: 3rem;
-  color: white;
+  color: var(--mina-black);
 }
 
 .pageTitle {
@@ -34,7 +34,7 @@
 }
 
 .sectionTitle {
-  color: white;
+  color: var(--mina-black);
   font-size: 1.75rem;
   font-weight: 600;
   margin: 0 0 1.5rem 0;
@@ -46,7 +46,7 @@
 .sectionToggle {
   background: none;
   border: none;
-  color: white;
+  color: var(--mina-black);
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -71,7 +71,7 @@
 }
 
 .count {
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(0, 0, 0, 0.1);
   padding: 0.25rem 0.75rem;
   border-radius: 1rem;
   font-size: 0.875rem;
@@ -135,19 +135,31 @@
   text-align: center;
 }
 
-.timeRemaining {
-  color: #e67e22;
-  font-weight: 500;
-  margin: 0;
-  font-size: 0.875rem;
+.challengeStatus {
+  margin-bottom: 1.5rem;
+  text-align: center;
 }
 
-.completedDate {
+.activeStatus {
   color: #27ae60;
   font-weight: 500;
   margin: 0;
-  font-size: 0.875rem;
+  padding: 0.5rem 1rem;
+  background: rgba(39, 174, 96, 0.1);
+  border-radius: 1rem;
+  display: inline-block;
 }
+
+.completedStatus {
+  color: #8e44ad;
+  font-weight: 500;
+  margin: 0;
+  padding: 0.5rem 1rem;
+  background: rgba(142, 68, 173, 0.1);
+  border-radius: 1rem;
+  display: inline-block;
+}
+
 
 
 .emptyState {
@@ -179,8 +191,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
+  background: linear-gradient(to bottom, var(--mina-light-gray), var(--mina-white));
+  color: var(--mina-black);
   font-size: 1.1rem;
 }
 
@@ -190,8 +202,8 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
+  background: linear-gradient(to bottom, var(--mina-light-gray), var(--mina-white));
+  color: var(--mina-black);
   text-align: center;
   gap: 1rem;
   padding: 2rem;
