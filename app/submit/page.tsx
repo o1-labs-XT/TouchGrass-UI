@@ -78,6 +78,20 @@ export default function SubmitPage() {
       return;
     }
 
+    // Check if we need to redirect to Auro browser on mobile
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    const hasWindowMina = typeof window.mina !== 'undefined';
+
+    if (isMobile && !hasWindowMina) {
+      // Redirect to AppLinks to open in Auro browser
+      const currentUrl = window.location.href;
+      const encodedUrl = encodeURIComponent(currentUrl);
+      const networkId = encodeURIComponent('mina:devnet');
+      const appLinksUrl = `https://applinks.aurowallet.com/applinks?action=openurl&networkid=${networkId}&url=${encodedUrl}`;
+      window.location.href = appLinksUrl;
+      return;
+    }
+
     // Check wallet connection
     if (!isConnected || !address) {
       setError('Please connect your Auro Wallet first');
