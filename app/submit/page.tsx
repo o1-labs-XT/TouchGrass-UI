@@ -1,4 +1,5 @@
 'use client';
+
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { getCurrentChallenge, getChainsByChallenge, BACKEND_URL } from '../lib/backendClient';
