@@ -85,8 +85,8 @@ export default function SubmitPage() {
 
     if (isMobile && !hasWindowMina) {
       // Redirect to AppLinks to open in Auro browser
-      const currentUrl = window.location.href;
-      const encodedUrl = encodeURIComponent(currentUrl);
+      const homeUrl = window.location.origin;
+      const encodedUrl = encodeURIComponent(homeUrl);
       const networkId = encodeURIComponent('mina:devnet');
       const appLinksUrl = `https://applinks.aurowallet.com/applinks?action=openurl&&networkid=${networkId}&url=${encodedUrl}`;
 
