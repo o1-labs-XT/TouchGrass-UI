@@ -1,5 +1,6 @@
 'use client';
 
+import Button from './Button';
 import Card from './Card';
 import styles from './WalletChoiceModal.module.css';
 
@@ -18,12 +19,16 @@ export default function WalletChoiceModal({
     <div className={styles.overlay}>
       <Card className={styles.modal}>
         <h2 className={styles.title}>Choose Signing Method</h2>
-        <button onClick={onChooseWallet}>
-          Use Auro Wallet
-        </button>
-        <button onClick={onChooseGenerated}>
-          Continue without wallet
-        </button>
+
+        <div className={styles.options}>
+          <Button variant="primary" onClick={onChooseWallet}>
+            Use Auro Wallet
+          </Button>
+
+          <Button variant="secondary" onClick={onChooseGenerated}>
+            Continue without wallet
+          </Button>
+        </div>
       </Card>
     </div>
   );
