@@ -176,12 +176,19 @@ export default function SubmitPage() {
 
       const result = await response.json();
       console.log('[7/7] Upload successful!', result);
-      setStatus('Success! Your image has been submitted.');
 
-      // Redirect to chain detail page after success
-      setTimeout(() => {
-        router.push(`/chain/${chainId}`);
-      }, 2000);
+      // Check if we're in Auro browser (mobile flow)
+      const isInAuroBrowser = isMobile && typeof window.mina !== 'undefined';
+
+      if (isInAuroBrowser) {
+        setStatus('Success! Your image has been submitted.\n\nYou can now return to your browser to view the chain.');
+      } else {
+        setStatus('Success! Your image has been submitted.');
+        // Redirect to chain detail page after success
+        setTimeout(() => {
+          router.push(`/chain/${chainId}`);
+        }, 2000);
+      }
     } catch (err) {
       console.error('Submission failed:', err);
       const errorMessage = err instanceof Error ? err.message : 'Submission failed';
