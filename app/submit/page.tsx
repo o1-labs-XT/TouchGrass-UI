@@ -88,7 +88,14 @@ export default function SubmitPage() {
       const encodedUrl = encodeURIComponent(currentUrl);
       const networkId = encodeURIComponent('mina:devnet');
       const appLinksUrl = `https://applinks.aurowallet.com/applinks?action=openurl&networkid=${networkId}&url=${encodedUrl}`;
-      window.location.href = appLinksUrl;
+
+      // Display URL on screen for debugging
+      setStatus(`Redirecting to Auro...\n\nGenerated URL:\n${appLinksUrl}`);
+
+      // Wait 2 seconds so user can see the URL, then redirect
+      setTimeout(() => {
+        window.location.href = appLinksUrl;
+      }, 2000);
       return;
     }
 
