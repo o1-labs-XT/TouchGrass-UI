@@ -1,7 +1,7 @@
 .backButton {
   background: none;
   border: none;
-  color: var(--mina-black);
+  color: var(--brand-primary);
   font-size: 0.875rem;
   padding: 0.5rem 0;
   cursor: pointer;

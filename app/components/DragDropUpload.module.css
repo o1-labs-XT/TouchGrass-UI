@@ -60,27 +60,27 @@
 }
 
 .dropArea.blueTheme {
-  border-color: var(--mina-blurple);
+  border-color: var(--brand-primary);
   background-color: var(--mina-white);
-  color: var(--mina-blurple);
+  color: var(--brand-primary);
 }
 
 .dropArea.blueTheme:hover:not(.disabled) {
-  border-color: var(--mina-purple);
+  border-color: var(--brand-primary);
   background-color: var(--mina-light-gray);
-  color: var(--mina-purple);
+  color: var(--brand-primary);
 }
 
 .dropArea.greenTheme {
   border-color: var(--mina-mint);
   background-color: var(--mina-white);
-  color: var(--mina-black);
+  color: var(--brand-primary);
 }
 
 .dropArea.greenTheme:hover:not(.disabled) {
   border-color: var(--mina-mint);
   background-color: var(--mina-light-gray);
-  color: var(--mina-black);
+  color: var(--brand-primary);
 }
 
 .uploadPrompt {
@@ -191,8 +191,8 @@
 .spinner {
   width: 24px;
   height: 24px;
-  border: 2px solid var(--mina-grey);
-  border-top: 2px solid var(--mina-blurple);
+  border: 2px solid var(--brand-secondary-text);
+  border-top: 2px solid var(--brand-primary);
   border-radius: 50%;
   animation: spin 1s linear infinite;
 }
@@ -204,7 +204,7 @@
 
 .processingText {
   font-size: 0.9rem;
-  color: var(--mina-black);
+  color: var(--brand-primary);
   margin: 0;
 }
 
