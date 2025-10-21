@@ -79,7 +79,7 @@
 
 .buttons {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   gap: 0.75rem;
   width: 100%;
 }
@@ -103,5 +103,9 @@
 
   .subtitle {
     font-size: 1.125rem;
+  }
+
+  .buttons {
+    flex-direction: row;
   }
 }
