@@ -2,7 +2,7 @@
 
 import Button from './components/Button';
 import Card from './components/Card';
-import styles from './page.module.css';
+import styles from './Welcome.module.css';
 
 export default function WelcomePage() {
   return (
