@@ -17,20 +17,20 @@ export default function WelcomePage() {
           />
           <h1 className={styles.title}>TouchGrass</h1>
           <p className={styles.subtitle}>
-            Capture authentic moments, verified on-chain
+            Join daily photo challenges and earn rewards for authentic outdoor experiences
           </p>
 
           <ul className={styles.features}>
-            <li>C2PA image verification</li>
-            <li>MINA blockchain integration</li>
-            <li>Weekly challenges</li>
+            <li data-icon="○">C2PA VERIFIED AUTHENTICITY</li>
+            <li data-icon="▢">MINA BLOCKCHAIN REWARDS</li>
+            <li data-icon="🏆">DAILY CHALLENGES & COMPETITIONS</li>
           </ul>
 
           <div className={styles.buttons}>
             <Button variant="primary">
               Use Auro Wallet
             </Button>
-            <Button variant="secondary">
+            <Button variant="primary">
               Continue without wallet
             </Button>
           </div>

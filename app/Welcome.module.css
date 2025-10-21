@@ -55,25 +55,32 @@
 }
 
 .features li {
-  font-size: 0.875rem;
+  font-size: 0.75rem;
   color: var(--mina-black);
   padding: 0.5rem 0;
-  padding-left: 1.5rem;
+  padding-left: 2rem;
   position: relative;
+  font-weight: 500;
+  letter-spacing: 0.5px;
 }
 
 .features li::before {
-  content: '✓';
+  content: attr(data-icon);
   position: absolute;
   left: 0;
-  color: var(--color-success);
-  font-weight: 600;
+  font-size: 1.125rem;
+  font-weight: 400;
 }
 
 .buttons {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   gap: 0.75rem;
+  width: 100%;
+}
+
+.buttons > * {
+  flex: 1;
 }
 
 @media (min-width: 768px) {
