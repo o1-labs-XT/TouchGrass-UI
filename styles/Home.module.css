@@ -50,7 +50,7 @@
 }
 
 .tagline {
-  font-family: var(--font-ibm-plex);
+  font-family: var(--font-figtree);
   font-weight: 400;
   font-size: 0.875rem;
   padding-top: 1rem;
@@ -59,7 +59,7 @@
 }
 
 .start {
-  font-family: var(--font-ibm-plex);
+  font-family: var(--font-figtree);
   font-weight: 400;
   font-size: 1.25rem;
   letter-spacing: 0.1rem;
@@ -67,7 +67,7 @@
 }
 
 .code {
-  font-family: var(--font-ibm-plex);
+  font-family: var(--font-figtree);
   font-weight: 700;
 }
 
@@ -114,7 +114,7 @@
 }
 
 .state .bold {
-  font-family: var(--font-ibm-plex);
+  font-family: var(--font-figtree);
   font-weight: 700;
 }
 
@@ -181,7 +181,7 @@
 }
 
 .title {
-  font-family: var(--font-ibm-plex);
+  font-family: var(--font-figtree);
   font-weight: 700;
   font-size: 2.5rem;
   text-align: center;
@@ -190,7 +190,7 @@
 }
 
 .subtitle {
-  font-family: var(--font-ibm-plex);
+  font-family: var(--font-figtree);
   font-weight: 400;
   font-size: 1.125rem;
   text-align: center;
@@ -238,7 +238,7 @@
 }
 
 .flowCard h2 {
-  font-family: var(--font-ibm-plex);
+  font-family: var(--font-figtree);
   font-weight: 700;
   font-size: 1.25rem;
   margin: 0 0 1rem 0;
@@ -246,7 +246,7 @@
 }
 
 .flowCard p {
-  font-family: var(--font-ibm-plex);
+  font-family: var(--font-figtree);
   font-weight: 400;
   font-size: 0.9rem;
   line-height: 1.4;
@@ -262,7 +262,7 @@
 }
 
 .info h3 {
-  font-family: var(--font-ibm-plex);
+  font-family: var(--font-figtree);
   font-weight: 700;
   font-size: 1.5rem;
   margin-bottom: 1.5rem;
@@ -276,7 +276,7 @@
 }
 
 .features li {
-  font-family: var(--font-ibm-plex);
+  font-family: var(--font-figtree);
   font-weight: 400;
   font-size: 0.9rem;
   line-height: 1.5;
