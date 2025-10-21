@@ -1,11 +1,19 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import Button from './components/Button';
 import Card from './components/Card';
 import styles from './Welcome.module.css';
 
 export default function WelcomePage() {
+  const router = useRouter();
+
+  const handleWithoutWallet = () => {
+    sessionStorage.setItem('walletChoice', 'generated');
+    router.push('/challenge/1');
+  };
+
   return (
     <main className={styles.container}>
       <div className={styles.background} />
@@ -39,7 +47,7 @@ export default function WelcomePage() {
             <Button variant="primary">
               Use Auro Wallet
             </Button>
-            <Button variant="primary">
+            <Button variant="primary" onClick={handleWithoutWallet}>
               Continue without wallet
             </Button>
           </div>
