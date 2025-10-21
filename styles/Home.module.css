@@ -298,10 +298,21 @@
 @media (hover: hover) and (pointer: fine) {
   .card:hover {
     color: var(--mina-white);
-    background: var(--brand-primary);
-    animation: cardGrassyFlow 3s ease-in-out infinite;
-    transform: scale(1.02);
-    filter: brightness(1.05);
+        background: linear-gradient(
+        0deg,
+        var(--mina-black),
+        var(--mina-black)
+      ),
+      url('/assets/button-hover-light.png');
+    border: 1px solid var(--mina-black);
+    background-size: 100% 100%;
+    transform: translateZ(-1px);
+  }
+
+  .card:hover:after {
+    border: 0px solid rgba(0, 0, 0, 0);
+    transform: translate(-0.4rem, -0.4rem);
+    transition: transform 200ms ease-in 0ms, border 50ms ease-in 100ms;
   }
 
   .card:hover img {
