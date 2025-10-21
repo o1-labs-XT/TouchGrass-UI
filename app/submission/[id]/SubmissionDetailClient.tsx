@@ -6,7 +6,8 @@ import { getSubmission, getImageUrl, getCachedSubmissionSync } from '../../lib/b
 import type { Submission } from '../../lib/backendClient';
 import BackButton from '../../components/BackButton';
 import SubmissionCard from '../../components/SubmissionCard';
-import TransactionDisplay from '../../components/TransactionDisplay';
+import SubmissionStatus from '../../components/SubmissionStatus';
+import SubmissionProgress from '../../components/SubmissionProgress';
 import styles from './SubmissionDetail.module.css';
 
 interface ShareIconProps {
@@ -214,6 +215,8 @@ export default function SubmissionDetailClient({ params }: SubmissionDetailClien
           </div>
         )}
 
+        <SubmissionStatus status={submission.status} />
+
         <SubmissionCard centered>
           <div className={styles.submissionContent}>
             <div className={styles.imageContainer}>
@@ -247,12 +250,11 @@ export default function SubmissionDetailClient({ params }: SubmissionDetailClien
             </div>
           </div>
         </SubmissionCard>
-
-        <div className={styles.transactionSection}>
-          <SubmissionCard>
-            <TransactionDisplay submission={submission} />
-          </SubmissionCard>
-        </div>
+        
+        <SubmissionProgress 
+          status={submission.status} 
+          transactionId={submission.transactionId} 
+        />
       </div>
     </div>
   );
