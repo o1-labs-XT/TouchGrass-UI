@@ -66,14 +66,15 @@
   position: relative;
   font-weight: 500;
   letter-spacing: 0.5px;
+  display: flex;
+  align-items: center;
 }
 
-.features li::before {
-  content: attr(data-icon);
+.featureIcon {
   position: absolute;
   left: 0;
-  font-size: 1.125rem;
-  font-weight: 400;
+  width: 1.125rem;
+  height: 1.125rem;
 }
 
 .buttons {

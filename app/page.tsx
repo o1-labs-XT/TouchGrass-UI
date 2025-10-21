@@ -25,8 +25,14 @@ export default function WelcomePage() {
           </p>
 
           <ul className={styles.features}>
-            <li data-icon="🏆">DAILY CHALLENGES & COMPETITIONS</li>
-            <li data-icon="▢">MINA BLOCKCHAIN REWARDS</li>
+            <li>
+              <img src="/assets/daly-challenges-icon.svg" alt="" className={styles.featureIcon} />
+              DAILY CHALLENGES & COMPETITIONS
+            </li>
+            <li>
+              <img src="/assets/blockchain-rewards-icon.svg" alt="" className={styles.featureIcon} />
+              MINA BLOCKCHAIN REWARDS
+            </li>
           </ul>
 
           <div className={styles.buttons}>
