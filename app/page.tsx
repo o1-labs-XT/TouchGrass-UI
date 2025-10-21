@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import Button from './components/Button';
 import Card from './components/Card';
 import styles from './Welcome.module.css';
@@ -10,10 +11,13 @@ export default function WelcomePage() {
       <div className={styles.background} />
       <div className={styles.wrapper}>
         <Card centered>
-          <img
+          <Image
             src="/assets/touchgrass-logo.png"
             alt="TouchGrass"
+            width={64}
+            height={64}
             className={styles.logo}
+            priority
           />
           <h1 className={styles.title}>TouchGrass</h1>
           <p className={styles.subtitle}>
