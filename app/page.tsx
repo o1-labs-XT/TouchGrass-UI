@@ -21,9 +21,8 @@ export default function WelcomePage() {
           </p>
 
           <ul className={styles.features}>
-            <li data-icon="○">C2PA VERIFIED AUTHENTICITY</li>
-            <li data-icon="▢">MINA BLOCKCHAIN REWARDS</li>
             <li data-icon="🏆">DAILY CHALLENGES & COMPETITIONS</li>
+            <li data-icon="▢">MINA BLOCKCHAIN REWARDS</li>
           </ul>
 
           <div className={styles.buttons}>
