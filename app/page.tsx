@@ -1,15 +1,38 @@
 'use client';
 
-import { useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import Button from './components/Button';
+import styles from './page.module.css';
 
-export default function Home() {
-  const router = useRouter();
+export default function WelcomePage() {
+  return (
+    <main className={styles.container}>
+      <div className={styles.background} />
+      <div className={styles.card}>
+        <img
+          src="/assets/touchgrass-logo.png"
+          alt="TouchGrass"
+          className={styles.logo}
+        />
+        <h1 className={styles.title}>TouchGrass</h1>
+        <p className={styles.subtitle}>
+          Capture authentic moments, verified on-chain
+        </p>
 
-  useEffect(() => {
-    // Redirect to current challenge
-    router.push('/challenge/1');
-  }, [router]);
+        <ul className={styles.features}>
+          <li>C2PA image verification</li>
+          <li>MINA blockchain integration</li>
+          <li>Weekly challenges</li>
+        </ul>
 
-  return null;
+        <div className={styles.buttons}>
+          <Button variant="primary">
+            Use Auro Wallet
+          </Button>
+          <Button variant="secondary">
+            Continue without wallet
+          </Button>
+        </div>
+      </div>
+    </main>
+  );
 }
