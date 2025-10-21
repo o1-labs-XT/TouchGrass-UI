@@ -9,6 +9,26 @@ import styles from './Welcome.module.css';
 export default function WelcomePage() {
   const router = useRouter();
 
+  const handleAuroWallet = () => {
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    const hasWindowMina = typeof window.mina !== 'undefined';
+
+    sessionStorage.setItem('walletChoice', 'auro');
+
+    if (isMobile && !hasWindowMina) {
+      // Mobile without window.mina - redirect to AppLinks
+      const returnUrl = window.location.origin + '/challenge/1';
+      const encodedUrl = encodeURIComponent(returnUrl);
+      const networkId = encodeURIComponent('mina:devnet');
+      const appLinksUrl = `https://applinks.aurowallet.com/applinks?action=openurl&&networkid=${networkId}&url=${encodedUrl}`;
+
+      window.location.href = appLinksUrl;
+    } else {
+      // Already in Auro browser or desktop - navigate directly
+      router.push('/challenge/1');
+    }
+  };
+
   const handleWithoutWallet = () => {
     sessionStorage.setItem('walletChoice', 'generated');
     router.push('/challenge/1');
@@ -44,7 +64,7 @@ export default function WelcomePage() {
           </ul>
 
           <div className={styles.buttons}>
-            <Button variant="primary">
+            <Button variant="primary" onClick={handleAuroWallet}>
               Use Auro Wallet
             </Button>
             <Button variant="primary" onClick={handleWithoutWallet}>
