@@ -192,20 +192,31 @@ export default function CameraCapture({ onCapture }: CameraCaptureProps) {
     }
   };
 
-  const handleFileCapture = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileCapture = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
-      // Check file size (max 10MB)
-      const maxSize = 10 * 1024 * 1024;
-      if (file.size > maxSize) {
-        setError(`Image too large (${(file.size / 1024 / 1024).toFixed(1)}MB). Maximum size is 10MB.`);
+      try {
+        // Compress image before submitting
+        const compressedBlob = await compressImage(file);
+
+        // Check file size (max 10MB)
+        const maxSize = 10 * 1024 * 1024;
+        if (compressedBlob.size > maxSize) {
+          setError(`Image too large (${(compressedBlob.size / 1024 / 1024).toFixed(1)}MB). Maximum size is 10MB.`);
+          if (fileInputRef.current) {
+            fileInputRef.current.value = '';
+          }
+          return;
+        }
+        setError(null);
+        onCapture(compressedBlob);
+      } catch (err) {
+        console.error('Failed to compress image:', err);
+        setError(err instanceof Error ? err.message : 'Failed to process image');
         if (fileInputRef.current) {
           fileInputRef.current.value = '';
         }
-        return;
       }
-      setError(null);
-      onCapture(file);
     }
   };
 
