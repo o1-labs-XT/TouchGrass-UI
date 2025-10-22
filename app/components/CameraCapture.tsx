@@ -59,8 +59,25 @@ const compressImage = async (blob: Blob, maxDimension: number = 1200, quality: n
 
       ctx.drawImage(img, 0, 0, width, height);
 
-      // TODO: Convert to JPEG blob
-      resolve(blob);
+      // Convert to JPEG blob
+      canvas.toBlob(
+        (compressedBlob) => {
+          if (!compressedBlob) {
+            reject(new Error('Failed to compress image'));
+            return;
+          }
+
+          // Log compression results
+          const originalSizeKB = (blob.size / 1024).toFixed(1);
+          const compressedSizeKB = (compressedBlob.size / 1024).toFixed(1);
+          const ratio = (blob.size / compressedBlob.size).toFixed(1);
+          console.log(`Compressed: ${originalSizeKB}KB → ${compressedSizeKB}KB (${ratio}x reduction)`);
+
+          resolve(compressedBlob);
+        },
+        'image/jpeg',
+        quality
+      );
     };
 
     img.onerror = () => {
