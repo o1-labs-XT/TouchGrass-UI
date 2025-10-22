@@ -6,7 +6,10 @@ import {
   Field,
   fetchAccount
 } from "o1js";
-import { computeOnChainCommitmentCrossPlatform, generateECKeypairCrossPlatform } from "authenticity-zkapp/browser";
+import {
+  computeOnChainCommitmentCrossPlatform,
+  generateECKeypairCrossPlatform
+} from "authenticity-zkapp/browser";
 import { Secp256r1, Ecdsa, Bytes32 } from "authenticity-zkapp";
 import * as Comlink from "comlink";
 import Client from "mina-signer";
@@ -69,10 +72,9 @@ export const api = {
     try {
       const client = new Client({ network: "testnet" });
 
-      const signResult = client.signFields({
-        fields: fields,
-        privateKey: privateKeyBase58
-      });
+      const fieldsBigInt = fields.map(f => BigInt(f));
+
+      const signResult = client.signFields(fieldsBigInt, privateKeyBase58);
 
       console.log("Fields signed successfully");
       return {
@@ -102,7 +104,7 @@ export const api = {
         publicKeyYHex: keyPair.publicKeyYHex,
         privateKeyBigInt: keyPair.privateKeyBigInt.toString(), // Serialize for Comlink
         publicKeyXBigInt: keyPair.publicKeyXBigInt.toString(),
-        publicKeyYBigInt: keyPair.publicKeyYBigInt.toString(),
+        publicKeyYBigInt: keyPair.publicKeyYBigInt.toString()
       };
     } catch (error) {
       console.error("Failed to generate ECDSA keypair:", error);
@@ -186,7 +188,7 @@ export const api = {
       const hashBytes = Bytes32.fromHex(sha256Hex);
 
       // Convert private key hex to bigint
-      const privateKeyBigInt = BigInt('0x' + privateKeyHex);
+      const privateKeyBigInt = BigInt("0x" + privateKeyHex);
 
       // Create Secp256r1 scalar from private key
       const creatorKey = Secp256r1.Scalar.from(privateKeyBigInt);
@@ -196,8 +198,8 @@ export const api = {
 
       // Extract r and s components as hex strings (64 chars each)
       const signatureData = signature.toBigInt();
-      const signatureR = signatureData.r.toString(16).padStart(64, '0');
-      const signatureS = signatureData.s.toString(16).padStart(64, '0');
+      const signatureR = signatureData.r.toString(16).padStart(64, "0");
+      const signatureS = signatureData.s.toString(16).padStart(64, "0");
 
       console.log("ECDSA signature created successfully");
       return {
