@@ -220,6 +220,10 @@ export default function CameraCapture({ onCapture }: CameraCaptureProps) {
           return;
         }
         setError(null);
+
+        // Show compression log for 5 seconds before continuing
+        await new Promise(resolve => setTimeout(resolve, 5000));
+
         onCapture(compressedBlob);
       } catch (err) {
         console.error('Failed to compress image:', err);
