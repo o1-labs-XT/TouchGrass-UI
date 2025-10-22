@@ -88,6 +88,7 @@ export default function SubmitPage() {
     }
 
     // For Auro wallet, check connection
+    console.log('[DEBUG] Wallet validation:', { walletChoice, isConnected, address });
     if (walletChoice === 'auro' && (!isConnected || !address)) {
       setError('Please connect your Auro Wallet first');
       return;
