@@ -46,7 +46,20 @@ const compressImage = async (blob: Blob, maxDimension: number = 1200, quality: n
         }
       }
 
-      // TODO: Create canvas and compress
+      // Create canvas and draw resized image
+      const canvas = document.createElement('canvas');
+      canvas.width = width;
+      canvas.height = height;
+      const ctx = canvas.getContext('2d');
+
+      if (!ctx) {
+        reject(new Error('Could not get canvas context'));
+        return;
+      }
+
+      ctx.drawImage(img, 0, 0, width, height);
+
+      // TODO: Convert to JPEG blob
       resolve(blob);
     };
 
