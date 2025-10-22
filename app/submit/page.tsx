@@ -79,27 +79,16 @@ export default function SubmitPage() {
       return;
     }
 
-    // Check if we need to redirect to Auro browser on mobile
-    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-    const hasWindowMina = typeof window.mina !== 'undefined';
+    // Check wallet choice
+    const walletChoice = sessionStorage.getItem('walletChoice');
 
-    if (isMobile && !hasWindowMina) {
-      // Redirect to AppLinks to open in Auro browser
-      const homeUrl = window.location.origin;
-      const encodedUrl = encodeURIComponent(homeUrl);
-      const networkId = encodeURIComponent('mina:devnet');
-      const appLinksUrl = `https://applinks.aurowallet.com/applinks?action=openurl&&networkid=${networkId}&url=${encodedUrl}`;
-
-      setStatus(`Redirecting to Auro in 10 seconds...\n\nGenerated URL:\n${appLinksUrl}`);
-
-      setTimeout(() => {
-        window.location.href = appLinksUrl;
-      }, 10000);
+    if (!walletChoice) {
+      setError('Please select a signing method from the welcome page');
       return;
     }
 
-    // Check wallet connection
-    if (!isConnected || !address) {
+    // For Auro wallet, check connection
+    if (walletChoice === 'auro' && (!isConnected || !address)) {
       setError('Please connect your Auro Wallet first');
       return;
     }
@@ -136,25 +125,67 @@ export default function SubmitPage() {
       );
       console.log('[4/7] ECDSA signature created');
 
-      // Sign Field elements with Auro Wallet
-      setStatus('Please approve signature in Auro Wallet...');
-      console.log('[5/7] Requesting Auro wallet signature');
-      const fieldMessage = [commitment.high128String, commitment.low128String];
+      // Sign with wallet choice
       let walletSignResult;
-      try {
-        walletSignResult = await signFields(fieldMessage);
-        console.log('[5/7] Auro signature received:', walletSignResult);
-      } catch (err: any) {
-        console.error('[5/7] Wallet signature failed:', err);
-        throw new Error(err.message || 'Wallet signature rejected');
+      let minaPublicKey;
+
+      if (walletChoice === 'auro') {
+        // Sign with Auro Wallet
+        setStatus('Please approve signature in Auro Wallet...');
+        console.log('[5/7] Requesting Auro wallet signature');
+        const fieldMessage = [commitment.high128String, commitment.low128String];
+        try {
+          walletSignResult = await signFields(fieldMessage);
+          minaPublicKey = address;
+          console.log('[5/7] Auro signature received:', walletSignResult);
+        } catch (err: any) {
+          console.error('[5/7] Wallet signature failed:', err);
+          throw new Error(err.message || 'Wallet signature rejected');
+        }
+
+      } else if (walletChoice === 'generated') {
+        // Sign with generated keypair
+        let keypairData = sessionStorage.getItem('minaKeypair');
+
+        if (!keypairData) {
+          // First submit - generate and store
+          setStatus('Generating Mina keypair...');
+          console.log('[5/7] Generating Mina keypair for first use');
+          const minaKeypair = await worker.generateKeypair();
+          sessionStorage.setItem('minaKeypair', JSON.stringify({
+            privateKey: minaKeypair.privateKey,
+            publicKey: minaKeypair.publicKey
+          }));
+          keypairData = JSON.stringify(minaKeypair);
+          console.log('[5/7] Mina keypair generated and stored');
+        } else {
+          console.log('[5/7] Using existing Mina keypair from sessionStorage');
+        }
+
+        const minaKeypair = JSON.parse(keypairData);
+
+        setStatus('Signing with generated keypair...');
+        console.log('[5/7] Signing with generated keypair');
+        const fieldMessage = [commitment.high128String, commitment.low128String];
+        const signResult = await worker.signFieldsMinaSigner(
+          minaKeypair.privateKey,
+          fieldMessage
+        );
+
+        walletSignResult = { signature: signResult.signature };
+        minaPublicKey = signResult.publicKey;
+        console.log('[5/7] Generated keypair signature created');
+
+      } else {
+        throw new Error('Invalid wallet choice');
       }
 
-      // Create FormData for upload with both ECDSA and Auro wallet signatures
+      // Create FormData for upload with both ECDSA and Mina signatures
       setStatus('Submitting image...');
       console.log('[6/7] Building form data');
       const formData = new FormData();
       formData.append('image', imageBlob);
-      formData.append('walletAddress', address);
+      formData.append('walletAddress', minaPublicKey);
       formData.append('walletSignature', walletSignResult.signature);
       formData.append('signatureR', signature.signatureR);
       formData.append('signatureS', signature.signatureS);
@@ -178,6 +209,7 @@ export default function SubmitPage() {
       console.log('[7/7] Upload successful!', result);
 
       // Check if we're in Auro browser (mobile flow)
+      const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
       const isInAuroBrowser = isMobile && typeof window.mina !== 'undefined';
 
       if (isInAuroBrowser) {
