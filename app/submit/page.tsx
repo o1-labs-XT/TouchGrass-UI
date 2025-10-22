@@ -16,7 +16,7 @@ import styles from './submit.module.css';
 
 export default function SubmitPage() {
   const router = useRouter();
-  const { isConnected, address, signFields } = useAuroWallet();
+  const { isConnected, isConnecting, address, signFields } = useAuroWallet();
   const [challenge, setChallenge] = useState<Challenge | null>(null);
   const [chainId, setChainId] = useState<string | null>(null);
   const [imageBlob, setImageBlob] = useState<Blob | null>(null);
@@ -24,6 +24,11 @@ export default function SubmitPage() {
   const [isProcessing, setIsProcessing] = useState(false);
   const [status, setStatus] = useState<string>('');
   const [error, setError] = useState<string | null>(null);
+  const [walletChoice, setWalletChoice] = useState<string | null>(null);
+
+  useEffect(() => {
+    setWalletChoice(sessionStorage.getItem('walletChoice'));
+  }, []);
 
   useEffect(() => {
     // Get chainId from URL params
@@ -78,9 +83,6 @@ export default function SubmitPage() {
       setError('Chain ID not available. Please try refreshing the page.');
       return;
     }
-
-    // Check wallet choice
-    const walletChoice = sessionStorage.getItem('walletChoice');
 
     if (!walletChoice) {
       setError('Please select a signing method from the welcome page');
@@ -252,8 +254,14 @@ export default function SubmitPage() {
             </div>
             {!isProcessing && !status && (
               <div className={styles.buttonGroup}>
-                <Button variant="primary" onClick={handleSubmit}>
-                  Submit
+                <Button
+                  variant="primary"
+                  onClick={handleSubmit}
+                  disabled={walletChoice === 'auro' && isConnecting}
+                >
+                  {walletChoice === 'auro' && isConnecting
+                    ? 'Connecting wallet...'
+                    : 'Submit'}
                 </Button>
                 <Button variant="primary" onClick={handleReset}>
                   Retake
