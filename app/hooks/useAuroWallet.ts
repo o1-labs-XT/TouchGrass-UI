@@ -55,6 +55,17 @@ export function useAuroWallet() {
         return;
       }
 
+      // Only auto-connect if user chose Auro wallet
+      const walletChoice = sessionStorage.getItem('walletChoice');
+      if (walletChoice !== 'auro') {
+        setWalletState(prev => ({
+          ...prev,
+          isInstalled: true,
+          isConnecting: false,
+        }));
+        return;
+      }
+
       setWalletState(prev => ({
         ...prev,
         isInstalled: true,
