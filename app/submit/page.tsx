@@ -127,8 +127,8 @@ export default function SubmitPage() {
       console.log('[4/7] ECDSA signature created');
 
       // Sign with wallet choice
-      let walletSignResult;
-      let minaPublicKey;
+      let walletSignResult: { signature: string } | undefined;
+      let minaPublicKey: string | null = null;
 
       if (walletChoice === 'auro') {
         // Sign with Auro Wallet
@@ -179,6 +179,10 @@ export default function SubmitPage() {
 
       } else {
         throw new Error('Invalid wallet choice');
+      }
+
+      if (!walletSignResult || !minaPublicKey) {
+        throw new Error('Failed to sign with wallet');
       }
 
       // Create FormData for upload with both ECDSA and Mina signatures
