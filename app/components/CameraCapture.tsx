@@ -22,7 +22,12 @@ const isMobileDevice = (): boolean => {
          (mobileUA && hasTouch && isSmallScreen);
 };
 
-const compressImage = async (blob: Blob, maxDimension: number = 1200, quality: number = 0.85): Promise<Blob> => {
+const compressImage = async (
+  blob: Blob,
+  maxDimension: number = 1200,
+  quality: number = 0.85,
+  setLog?: (log: string) => void
+): Promise<Blob> => {
   return new Promise((resolve, reject) => {
     const img = new Image();
     const url = URL.createObjectURL(blob);
@@ -71,7 +76,12 @@ const compressImage = async (blob: Blob, maxDimension: number = 1200, quality: n
           const originalSizeKB = (blob.size / 1024).toFixed(1);
           const compressedSizeKB = (compressedBlob.size / 1024).toFixed(1);
           const ratio = (blob.size / compressedBlob.size).toFixed(1);
-          console.log(`Compressed: ${originalSizeKB}KB → ${compressedSizeKB}KB (${ratio}x reduction)`);
+          const logMessage = `Compressed: ${originalSizeKB}KB → ${compressedSizeKB}KB (${ratio}x reduction)`;
+          console.log(logMessage);
+
+          if (setLog) {
+            setLog(logMessage);
+          }
 
           resolve(compressedBlob);
         },
@@ -98,6 +108,7 @@ export default function CameraCapture({ onCapture }: CameraCaptureProps) {
   const [isCameraActive, setIsCameraActive] = useState(false);
   const [facingMode, setFacingMode] = useState<'user' | 'environment'>('environment');
   const [isCapturing, setIsCapturing] = useState(false);
+  const [compressionLog, setCompressionLog] = useState<string>('');
 
   // Detect device type on mount
   useEffect(() => {
@@ -173,7 +184,7 @@ export default function CameraCapture({ onCapture }: CameraCaptureProps) {
       const blob = await imageCapture.takePhoto();
 
       // Compress image before submitting
-      const compressedBlob = await compressImage(blob);
+      const compressedBlob = await compressImage(blob, 1200, 0.85, setCompressionLog);
 
       // Check file size (max 10MB)
       const maxSize = 10 * 1024 * 1024;
@@ -197,7 +208,7 @@ export default function CameraCapture({ onCapture }: CameraCaptureProps) {
     if (file) {
       try {
         // Compress image before submitting
-        const compressedBlob = await compressImage(file);
+        const compressedBlob = await compressImage(file, 1200, 0.85, setCompressionLog);
 
         // Check file size (max 10MB)
         const maxSize = 10 * 1024 * 1024;
@@ -242,6 +253,19 @@ export default function CameraCapture({ onCapture }: CameraCaptureProps) {
         {error && (
           <div className={styles.error}>
             <p>{error}</p>
+          </div>
+        )}
+        {compressionLog && (
+          <div style={{
+            padding: '12px',
+            margin: '10px 0',
+            backgroundColor: '#4CAF50',
+            color: 'white',
+            borderRadius: '8px',
+            fontSize: '14px',
+            fontWeight: '500'
+          }}>
+            {compressionLog}
           </div>
         )}
         <div className={styles.controls}>
