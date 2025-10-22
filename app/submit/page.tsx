@@ -145,34 +145,36 @@ export default function SubmitPage() {
   return (
     <>
       {imageUrl ? (
-        <div className={styles.container}>
-          <h1 className={styles.title}>Submit Photo</h1>
-          <div className={styles.previewContainer}>
-            <div className={styles.imageWrapper}>
-              <img 
-                src={imageUrl} 
-                alt="Captured photo" 
-                className={styles.capturedImage}
-              />
-            </div>
-            {!isProcessing && !status && (
-              <div className={styles.buttonGroup}>
-                <Button variant="primary" onClick={handleSubmit}>
-                  Submit
-                </Button>
-                <Button variant="primary" onClick={handleReset}>
-                  Retake
-                </Button>
+        <main className={styles.container}>
+          <div className={styles.wrapper}>
+            <h1 className={styles.pageTitle}>Submit Photo</h1>
+            <div className={styles.previewContainer}>
+              <div className={styles.imageWrapper}>
+                <img
+                  src={imageUrl}
+                  alt="Captured photo"
+                  className={styles.capturedImage}
+                />
               </div>
-            )}
-            {(isProcessing || status) && (
-              <StatusMessage type="processing" message={status} showSpinner={isProcessing} />
-            )}
-            {error && (
-              <ErrorMessage message={error} onDismiss={() => setError(null)} />
-            )}
+              {!isProcessing && !status && (
+                <div className={styles.buttonGroup}>
+                  <Button variant="primary" onClick={handleSubmit}>
+                    Submit
+                  </Button>
+                  <Button variant="primary" onClick={handleReset}>
+                    Retake
+                  </Button>
+                </div>
+              )}
+              {(isProcessing || status) && (
+                <StatusMessage type="processing" message={status} showSpinner={isProcessing} />
+              )}
+              {error && (
+                <ErrorMessage message={error} onDismiss={() => setError(null)} />
+              )}
+            </div>
           </div>
-        </div>
+        </main>
       ) : (
         <main className={styles.container}>
           <div className={styles.wrapper}>
