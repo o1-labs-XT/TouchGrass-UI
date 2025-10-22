@@ -1,0 +1,173 @@
+.container {
+  background: var(--mina-white);
+  border-radius: 16px 14px 18px 12px / 12px 16px 14px 18px;
+  padding: 1.5rem;
+  border: 1px solid var(--brand-primary);
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+.title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--brand-primary);
+  margin: 0 0 1.5rem 0;
+  font-family: var(--font-figtree);
+}
+
+.progressTrack {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.step {
+  display: flex;
+  gap: 1rem;
+  position: relative;
+}
+
+.stepHeader {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.stepIcon {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 2;
+}
+
+.stepIcon.completed {
+  background: var(--mina-mint);
+  color: white;
+}
+
+.stepIcon.failed {
+  background: var(--mina-red-violet);
+  color: white;
+}
+
+.stepIcon.current {
+  background: var(--brand-primary);
+  color: white;
+}
+
+.stepIcon.pending {
+  background: var(--brand-secondary-text);
+  color: white;
+}
+
+.dot {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.spinner {
+  width: 1rem;
+  height: 1rem;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top: 2px solid white;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.connector {
+  width: 2px;
+  height: 1.5rem;
+  margin-top: 0.25rem;
+  position: relative;
+  z-index: 1;
+}
+
+.connectorCompleted {
+  background: var(--mina-mint);
+}
+
+.connectorPending {
+  background: var(--brand-secondary-text);
+}
+
+.stepContent {
+  flex: 1;
+  padding-top: 0.25rem;
+}
+
+.stepLabel {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--brand-primary);
+  margin-bottom: 0.25rem;
+  font-family: var(--font-figtree);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.stepLink {
+  color: var(--brand-primary);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  transition: opacity 0.2s ease;
+}
+
+.stepLink:hover {
+  opacity: 0.7;
+  text-decoration: underline;
+}
+
+.externalIcon {
+  width: 0.875rem;
+  height: 0.875rem;
+}
+
+.stepDescription {
+  font-size: 0.875rem;
+  color: var(--brand-secondary-text);
+  line-height: 1.4;
+  font-family: var(--font-figtree);
+}
+
+/* Mobile responsiveness */
+@media (max-width: 640px) {
+  .container {
+    padding: 1rem;
+  }
+  
+  .title {
+    font-size: 1.125rem;
+  }
+  
+  .progressTrack {
+    gap: 1.25rem;
+  }
+  
+  .stepIcon {
+    width: 1.75rem;
+    height: 1.75rem;
+  }
+  
+  .stepLabel {
+    font-size: 0.9rem;
+  }
+  
+  .stepDescription {
+    font-size: 0.8rem;
+  }
+}
