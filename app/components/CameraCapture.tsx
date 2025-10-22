@@ -30,7 +30,23 @@ const compressImage = async (blob: Blob, maxDimension: number = 1200, quality: n
     img.onload = () => {
       URL.revokeObjectURL(url);
 
-      // TODO: Calculate dimensions and compress
+      // Calculate new dimensions while maintaining aspect ratio
+      let width = img.width;
+      let height = img.height;
+
+      if (width > height) {
+        if (width > maxDimension) {
+          height = Math.round((height * maxDimension) / width);
+          width = maxDimension;
+        }
+      } else {
+        if (height > maxDimension) {
+          width = Math.round((width * maxDimension) / height);
+          height = maxDimension;
+        }
+      }
+
+      // TODO: Create canvas and compress
       resolve(blob);
     };
 
