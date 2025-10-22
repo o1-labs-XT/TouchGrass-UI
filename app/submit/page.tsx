@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { getCurrentChallenge, getChainsByChallenge, BACKEND_URL } from '../lib/backendClient';
 import type { Challenge } from '../lib/backendClient';
+import { STATIC_ECDSA_PUBLIC_KEY } from '../lib/staticEcdsaKeys';
 import CameraCapture from '../components/CameraCapture';
 import Button from '../components/Button';
 import BackButton from '../components/BackButton';
@@ -87,9 +88,7 @@ export default function SubmitPage() {
       setStatus('Generating wallet address...');
       const walletKeypair = await worker.generateKeypair();
 
-      // Generate ECDSA keypair for image signing
-      setStatus('Generating signing keypair...');
-      const ecKeypair = await worker.generateECKeypair();
+      // ECDSA signing now handled by server-side API
 
       // Convert blob to buffer for processing
       const arrayBuffer = await imageBlob.arrayBuffer();
@@ -100,10 +99,21 @@ export default function SubmitPage() {
       console.log('Image hash:', commitment.sha256Hash);
 
       setStatus('Creating ECDSA signature...');
-      const signature = await worker.signECDSA(
-        ecKeypair.privateKeyHex,
-        commitment.sha256Hash
-      );
+      const signResponse = await fetch('/api/sign-image', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          sha256Hash: commitment.sha256Hash
+        })
+      });
+
+      if (!signResponse.ok) {
+        throw new Error('Failed to generate signature');
+      }
+
+      const signature = await signResponse.json();
 
       // Create FormData for upload with ECDSA signature components
       setStatus('Submitting image...');
@@ -112,8 +122,8 @@ export default function SubmitPage() {
       formData.append('walletAddress', walletKeypair.publicKeyBase58);
       formData.append('signatureR', signature.signatureR);
       formData.append('signatureS', signature.signatureS);
-      formData.append('publicKeyX', ecKeypair.publicKeyXHex);
-      formData.append('publicKeyY', ecKeypair.publicKeyYHex);
+      formData.append('publicKeyX', STATIC_ECDSA_PUBLIC_KEY.x);
+      formData.append('publicKeyY', STATIC_ECDSA_PUBLIC_KEY.y);
       formData.append('chainId', chainId);
 
       const response = await fetch(`${BACKEND_URL}/submissions`, {

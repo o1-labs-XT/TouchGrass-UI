@@ -62,8 +62,12 @@ export const api = {
   /**
    * Generate a random ECDSA keypair for browser-based signing
    * Uses P-256 curve (same as prime256v1 in Node.js)
+   * 
+   * @deprecated This method is deprecated. ECDSA signing now happens server-side.
+   * Use the /api/sign-image endpoint instead.
    */
   generateECKeypair: async () => {
+    console.warn("⚠️ DEPRECATED: generateECKeypair() is deprecated. ECDSA signing now happens server-side via /api/sign-image");
     console.log("Generating ECDSA keypair...");
 
     try {
@@ -147,8 +151,12 @@ export const api = {
   /**
    * Sign a SHA256 hash with ECDSA private key
    * Matches the backend signature format (signatureR, signatureS)
+   * 
+   * @deprecated This method is deprecated. ECDSA signing now happens server-side.
+   * Use the /api/sign-image endpoint instead.
    */
   signECDSA: async (privateKeyHex: string, sha256Hex: string) => {
+    console.warn("⚠️ DEPRECATED: signECDSA() is deprecated. ECDSA signing now happens server-side via /api/sign-image");
     console.log("Signing with ECDSA...");
 
     try {
