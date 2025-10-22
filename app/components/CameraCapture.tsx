@@ -22,6 +22,27 @@ const isMobileDevice = (): boolean => {
          (mobileUA && hasTouch && isSmallScreen);
 };
 
+const compressImage = async (blob: Blob, maxDimension: number = 1200, quality: number = 0.85): Promise<Blob> => {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    const url = URL.createObjectURL(blob);
+
+    img.onload = () => {
+      URL.revokeObjectURL(url);
+
+      // TODO: Calculate dimensions and compress
+      resolve(blob);
+    };
+
+    img.onerror = () => {
+      URL.revokeObjectURL(url);
+      reject(new Error('Failed to load image for compression'));
+    };
+
+    img.src = url;
+  });
+};
+
 export default function CameraCapture({ onCapture }: CameraCaptureProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const streamRef = useRef<MediaStream | null>(null);
