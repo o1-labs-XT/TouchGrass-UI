@@ -172,16 +172,19 @@ export default function CameraCapture({ onCapture }: CameraCaptureProps) {
       const imageCapture = new (window as any).ImageCapture(videoTrack);
       const blob = await imageCapture.takePhoto();
 
+      // Compress image before submitting
+      const compressedBlob = await compressImage(blob);
+
       // Check file size (max 10MB)
       const maxSize = 10 * 1024 * 1024;
-      if (blob.size > maxSize) {
-        setError(`Image too large (${(blob.size / 1024 / 1024).toFixed(1)}MB). Maximum size is 10MB.`);
+      if (compressedBlob.size > maxSize) {
+        setError(`Image too large (${(compressedBlob.size / 1024 / 1024).toFixed(1)}MB). Maximum size is 10MB.`);
         setIsCapturing(false);
         return;
       }
 
       stopCamera();
-      onCapture(blob);
+      onCapture(compressedBlob);
     } catch (err) {
       console.error('Failed to capture photo:', err);
       setError(err instanceof Error ? err.message : 'Failed to capture photo. Please try again.');
