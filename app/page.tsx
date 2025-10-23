@@ -4,16 +4,18 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Button from "./components/Button";
 import Card from "./components/Card";
+import { useWallet } from "./contexts/WalletContext";
 import styles from "./Welcome.module.css";
 
 export default function WelcomePage() {
   const router = useRouter();
+  const { setWalletChoice } = useWallet();
 
   const handleAuroWallet = () => {
     const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
     const hasWindowMina = typeof window.mina !== "undefined";
 
-    sessionStorage.setItem("walletChoice", "auro");
+    setWalletChoice("auro");
 
     if (isMobile && !hasWindowMina) {
       // Mobile without window.mina - redirect to AppLinks
@@ -30,7 +32,7 @@ export default function WelcomePage() {
   };
 
   const handleWithoutWallet = () => {
-    sessionStorage.setItem("walletChoice", "generated");
+    setWalletChoice("generated");
     router.push("/challenges");
   };
 
