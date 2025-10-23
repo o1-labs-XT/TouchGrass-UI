@@ -70,9 +70,9 @@ export default function ChallengePage({
     return (
       <main className={styles.error}>
         <p className={styles.errorMessage}>Error: {error}</p>
-        <Button variant="primary" onClick={() => window.location.reload()}>
+        <GrassyButton variant="primary" onClick={() => window.location.reload()}>
           Try Again
-        </Button>
+        </GrassyButton>
       </main>
     );
   }
