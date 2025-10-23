@@ -61,3 +61,11 @@
   opacity: 0.5;
   cursor: not-allowed;
 }
+
+.secondary .text {
+  color: #003712;
+}
+
+.secondary:hover:not(.disabled) .text {
+  color: #2C8C3E;
+}
