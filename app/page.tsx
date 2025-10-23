@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Button from "./components/Button";
+import GrassyButton from "./components/GrassyButton";
 import Card from "./components/Card";
 import { useWallet } from "./contexts/WalletContext";
 import styles from "./Welcome.module.css";
@@ -75,9 +76,9 @@ export default function WelcomePage() {
           </ul>
 
           <div className={styles.buttons}>
-            <Button variant="primary" onClick={handleAuroWallet}>
-              Use Auro Wallet
-            </Button>
+            <GrassyButton onClick={handleAuroWallet}>
+              Connect Wallet & Start Playing
+            </GrassyButton>
             <Button variant="primary" onClick={handleWithoutWallet}>
               Continue without wallet
             </Button>
