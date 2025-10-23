@@ -6,8 +6,7 @@ import {
   Field,
   fetchAccount
 } from "o1js";
-import { computeOnChainCommitmentCrossPlatform, generateECKeypairCrossPlatform } from "authenticity-zkapp/browser";
-import { Secp256r1, Ecdsa, Bytes32 } from "authenticity-zkapp";
+import { computeOnChainCommitmentCrossPlatform } from "authenticity-zkapp/browser";
 import * as Comlink from "comlink";
 
 export const api = {
@@ -59,34 +58,6 @@ export const api = {
     }
   },
 
-  /**
-   * Generate a random ECDSA keypair for browser-based signing
-   * Uses P-256 curve (same as prime256v1 in Node.js)
-   * 
-   * @deprecated This method is deprecated. ECDSA signing now happens server-side.
-   * Use the /api/sign-image endpoint instead.
-   */
-  generateECKeypair: async () => {
-    console.warn("⚠️ DEPRECATED: generateECKeypair() is deprecated. ECDSA signing now happens server-side via /api/sign-image");
-    console.log("Generating ECDSA keypair...");
-
-    try {
-      const keyPair = await generateECKeypairCrossPlatform();
-
-      console.log("ECDSA keypair generated successfully");
-      return {
-        privateKeyHex: keyPair.privateKeyHex,
-        publicKeyXHex: keyPair.publicKeyXHex,
-        publicKeyYHex: keyPair.publicKeyYHex,
-        privateKeyBigInt: keyPair.privateKeyBigInt.toString(), // Serialize for Comlink
-        publicKeyXBigInt: keyPair.publicKeyXBigInt.toString(),
-        publicKeyYBigInt: keyPair.publicKeyYBigInt.toString(),
-      };
-    } catch (error) {
-      console.error("Failed to generate ECDSA keypair:", error);
-      throw error;
-    }
-  },
 
   /**
    * Sign an image commitment with a Mina private key
@@ -148,49 +119,6 @@ export const api = {
     }
   },
 
-  /**
-   * Sign a SHA256 hash with ECDSA private key
-   * Matches the backend signature format (signatureR, signatureS)
-   * 
-   * @deprecated This method is deprecated. ECDSA signing now happens server-side.
-   * Use the /api/sign-image endpoint instead.
-   */
-  signECDSA: async (privateKeyHex: string, sha256Hex: string) => {
-    console.warn("⚠️ DEPRECATED: signECDSA() is deprecated. ECDSA signing now happens server-side via /api/sign-image");
-    console.log("Signing with ECDSA...");
-
-    try {
-      // Import Bytes to create Bytes32
-      const { Bytes } = await import("o1js");
-      class Bytes32 extends Bytes(32) {}
-
-      // Convert sha256 hex to Bytes32
-      const hashBytes = Bytes32.fromHex(sha256Hex);
-
-      // Convert private key hex to bigint
-      const privateKeyBigInt = BigInt('0x' + privateKeyHex);
-
-      // Create Secp256r1 scalar from private key
-      const creatorKey = Secp256r1.Scalar.from(privateKeyBigInt);
-
-      // Sign the hash using ECDSA
-      const signature = Ecdsa.signHash(hashBytes, creatorKey.toBigInt());
-
-      // Extract r and s components as hex strings (64 chars each)
-      const signatureData = signature.toBigInt();
-      const signatureR = signatureData.r.toString(16).padStart(64, '0');
-      const signatureS = signatureData.s.toString(16).padStart(64, '0');
-
-      console.log("ECDSA signature created successfully");
-      return {
-        signatureR,
-        signatureS
-      };
-    } catch (error) {
-      console.error("Failed to sign with ECDSA:", error);
-      throw error;
-    }
-  },
 
   /**
    * Read contract state from a token account to verify image authenticity

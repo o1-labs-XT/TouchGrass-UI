@@ -29,21 +29,6 @@ export default class TouchGrassWorkerClient {
     return this.remoteApi.generateKeypair();
   }
 
-  /**
-   * @deprecated This method is deprecated. ECDSA signing now happens server-side.
-   * Use the /api/sign-image endpoint instead.
-   */
-  async generateECKeypair(): Promise<{
-    privateKeyHex: string;
-    publicKeyXHex: string;
-    publicKeyYHex: string;
-    privateKeyBigInt: string;
-    publicKeyXBigInt: string;
-    publicKeyYBigInt: string;
-  }> {
-    console.warn("⚠️ DEPRECATED: generateECKeypair() is deprecated. ECDSA signing now happens server-side via /api/sign-image");
-    return this.remoteApi.generateECKeypair();
-  }
 
   async signCommitment(privateKeyBase58: string, commitmentString: string): Promise<{
     signatureBase58: string;
@@ -59,17 +44,6 @@ export default class TouchGrassWorkerClient {
     return this.remoteApi.signSHA256Hash(privateKeyBase58, sha256Hex);
   }
 
-  /**
-   * @deprecated This method is deprecated. ECDSA signing now happens server-side.
-   * Use the /api/sign-image endpoint instead.
-   */
-  async signECDSA(privateKeyHex: string, sha256Hex: string): Promise<{
-    signatureR: string;
-    signatureS: string;
-  }> {
-    console.warn("⚠️ DEPRECATED: signECDSA() is deprecated. ECDSA signing now happens server-side via /api/sign-image");
-    return this.remoteApi.signECDSA(privateKeyHex, sha256Hex);
-  }
 
   async readContractState(tokenOwnerAddress: string) {
     return this.remoteApi.readContractState(tokenOwnerAddress);
