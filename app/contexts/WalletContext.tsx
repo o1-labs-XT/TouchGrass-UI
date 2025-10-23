@@ -1,8 +1,24 @@
 'use client';
 import { createContext, useContext, ReactNode } from 'react';
 
+type WalletChoice = 'auro' | 'generated' | null;
+
 interface WalletContextType {
-  // To be filled in next commits
+  // Wallet choice
+  walletChoice: WalletChoice;
+  setWalletChoice: (choice: 'auro' | 'generated') => void;
+
+  // Auro wallet state
+  isInstalled: boolean;
+  isConnecting: boolean;
+  isConnected: boolean;
+  address: string | null;
+  error: string | null;
+  reconnect: () => Promise<void>;
+  signFields: (fields: (string | number)[]) => Promise<{
+    data: (string | number)[];
+    signature: string;
+  }>;
 }
 
 const WalletContext = createContext<WalletContextType | undefined>(undefined);
