@@ -20,7 +20,7 @@
 .pageTitle {
   font-size: 1.25rem;
   font-weight: 600;
-  color: var(--mina-black);
+  color: var(--brand-primary);
 }
 
 .icon {
@@ -31,7 +31,7 @@
 .title {
   font-size: 1.5rem;
   font-weight: 600;
-  color: var(--mina-black);
+  color: var(--brand-primary);
   margin-bottom: 0.75rem;
 }
 
@@ -51,6 +51,31 @@
 
 .challengeCard {
   margin-bottom: 2rem;
+}
+
+.challengeStatus {
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.activeStatus {
+  color: #27ae60;
+  font-weight: 500;
+  margin: 0;
+  padding: 0.5rem 1rem;
+  background: rgba(39, 174, 96, 0.1);
+  border-radius: 1rem;
+  display: inline-block;
+}
+
+.completedStatus {
+  color: #8e44ad;
+  font-weight: 500;
+  margin: 0;
+  padding: 0.5rem 1rem;
+  background: rgba(142, 68, 173, 0.1);
+  border-radius: 1rem;
+  display: inline-block;
 }
 
 .buttonGroup {

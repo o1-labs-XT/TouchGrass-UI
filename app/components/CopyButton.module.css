@@ -10,14 +10,15 @@
   min-width: 32px;
   height: 32px;
   flex-shrink: 0;
-  color: var(--mina-grey);
+  color: var(--brand-secondary-text);
   opacity: 1;
 }
 
 .copyButton:hover {
   background: rgba(255, 255, 255, 0.1);
   border: 1px solid currentColor;
-  color: var(--mina-black);
+  border-radius: 4px;
+  color: var(--brand-primary);
   opacity: 1;
 }
 

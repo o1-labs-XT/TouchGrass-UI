@@ -1,37 +1,37 @@
-'use client';
+"use client";
 
-import { useRouter } from 'next/navigation';
-import Image from 'next/image';
-import Button from './components/Button';
-import Card from './components/Card';
-import styles from './Welcome.module.css';
+import { useRouter } from "next/navigation";
+import Image from "next/image";
+import Button from "./components/Button";
+import Card from "./components/Card";
+import styles from "./Welcome.module.css";
 
 export default function WelcomePage() {
   const router = useRouter();
 
   const handleAuroWallet = () => {
     const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-    const hasWindowMina = typeof window.mina !== 'undefined';
+    const hasWindowMina = typeof window.mina !== "undefined";
 
-    sessionStorage.setItem('walletChoice', 'auro');
+    sessionStorage.setItem("walletChoice", "auro");
 
     if (isMobile && !hasWindowMina) {
       // Mobile without window.mina - redirect to AppLinks
-      const returnUrl = window.location.origin + '/challenge/1';
+      const returnUrl = window.location.origin + "/challenges";
       const encodedUrl = encodeURIComponent(returnUrl);
-      const networkId = encodeURIComponent('mina:devnet');
+      const networkId = encodeURIComponent("mina:devnet");
       const appLinksUrl = `https://applinks.aurowallet.com/applinks?action=openurl&&networkid=${networkId}&url=${encodedUrl}`;
 
       window.location.href = appLinksUrl;
     } else {
       // Already in Auro browser or desktop - navigate directly
-      router.push('/challenge/1');
+      router.push("/challenges");
     }
   };
 
   const handleWithoutWallet = () => {
-    sessionStorage.setItem('walletChoice', 'generated');
-    router.push('/challenge/1');
+    sessionStorage.setItem("walletChoice", "generated");
+    router.push("/challenges");
   };
 
   return (
@@ -49,16 +49,25 @@ export default function WelcomePage() {
           />
           <h1 className={styles.title}>TouchGrass</h1>
           <p className={styles.subtitle}>
-            Join daily photo challenges and earn rewards for authentic outdoor experiences
+            Join daily photo challenges and earn rewards for authentic outdoor
+            experiences
           </p>
 
           <ul className={styles.features}>
             <li>
-              <img src="/assets/daly-challenges-icon.svg" alt="" className={styles.featureIcon} />
+              <img
+                src="/assets/daly-challenges-icon.svg"
+                alt=""
+                className={styles.featureIcon}
+              />
               DAILY CHALLENGES & COMPETITIONS
             </li>
             <li>
-              <img src="/assets/blockchain-rewards-icon.svg" alt="" className={styles.featureIcon} />
+              <img
+                src="/assets/blockchain-rewards-icon.svg"
+                alt=""
+                className={styles.featureIcon}
+              />
               MINA BLOCKCHAIN REWARDS
             </li>
           </ul>

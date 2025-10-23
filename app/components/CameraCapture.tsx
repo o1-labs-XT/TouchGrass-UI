@@ -22,6 +22,77 @@ const isMobileDevice = (): boolean => {
          (mobileUA && hasTouch && isSmallScreen);
 };
 
+const compressImage = async (
+  blob: Blob,
+  maxDimension: number = 1200,
+  quality: number = 0.85
+): Promise<Blob> => {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    const url = URL.createObjectURL(blob);
+
+    img.onload = () => {
+      URL.revokeObjectURL(url);
+
+      // Calculate new dimensions while maintaining aspect ratio
+      let width = img.width;
+      let height = img.height;
+
+      if (width > height) {
+        if (width > maxDimension) {
+          height = Math.round((height * maxDimension) / width);
+          width = maxDimension;
+        }
+      } else {
+        if (height > maxDimension) {
+          width = Math.round((width * maxDimension) / height);
+          height = maxDimension;
+        }
+      }
+
+      // Create canvas and draw resized image
+      const canvas = document.createElement('canvas');
+      canvas.width = width;
+      canvas.height = height;
+      const ctx = canvas.getContext('2d');
+
+      if (!ctx) {
+        reject(new Error('Could not get canvas context'));
+        return;
+      }
+
+      ctx.drawImage(img, 0, 0, width, height);
+
+      // Convert to JPEG blob
+      canvas.toBlob(
+        (compressedBlob) => {
+          if (!compressedBlob) {
+            reject(new Error('Failed to compress image'));
+            return;
+          }
+
+          // Log compression results
+          const originalSizeKB = (blob.size / 1024).toFixed(1);
+          const compressedSizeKB = (compressedBlob.size / 1024).toFixed(1);
+          const ratio = (blob.size / compressedBlob.size).toFixed(1);
+          console.log(`Compressed: ${originalSizeKB}KB → ${compressedSizeKB}KB (${ratio}x reduction)`);
+
+          resolve(compressedBlob);
+        },
+        'image/jpeg',
+        quality
+      );
+    };
+
+    img.onerror = () => {
+      URL.revokeObjectURL(url);
+      reject(new Error('Failed to load image for compression'));
+    };
+
+    img.src = url;
+  });
+};
+
 export default function CameraCapture({ onCapture }: CameraCaptureProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const streamRef = useRef<MediaStream | null>(null);
@@ -105,16 +176,19 @@ export default function CameraCapture({ onCapture }: CameraCaptureProps) {
       const imageCapture = new (window as any).ImageCapture(videoTrack);
       const blob = await imageCapture.takePhoto();
 
+      // Compress image before submitting
+      const compressedBlob = await compressImage(blob);
+
       // Check file size (max 10MB)
       const maxSize = 10 * 1024 * 1024;
-      if (blob.size > maxSize) {
-        setError(`Image too large (${(blob.size / 1024 / 1024).toFixed(1)}MB). Maximum size is 10MB.`);
+      if (compressedBlob.size > maxSize) {
+        setError(`Image too large (${(compressedBlob.size / 1024 / 1024).toFixed(1)}MB). Maximum size is 10MB.`);
         setIsCapturing(false);
         return;
       }
 
       stopCamera();
-      onCapture(blob);
+      onCapture(compressedBlob);
     } catch (err) {
       console.error('Failed to capture photo:', err);
       setError(err instanceof Error ? err.message : 'Failed to capture photo. Please try again.');
@@ -122,20 +196,31 @@ export default function CameraCapture({ onCapture }: CameraCaptureProps) {
     }
   };
 
-  const handleFileCapture = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileCapture = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
-      // Check file size (max 10MB)
-      const maxSize = 10 * 1024 * 1024;
-      if (file.size > maxSize) {
-        setError(`Image too large (${(file.size / 1024 / 1024).toFixed(1)}MB). Maximum size is 10MB.`);
+      try {
+        // Compress image before submitting
+        const compressedBlob = await compressImage(file);
+
+        // Check file size (max 10MB)
+        const maxSize = 10 * 1024 * 1024;
+        if (compressedBlob.size > maxSize) {
+          setError(`Image too large (${(compressedBlob.size / 1024 / 1024).toFixed(1)}MB). Maximum size is 10MB.`);
+          if (fileInputRef.current) {
+            fileInputRef.current.value = '';
+          }
+          return;
+        }
+        setError(null);
+        onCapture(compressedBlob);
+      } catch (err) {
+        console.error('Failed to compress image:', err);
+        setError(err instanceof Error ? err.message : 'Failed to process image');
         if (fileInputRef.current) {
           fileInputRef.current.value = '';
         }
-        return;
       }
-      setError(null);
-      onCapture(file);
     }
   };
 

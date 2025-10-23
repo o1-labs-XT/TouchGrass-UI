@@ -50,7 +50,7 @@
 }
 
 .tagline {
-  font-family: var(--font-ibm-plex);
+  font-family: var(--font-figtree);
   font-weight: 400;
   font-size: 0.875rem;
   padding-top: 1rem;
@@ -59,7 +59,7 @@
 }
 
 .start {
-  font-family: var(--font-ibm-plex);
+  font-family: var(--font-figtree);
   font-weight: 400;
   font-size: 1.25rem;
   letter-spacing: 0.1rem;
@@ -67,7 +67,7 @@
 }
 
 .code {
-  font-family: var(--font-ibm-plex);
+  font-family: var(--font-figtree);
   font-weight: 700;
 }
 
@@ -89,7 +89,7 @@
   display: block;
   margin: .5rem auto 1rem;
   background-color: rgb(255, 255, 255);
-  border: 1px solid var(--mina-black);
+  border: 1px solid var(--brand-primary);
   padding: .25rem .5rem;
   width: 11.75rem;
   cursor: pointer;
@@ -103,7 +103,7 @@
   gap: 0.5rem;
   margin: 1rem 1.6rem;
   background-color: rgb(255, 255, 255);
-  border: 1px solid var(--mina-black);
+  border: 1px solid var(--brand-primary);
   width: 14rem;
   height: 6rem;
   text-align: center;
@@ -114,7 +114,7 @@
 }
 
 .state .bold {
-  font-family: var(--font-ibm-plex);
+  font-family: var(--font-figtree);
   font-weight: 700;
 }
 
@@ -124,21 +124,26 @@
   margin: 1rem;
   background: rgba(var(--card-rgb), 0);
   background-color: rgb(255, 255, 255);
-  border: 1px solid var(--mina-black);
-  border-radius: 4px 1px;
-  transform-style: preserve-3d;
+  border: 1px solid var(--brand-primary);
+  border-radius: 4px 1px;	
+  transform-style: preserve-3d;	
   transition: background 200ms, border 200ms;
   width: 14rem;
+  position: relative;
+  box-shadow: 
+    0 0 0 1px var(--brand-primary),
+    1px 2px 0 1px var(--brand-primary),
+    2px 1px 0 1px var(--brand-primary),
+    -1px 3px 0 1px var(--brand-primary);
 }
-
 .card:after {
   content: '';
-  position: absolute;
-  inset: 0.4rem -0.4rem -0.4rem 0.4rem;
-  border-radius: 4px 1px;
-  border: 1px solid var(--mina-black);
-  transform: translateZ(-1px);
-  transition: transform 200ms ease-in 0ms, border 50ms ease-in 100ms;
+  position: absolute;	 
+  inset: 0.4rem -0.4rem -0.4rem 0.4rem;	 
+  border-radius: 4px 1px;	
+  border: 1px solid var(--mina-black);	
+  transform: translateZ(-1px);	
+  transition: transform 200ms ease-in 0ms, border 50ms ease-in 100ms;	
 }
 
 .card span {
@@ -181,7 +186,7 @@
 }
 
 .title {
-  font-family: var(--font-ibm-plex);
+  font-family: var(--font-figtree);
   font-weight: 700;
   font-size: 2.5rem;
   text-align: center;
@@ -190,7 +195,7 @@
 }
 
 .subtitle {
-  font-family: var(--font-ibm-plex);
+  font-family: var(--font-figtree);
   font-weight: 400;
   font-size: 1.125rem;
   text-align: center;
@@ -216,10 +221,10 @@
   text-align: center;
   padding: 2rem;
   background-color: var(--mina-white);
-  border: 1px solid var(--mina-black);
+  border: 1px solid var(--brand-primary);
   border-radius: 8px;
   text-decoration: none;
-  color: var(--mina-black);
+  color: var(--brand-primary);
   transition: all 200ms ease;
   min-height: 200px;
   backdrop-filter: blur(10px);
@@ -229,7 +234,7 @@
   transform: translateY(-2px);
   box-shadow: 0 8px 24px var(--mina-light-gray);
   background-color: var(--mina-white);
-  border-color: var(--mina-blurple);
+  border-color: var(--brand-primary);
 }
 
 .flowIcon {
@@ -238,7 +243,7 @@
 }
 
 .flowCard h2 {
-  font-family: var(--font-ibm-plex);
+  font-family: var(--font-figtree);
   font-weight: 700;
   font-size: 1.25rem;
   margin: 0 0 1rem 0;
@@ -246,7 +251,7 @@
 }
 
 .flowCard p {
-  font-family: var(--font-ibm-plex);
+  font-family: var(--font-figtree);
   font-weight: 400;
   font-size: 0.9rem;
   line-height: 1.4;
@@ -262,7 +267,7 @@
 }
 
 .info h3 {
-  font-family: var(--font-ibm-plex);
+  font-family: var(--font-figtree);
   font-weight: 700;
   font-size: 1.5rem;
   margin-bottom: 1.5rem;
@@ -276,7 +281,7 @@
 }
 
 .features li {
-  font-family: var(--font-ibm-plex);
+  font-family: var(--font-figtree);
   font-weight: 400;
   font-size: 0.9rem;
   line-height: 1.5;
@@ -288,7 +293,7 @@
 
 .features li::before {
   content: '•';
-  color: var(--mina-grey);
+  color: var(--brand-secondary-text);
   position: absolute;
   left: 0;
 }
@@ -303,7 +308,7 @@
 @media (hover: hover) and (pointer: fine) {
   .card:hover {
     color: var(--mina-white);
-    background: linear-gradient(
+        background: linear-gradient(
         0deg,
         var(--mina-black),
         var(--mina-black)

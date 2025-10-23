@@ -1,18 +1,22 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-import { getCurrentChallenge, getChainsByChallenge, BACKEND_URL } from '../lib/backendClient';
-import type { Challenge } from '../lib/backendClient';
-import CameraCapture from '../components/CameraCapture';
-import Button from '../components/Button';
-import BackButton from '../components/BackButton';
-import Card from '../components/Card';
-import StatusMessage from '../components/StatusMessage';
-import ErrorMessage from '../components/ErrorMessage';
-import WalletStatus from '../components/WalletStatus';
-import { useAuroWallet } from '../hooks/useAuroWallet';
-import styles from './submit.module.css';
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import {
+  getCurrentChallenge,
+  getChainsByChallenge,
+  BACKEND_URL
+} from "../lib/backendClient";
+import type { Challenge } from "../lib/backendClient";
+import CameraCapture from "../components/CameraCapture";
+import Button from "../components/Button";
+import BackButton from "../components/BackButton";
+import SubmissionCard from "../components/SubmissionCard";
+import StatusMessage from "../components/StatusMessage";
+import ErrorMessage from "../components/ErrorMessage";
+import WalletStatus from "../components/WalletStatus";
+import { useAuroWallet } from "../hooks/useAuroWallet";
+import styles from "./submit.module.css";
 
 export default function SubmitPage() {
   const router = useRouter();
@@ -22,18 +26,18 @@ export default function SubmitPage() {
   const [imageBlob, setImageBlob] = useState<Blob | null>(null);
   const [imageUrl, setImageUrl] = useState<string | null>(null);
   const [isProcessing, setIsProcessing] = useState(false);
-  const [status, setStatus] = useState<string>('');
+  const [status, setStatus] = useState<string>("");
   const [error, setError] = useState<string | null>(null);
   const [walletChoice, setWalletChoice] = useState<string | null>(null);
 
   useEffect(() => {
-    setWalletChoice(sessionStorage.getItem('walletChoice'));
+    setWalletChoice(sessionStorage.getItem("walletChoice"));
   }, []);
 
   useEffect(() => {
     // Get chainId from URL params
     const params = new URLSearchParams(window.location.search);
-    const chainIdParam = params.get('chainId');
+    const chainIdParam = params.get("chainId");
     if (chainIdParam) {
       setChainId(chainIdParam);
     }
@@ -51,7 +55,7 @@ export default function SubmitPage() {
           }
         }
       } catch (err) {
-        console.error('Failed to load challenge:', err);
+        console.error("Failed to load challenge:", err);
       }
     }
     fetchChallengeAndChain();
@@ -67,32 +71,36 @@ export default function SubmitPage() {
 
   const handleCapture = (blob: Blob) => {
     setImageBlob(blob);
-    console.log('Captured image:', blob.size, 'bytes');
+    console.log("Captured image:", blob.size, "bytes");
   };
 
   const handleReset = () => {
     setImageBlob(null);
     setImageUrl(null);
-    setStatus('');
+    setStatus("");
     setError(null);
   };
 
   const handleSubmit = async () => {
     if (!imageBlob) return;
     if (!chainId) {
-      setError('Chain ID not available. Please try refreshing the page.');
+      setError("Chain ID not available. Please try refreshing the page.");
       return;
     }
 
     if (!walletChoice) {
-      setError('Please select a signing method from the welcome page');
+      setError("Please select a signing method from the welcome page");
       return;
     }
 
     // For Auro wallet, check connection
-    console.log('[DEBUG] Wallet validation:', { walletChoice, isConnected, address });
-    if (walletChoice === 'auro' && (!isConnected || !address)) {
-      setError('Please connect your Auro Wallet first');
+    console.log("[DEBUG] Wallet validation:", {
+      walletChoice,
+      isConnected,
+      address
+    });
+    if (walletChoice === "auro" && (!isConnected || !address)) {
+      setError("Please connect your Auro Wallet first");
       return;
     }
 
@@ -100,76 +108,85 @@ export default function SubmitPage() {
     setError(null);
 
     try {
-      setStatus('Preparing submission...');
-      console.log('[1/7] Preparing submission');
-      const TouchGrassWorkerClient = (await import('../TouchGrassWorkerClient')).default;
+      setStatus("Preparing submission...");
+      console.log("[1/7] Preparing submission");
+      const TouchGrassWorkerClient = (await import("../TouchGrassWorkerClient"))
+        .default;
       const worker = new TouchGrassWorkerClient();
 
       // Generate ECDSA keypair for image signing
-      setStatus('Generating signing keypair...');
-      console.log('[2/7] Generating ECDSA keypair');
+      setStatus("Generating signing keypair...");
+      console.log("[2/7] Generating ECDSA keypair");
       const ecKeypair = await worker.generateECKeypair();
-      console.log('[2/7] Keypair generated');
+      console.log("[2/7] Keypair generated");
 
       // Convert blob to buffer for processing
       const arrayBuffer = await imageBlob.arrayBuffer();
       const imageBuffer = new Uint8Array(arrayBuffer);
 
-      setStatus('Computing image hash...');
-      console.log('[3/7] Computing image hash');
+      setStatus("Computing image hash...");
+      console.log("[3/7] Computing image hash");
       const commitment = await worker.computeOnChainCommitmentWeb(imageBuffer);
-      console.log('[3/7] Image hash:', commitment.sha256Hash);
+      console.log("[3/7] Image hash:", commitment.sha256Hash);
 
-      setStatus('Creating ECDSA signature...');
-      console.log('[4/7] Creating ECDSA signature');
+      setStatus("Creating ECDSA signature...");
+      console.log("[4/7] Creating ECDSA signature");
       const signature = await worker.signECDSA(
         ecKeypair.privateKeyHex,
         commitment.sha256Hash
       );
-      console.log('[4/7] ECDSA signature created');
+      console.log("[4/7] ECDSA signature created");
 
       // Sign with wallet choice
       let walletSignResult: { signature: string } | undefined;
       let minaPublicKey: string | null = null;
 
-      if (walletChoice === 'auro') {
+      if (walletChoice === "auro") {
         // Sign with Auro Wallet
-        setStatus('Please approve signature in Auro Wallet...');
-        console.log('[5/7] Requesting Auro wallet signature');
-        const fieldMessage = [commitment.high128String, commitment.low128String];
+        setStatus("Please approve signature in Auro Wallet...");
+        console.log("[5/7] Requesting Auro wallet signature");
+        const fieldMessage = [
+          commitment.high128String,
+          commitment.low128String
+        ];
         try {
           walletSignResult = await signFields(fieldMessage);
           minaPublicKey = address;
-          console.log('[5/7] Auro signature received:', walletSignResult);
+          console.log("[5/7] Auro signature received:", walletSignResult);
         } catch (err: any) {
-          console.error('[5/7] Wallet signature failed:', err);
-          throw new Error(err.message || 'Wallet signature rejected');
+          console.error("[5/7] Wallet signature failed:", err);
+          throw new Error(err.message || "Wallet signature rejected");
         }
-
-      } else if (walletChoice === 'generated') {
+      } else if (walletChoice === "generated") {
         // Sign with generated keypair
-        let keypairData = sessionStorage.getItem('minaKeypair');
+        let keypairData = sessionStorage.getItem("minaKeypair");
 
         if (!keypairData) {
           // First submit - generate and store
-          setStatus('Generating Mina keypair...');
-          console.log('[5/7] Generating Mina keypair for first use');
+          setStatus("Generating Mina keypair...");
+          console.log("[5/7] Generating Mina keypair for first use");
           const minaKeypair = await worker.generateKeypair();
-          sessionStorage.setItem('minaKeypair', JSON.stringify({
-            privateKey: minaKeypair.privateKey,
-            publicKey: minaKeypair.publicKey
-          }));
+          sessionStorage.setItem(
+            "minaKeypair",
+            JSON.stringify({
+              privateKey: minaKeypair.privateKey,
+              publicKey: minaKeypair.publicKey
+            })
+          );
           keypairData = JSON.stringify(minaKeypair);
-          console.log('[5/7] Mina keypair generated and stored');
+          console.log("[5/7] Mina keypair generated and stored");
         } else {
-          console.log('[5/7] Using existing Mina keypair from sessionStorage');
+          console.log("[5/7] Using existing Mina keypair from sessionStorage");
         }
 
         const minaKeypair = JSON.parse(keypairData);
 
-        setStatus('Signing with generated keypair...');
-        console.log('[5/7] Signing with generated keypair');
-        const fieldMessage = [commitment.high128String, commitment.low128String];
+        setStatus("Signing with generated keypair...");
+        console.log("[5/7] Signing with generated keypair");
+        const fieldMessage = [
+          commitment.high128String,
+          commitment.low128String
+        ];
         const signResult = await worker.signFieldsMinaSigner(
           minaKeypair.privateKey,
           fieldMessage
@@ -177,63 +194,69 @@ export default function SubmitPage() {
 
         walletSignResult = { signature: signResult.signature };
         minaPublicKey = signResult.publicKey;
-        console.log('[5/7] Generated keypair signature created');
-
+        console.log("[5/7] Generated keypair signature created");
       } else {
-        throw new Error('Invalid wallet choice');
+        throw new Error("Invalid wallet choice");
       }
 
       if (!walletSignResult || !minaPublicKey) {
-        throw new Error('Failed to sign with wallet');
+        throw new Error("Failed to sign with wallet");
       }
 
       // Create FormData for upload with both ECDSA and Mina signatures
-      setStatus('Submitting image...');
-      console.log('[6/7] Building form data');
+      setStatus("Submitting image...");
+      console.log("[6/7] Building form data");
       const formData = new FormData();
-      formData.append('image', imageBlob);
-      formData.append('walletAddress', minaPublicKey);
-      formData.append('walletSignature', walletSignResult.signature);
-      formData.append('signatureR', signature.signatureR);
-      formData.append('signatureS', signature.signatureS);
-      formData.append('publicKeyX', ecKeypair.publicKeyXHex);
-      formData.append('publicKeyY', ecKeypair.publicKeyYHex);
-      formData.append('chainId', chainId);
-      console.log('[6/7] Form data ready, uploading to:', BACKEND_URL);
+      formData.append("image", imageBlob);
+      formData.append("walletAddress", minaPublicKey);
+      formData.append("walletSignature", walletSignResult.signature);
+      formData.append("signatureR", signature.signatureR);
+      formData.append("signatureS", signature.signatureS);
+      formData.append("publicKeyX", ecKeypair.publicKeyXHex);
+      formData.append("publicKeyY", ecKeypair.publicKeyYHex);
+      formData.append("chainId", chainId);
+      console.log("[6/7] Form data ready, uploading to:", BACKEND_URL);
 
       const response = await fetch(`${BACKEND_URL}/submissions`, {
-        method: 'POST',
+        method: "POST",
         body: formData
       });
 
       if (!response.ok) {
         const errorText = await response.text();
-        console.error('[6/7] Upload failed:', { status: response.status, body: errorText });
+        console.error("[6/7] Upload failed:", {
+          status: response.status,
+          body: errorText
+        });
         throw new Error(`Upload failed (${response.status}): ${errorText}`);
       }
 
       const result = await response.json();
-      console.log('[7/7] Upload successful!', result);
+      console.log("[7/7] Upload successful!", result);
 
       // Check if we're in Auro browser (mobile flow)
       const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-      const isInAuroBrowser = isMobile && typeof window.mina !== 'undefined';
+      const isInAuroBrowser = isMobile && typeof window.mina !== "undefined";
 
       if (isInAuroBrowser) {
-        setStatus('Success! Your image has been submitted.\n\nYou can now return to your browser to view the chain.');
+        setStatus(
+          "Success! Your image has been submitted.\n\nYou can now return to your browser to view the chain."
+        );
       } else {
-        setStatus('Success! Your image has been submitted.');
+        setStatus("Success! Your image has been submitted.");
         // Redirect to chain detail page after success
         setTimeout(() => {
           router.push(`/chain/${chainId}`);
         }, 2000);
       }
     } catch (err) {
-      console.error('Submission failed:', err);
-      const errorMessage = err instanceof Error ? err.message : 'Submission failed';
-      const stackTrace = err instanceof Error && err.stack ? `\n\nStack:\n${err.stack}` : '';
+      console.error("Submission failed:", err);
+      const errorMessage =
+        err instanceof Error ? err.message : "Submission failed";
+      const stackTrace =
+        err instanceof Error && err.stack ? `\n\nStack:\n${err.stack}` : "";
       setError(errorMessage + stackTrace);
-      setStatus('');
+      setStatus("");
     } finally {
       setIsProcessing(false);
     }
@@ -242,40 +265,49 @@ export default function SubmitPage() {
   return (
     <>
       {imageUrl ? (
-        <div className={styles.container}>
-          <h1 className={styles.title}>Submit Photo</h1>
-          <div className={styles.previewContainer}>
-            <div className={styles.imageWrapper}>
-              <img 
-                src={imageUrl} 
-                alt="Captured photo" 
-                className={styles.capturedImage}
-              />
-            </div>
-            {!isProcessing && !status && (
-              <div className={styles.buttonGroup}>
-                <Button
-                  variant="primary"
-                  onClick={handleSubmit}
-                  disabled={walletChoice === 'auro' && isConnecting}
-                >
-                  {walletChoice === 'auro' && isConnecting
-                    ? 'Connecting wallet...'
-                    : 'Submit'}
-                </Button>
-                <Button variant="primary" onClick={handleReset}>
-                  Retake
-                </Button>
+        <main className={styles.container}>
+          <div className={styles.wrapper}>
+            <h1 className={styles.pageTitle}>Submit Photo</h1>
+            <div className={styles.previewContainer}>
+              <div className={styles.imageWrapper}>
+                <img
+                  src={imageUrl}
+                  alt="Captured photo"
+                  className={styles.capturedImage}
+                />
               </div>
-            )}
-            {(isProcessing || status) && (
-              <StatusMessage type="processing" message={status} showSpinner={isProcessing} />
-            )}
-            {error && (
-              <ErrorMessage message={error} onDismiss={() => setError(null)} />
-            )}
+              {!isProcessing && !status && (
+                <div className={styles.buttonGroup}>
+                  <Button
+                    variant="primary"
+                    onClick={handleSubmit}
+                    disabled={walletChoice === "auro" && isConnecting}
+                  >
+                    {walletChoice === "auro" && isConnecting
+                      ? "Connecting wallet..."
+                      : "Submit"}
+                  </Button>
+                  <Button variant="primary" onClick={handleReset}>
+                    Retake
+                  </Button>
+                </div>
+              )}
+              {(isProcessing || status) && (
+                <StatusMessage
+                  type="processing"
+                  message={status}
+                  showSpinner={isProcessing}
+                />
+              )}
+              {error && (
+                <ErrorMessage
+                  message={error}
+                  onDismiss={() => setError(null)}
+                />
+              )}
+            </div>
           </div>
-        </div>
+        </main>
       ) : (
         <main className={styles.container}>
           <div className={styles.wrapper}>
@@ -286,25 +318,45 @@ export default function SubmitPage() {
             </header>
 
             {challenge && (
-              <Card className={styles.challengeCard}>
+              <SubmissionCard className={styles.challengeCard}>
                 <h2 className={styles.challengeTitle}>{challenge.title}</h2>
-                <p className={styles.challengeDescription}>{challenge.description}</p>
-              </Card>
+                <p className={styles.challengeDescription}>
+                  {challenge.description}
+                </p>
+              </SubmissionCard>
             )}
 
-            <Card centered className={styles.cameraCard}>
+            <SubmissionCard centered className={styles.cameraCard}>
               <div className={styles.cameraIconWrapper}>
-                <svg className={styles.cameraIcon} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M9 3L7.17 5H4C2.9 5 2 5.9 2 7V19C2 20.1 2.9 21 4 21H20C21.1 21 22 20.1 22 19V7C22 5.9 21.1 5 20 5H16.83L15 3H9Z" stroke="#4CAF50" strokeWidth="1.5" fill="none"/>
-                  <circle cx="12" cy="13" r="3.5" stroke="#4CAF50" strokeWidth="1.5" fill="none"/>
+                <svg
+                  className={styles.cameraIcon}
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M9 3L7.17 5H4C2.9 5 2 5.9 2 7V19C2 20.1 2.9 21 4 21H20C21.1 21 22 20.1 22 19V7C22 5.9 21.1 5 20 5H16.83L15 3H9Z"
+                    stroke="#4CAF50"
+                    strokeWidth="1.5"
+                    fill="none"
+                  />
+                  <circle
+                    cx="12"
+                    cy="13"
+                    r="3.5"
+                    stroke="#4CAF50"
+                    strokeWidth="1.5"
+                    fill="none"
+                  />
                 </svg>
               </div>
               <h2 className={styles.cameraTitle}>Take Your Photo</h2>
               <p className={styles.cameraDescription}>
-                Use your device's camera to capture an authentic photo for this challenge
+                Use your device's camera to capture an authentic photo for this
+                challenge
               </p>
               <CameraCapture onCapture={handleCapture} />
-            </Card>
+            </SubmissionCard>
           </div>
         </main>
       )}

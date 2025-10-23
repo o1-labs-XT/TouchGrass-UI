@@ -25,12 +25,23 @@ export const mockChallenges: Challenge[] = [
     id: "2",
     title: "Sunrise Photography",
     description: "Capture the beauty of sunrise from your location",
-    startTime: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString(),
-    endTime: new Date().toISOString(),
+    startTime: new Date(Date.now() - 14 * 24 * 60 * 60 * 1000).toISOString(),
+    endTime: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString(), // Completed 7 days ago
     participantCount: 127,
     chainCount: 3,
-    createdAt: new Date(Date.now() - 14 * 24 * 60 * 60 * 1000).toISOString(),
-    updatedAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString()
+    createdAt: new Date(Date.now() - 21 * 24 * 60 * 60 * 1000).toISOString(),
+    updatedAt: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString()
+  },
+  {
+    id: "3",
+    title: "Urban Nature Discovery",
+    description: "Find and photograph nature in urban environments - parks, street trees, urban wildlife",
+    startTime: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString(),
+    endTime: new Date(Date.now() - 14 * 24 * 60 * 60 * 1000).toISOString(), // Completed 14 days ago
+    participantCount: 89,
+    chainCount: 2,
+    createdAt: new Date(Date.now() - 35 * 24 * 60 * 60 * 1000).toISOString(),
+    updatedAt: new Date(Date.now() - 14 * 24 * 60 * 60 * 1000).toISOString()
   }
 ];
 

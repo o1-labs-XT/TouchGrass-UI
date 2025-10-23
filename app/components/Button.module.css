@@ -1,9 +1,9 @@
 /* Base button styles */
 .button {
-  border: 1px solid var(--mina-black);
+  border: 1px solid var(--brand-primary);
   padding: 12px 24px;
   border-radius: 4px 1px;
-  font-family: var(--font-ibm-plex);
+  font-family: var(--font-figtree);
   font-weight: 600;
   font-size: 14px;
   text-transform: uppercase;
@@ -20,7 +20,7 @@
 
 /* Primary button (Button 1 - Dark with gradient hover) */
 .primary {
-  background: var(--mina-black);
+  background: var(--brand-primary);
   color: var(--mina-white);
 }
 
@@ -29,7 +29,7 @@
   position: absolute;
   inset: 0.32rem -0.32rem -0.32rem 0.32rem;
   border-radius: 4px 1px;
-  border: 1px solid var(--mina-black);
+  border: 1px solid var(--brand-primary);
   transform: translateZ(-1px);
   transition: transform 200ms ease-in 0ms, border 50ms ease-in 100ms;
 }
@@ -53,14 +53,14 @@
   position: absolute;
   inset: 0.2rem -0.2rem -0.2rem 0.2rem;
   border-radius: 4px 1px;
-  border: 1px solid var(--mina-black);
+  border: 1px solid var(--brand-primary);
   background: var(--mina-white);
   transform: translateZ(-1px);
   transition: transform 200ms ease-in 0ms, border 50ms ease-in 100ms;
 }
 
 .secondary:hover:not(.disabled) {
-  background: var(--mina-black);
+  background: var(--brand-primary);
   color: var(--mina-white);
 }
 
@@ -70,9 +70,9 @@
 
 /* Clean variant - No underlay, for wallet buttons */
 .clean {
-  background: var(--mina-blurple);
+  background: var(--brand-primary);
   color: var(--mina-white);
-  border-color: var(--mina-blurple);
+  border-color: var(--brand-primary);
 }
 
 .clean:after {
@@ -80,15 +80,15 @@
 }
 
 .clean:hover:not(.disabled) {
-  background: var(--mina-purple);
-  border-color: var(--mina-purple);
+  background: var(--brand-primary);
+  border-color: var(--brand-primary);
   transform: translateY(-1px);
   box-shadow: 0 2px 8px var(--mina-light-gray);
 }
 
 /* Disabled state - Brand compliant */
 .disabled {
-  background: var(--mina-grey) !important;
+  background: var(--brand-secondary-text) !important;
   color: var(--mina-white) !important;
   cursor: not-allowed !important;
   transform: none !important;

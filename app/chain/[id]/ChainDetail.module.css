@@ -17,7 +17,7 @@
 .backButton {
   background: none;
   border: none;
-  color: var(--mina-black);
+  color: var(--brand-primary);
   font-size: 0.875rem;
   padding: 0.5rem 0;
   cursor: pointer;
@@ -33,7 +33,7 @@
 .pageTitle {
   font-size: 1.25rem;
   font-weight: 600;
-  color: var(--mina-black);
+  color: var(--brand-primary);
   margin-top: 0.5rem;
 }
 
@@ -60,7 +60,7 @@
 
 .position {
   font-weight: 600;
-  color: var(--mina-purple);
+  color: var(--brand-primary);
   margin-bottom: 0.5rem;
 }
 
@@ -78,8 +78,8 @@
   font-size: 0.875rem;
 }
 
-.transactionStatus {
-  margin-top: 0.75rem;
+.submissionCard {
+  position: relative;
 }
 
 .loading {

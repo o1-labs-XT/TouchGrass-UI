@@ -33,11 +33,11 @@
 
 /* Info style - Blurple */
 .info {
-  border-color: var(--mina-blurple);
+  border-color: var(--brand-primary);
 }
 
 .info .messageText {
-  color: var(--mina-blurple);
+  color: var(--brand-primary);
 }
 
 /* Error style - Red Violet */
@@ -57,12 +57,12 @@
 }
 
 .success .messageText {
-  color: var(--mina-black);
+  color: var(--brand-primary);
 }
 
 /* Processing style - Matches original statusBar */
 .processing {
-  border-color: var(--mina-blurple);
+  border-color: var(--brand-primary);
 }
 
 .processing .messageText {
@@ -73,8 +73,8 @@
 .spinner {
   width: 20px;
   height: 20px;
-  border: 2px solid var(--mina-grey);
-  border-top: 2px solid var(--mina-blurple);
+  border: 2px solid var(--brand-secondary-text);
+  border-top: 2px solid var(--brand-primary);
   border-radius: 50%;
   animation: spin 1s linear infinite;
 }
