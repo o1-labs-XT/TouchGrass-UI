@@ -3,6 +3,7 @@ import React from 'react';
 import styles from './GrassyButton.module.css';
 
 interface GrassyButtonProps {
+  variant: 'primary' | 'secondary';
   children: React.ReactNode;
   onClick?: () => void;
   disabled?: boolean;
@@ -11,6 +12,7 @@ interface GrassyButtonProps {
 }
 
 export default function GrassyButton({
+  variant,
   children,
   onClick,
   disabled = false,
@@ -22,7 +24,7 @@ export default function GrassyButton({
       type={type}
       onClick={onClick}
       disabled={disabled}
-      className={`${styles.grassyButton} ${disabled ? styles.disabled : ''} ${className}`}
+      className={`${styles.grassyButton} ${styles[variant]} ${disabled ? styles.disabled : ''} ${className}`}
     >
       <span className={styles.text}>{children}</span>
     </button>
