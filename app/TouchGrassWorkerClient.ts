@@ -23,10 +23,17 @@ export default class TouchGrassWorkerClient {
   }
 
   async generateKeypair(): Promise<{
-    privateKeyBase58: string;
-    publicKeyBase58: string;
+    privateKey: string;
+    publicKey: string;
   }> {
     return this.remoteApi.generateKeypair();
+  }
+
+  async signFieldsMinaSigner(privateKeyBase58: string, fields: string[]): Promise<{
+    signature: string;
+    publicKey: string;
+  }> {
+    return this.remoteApi.signFieldsMinaSigner(privateKeyBase58, fields);
   }
 
   async generateECKeypair(): Promise<{
