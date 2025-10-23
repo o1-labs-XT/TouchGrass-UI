@@ -22,7 +22,7 @@ export default function GrassyButton({
       type={type}
       onClick={onClick}
       disabled={disabled}
-      className={styles.grassyButton}
+      className={`${styles.grassyButton} ${disabled ? styles.disabled : ''} ${className}`}
     >
       {children}
     </button>
