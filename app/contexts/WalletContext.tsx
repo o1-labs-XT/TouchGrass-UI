@@ -23,7 +23,7 @@ const WalletContext = createContext<WalletContextType | undefined>(undefined);
 
 export function WalletProvider({ children }: { children: ReactNode }) {
   const [walletChoice, setWalletChoiceState] = useState<WalletChoice>(null);
-  const auroWallet = useAuroWallet(); // Single instance for entire app
+  const auroWallet = useAuroWallet();
 
   // Load from sessionStorage on mount
   useEffect(() => {

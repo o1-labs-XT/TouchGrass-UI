@@ -39,7 +39,10 @@ export function useAuroWallet() {
     let retryTimer: NodeJS.Timeout;
 
     const checkAndConnect = async () => {
+      console.log('[DEBUG] checkAndConnect called, retryCount:', retryCount);
+
       if (typeof window.mina === 'undefined') {
+        console.log('[DEBUG] window.mina undefined, retry:', retryCount);
         // Retry if we haven't exceeded max retries
         if (retryCount < maxRetries) {
           retryCount++;
@@ -47,6 +50,7 @@ export function useAuroWallet() {
           return;
         }
 
+        console.log('[DEBUG] Max retries reached, wallet not installed');
         setWalletState(prev => ({
           ...prev,
           isInstalled: false,
@@ -57,7 +61,10 @@ export function useAuroWallet() {
 
       // Only auto-connect if user chose Auro wallet
       const walletChoice = sessionStorage.getItem('walletChoice');
+      console.log('[DEBUG] window.mina found, walletChoice:', walletChoice);
+
       if (walletChoice !== 'auro') {
+        console.log('[DEBUG] walletChoice is not auro, skipping auto-connect');
         setWalletState(prev => ({
           ...prev,
           isInstalled: true,
@@ -65,6 +72,8 @@ export function useAuroWallet() {
         }));
         return;
       }
+
+      console.log('[DEBUG] Starting auto-connect...');
 
       setWalletState(prev => ({
         ...prev,
@@ -76,14 +85,19 @@ export function useAuroWallet() {
         let accounts: string[] = [];
 
         if (window.mina.getAccounts) {
+          console.log('[DEBUG] Calling getAccounts()...');
           accounts = await window.mina.getAccounts();
+          console.log('[DEBUG] getAccounts() returned:', accounts);
         }
 
         if (accounts.length === 0) {
+          console.log('[DEBUG] No accounts from getAccounts, calling requestAccounts()...');
           accounts = await window.mina.requestAccounts();
+          console.log('[DEBUG] requestAccounts() returned:', accounts);
         }
 
         if (accounts.length > 0) {
+          console.log('[DEBUG] Auto-connect successful, address:', accounts[0]);
           setWalletState({
             isInstalled: true,
             isConnecting: false,
@@ -92,6 +106,7 @@ export function useAuroWallet() {
             error: null,
           });
         } else {
+          console.log('[DEBUG] No accounts available after requestAccounts');
           setWalletState(prev => ({
             ...prev,
             isConnecting: false,
@@ -99,6 +114,7 @@ export function useAuroWallet() {
           }));
         }
       } catch (error: any) {
+        console.error('[DEBUG] Auto-connect error:', error);
         setWalletState(prev => ({
           ...prev,
           isConnecting: false,
@@ -143,12 +159,20 @@ export function useAuroWallet() {
   }, []);
 
   const reconnect = async () => {
-    if (!window.mina) return;
+    console.log('[DEBUG] reconnect called, window.mina:', typeof window.mina);
 
+    if (!window.mina) {
+      console.log('[DEBUG] window.mina is undefined, wallet not available');
+      return;
+    }
+
+    console.log('[DEBUG] Requesting accounts from Auro wallet...');
     setWalletState(prev => ({ ...prev, isConnecting: true, error: null }));
 
     try {
       const accounts = await window.mina.requestAccounts();
+      console.log('[DEBUG] Accounts received:', accounts);
+
       if (accounts.length > 0) {
         setWalletState({
           isInstalled: true,
@@ -159,6 +183,7 @@ export function useAuroWallet() {
         });
       }
     } catch (error: any) {
+      console.error('[DEBUG] reconnect error:', error);
       setWalletState(prev => ({
         ...prev,
         isConnecting: false,

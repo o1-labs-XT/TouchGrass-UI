@@ -20,7 +20,14 @@ import styles from "./submit.module.css";
 
 export default function SubmitPage() {
   const router = useRouter();
-  const { walletChoice, isConnected, isConnecting, address, signFields } = useWallet();
+  const {
+    walletChoice,
+    isConnected,
+    isConnecting,
+    address,
+    signFields,
+    reconnect
+  } = useWallet();
   const [challenge, setChallenge] = useState<Challenge | null>(null);
   const [chainId, setChainId] = useState<string | null>(null);
   const [imageBlob, setImageBlob] = useState<Blob | null>(null);
@@ -28,6 +35,20 @@ export default function SubmitPage() {
   const [isProcessing, setIsProcessing] = useState(false);
   const [status, setStatus] = useState<string>("");
   const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    console.log(
+      "[SubmitPage] Mounted. walletChoice:",
+      walletChoice,
+      "isConnected:",
+      isConnected
+    );
+
+    if (walletChoice === "auro" && !isConnected && !isConnecting) {
+      console.log("[SubmitPage] Triggering auto-connect to Auro wallet...");
+      reconnect();
+    }
+  }, [walletChoice, isConnected, isConnecting, reconnect]);
 
   useEffect(() => {
     // Get chainId from URL params
@@ -233,17 +254,11 @@ export default function SubmitPage() {
       const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
       const isInAuroBrowser = isMobile && typeof window.mina !== "undefined";
 
-      if (isInAuroBrowser) {
-        setStatus(
-          "Success! Your image has been submitted.\n\nYou can now return to your browser to view the chain."
-        );
-      } else {
-        setStatus("Success! Your image has been submitted.");
-        // Redirect to chain detail page after success
-        setTimeout(() => {
-          router.push(`/chain/${chainId}`);
-        }, 2000);
-      }
+      setStatus("Success! Your image has been submitted.");
+      // Redirect to chain detail page after success
+      setTimeout(() => {
+        router.push(`/chain/${chainId}`);
+      }, 2000);
     } catch (err) {
       console.error("Submission failed:", err);
       const errorMessage =
