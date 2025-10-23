@@ -1,5 +1,5 @@
 'use client';
-import { createContext, useContext, useState, ReactNode } from 'react';
+import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 
 type WalletChoice = 'auro' | 'generated' | null;
 
@@ -26,7 +26,16 @@ const WalletContext = createContext<WalletContextType | undefined>(undefined);
 export function WalletProvider({ children }: { children: ReactNode }) {
   const [walletChoice, setWalletChoiceState] = useState<WalletChoice>(null);
 
+  // Load from sessionStorage on mount
+  useEffect(() => {
+    const stored = sessionStorage.getItem('walletChoice');
+    if (stored === 'auro' || stored === 'generated') {
+      setWalletChoiceState(stored);
+    }
+  }, []);
+
   const setWalletChoice = (choice: 'auro' | 'generated') => {
+    sessionStorage.setItem('walletChoice', choice);
     setWalletChoiceState(choice);
   };
 
