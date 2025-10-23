@@ -9,7 +9,7 @@ import {
 } from "../lib/backendClient";
 import type { Challenge } from "../lib/backendClient";
 import CameraCapture from "../components/CameraCapture";
-import Button from "../components/Button";
+import GrassyButton from "../components/GrassyButton";
 import BackButton from "../components/BackButton";
 import SubmissionCard from "../components/SubmissionCard";
 import StatusMessage from "../components/StatusMessage";
@@ -288,7 +288,7 @@ export default function SubmitPage() {
               </div>
               {!isProcessing && !status && (
                 <div className={styles.buttonGroup}>
-                  <Button
+                  <GrassyButton
                     variant="primary"
                     onClick={handleSubmit}
                     disabled={walletChoice === "auro" && isConnecting}
@@ -296,10 +296,10 @@ export default function SubmitPage() {
                     {walletChoice === "auro" && isConnecting
                       ? "Connecting wallet..."
                       : "Submit"}
-                  </Button>
-                  <Button variant="primary" onClick={handleReset}>
+                  </GrassyButton>
+                  <GrassyButton variant="secondary" onClick={handleReset}>
                     Retake
-                  </Button>
+                  </GrassyButton>
                 </div>
               )}
               {(isProcessing || status) && (
