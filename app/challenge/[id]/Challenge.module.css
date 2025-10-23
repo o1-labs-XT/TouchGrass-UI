@@ -80,9 +80,14 @@
 
 .buttonGroup {
   display: flex;
-  gap: 4rem;
-  width: 100%;
+  gap: 0.75rem;
   justify-content: center;
+}
+
+.buttonGroup button {
+  width: auto;
+  min-width: 180px;
+  flex: 0 0 auto;
 }
 
 .loading {

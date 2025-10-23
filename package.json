@@ -15,8 +15,11 @@
     "clear-cache": "npx rimraf public/cache && npx rimraf app/cache.json && echo \"UI Cache cleared successfully!\""
   },
   "dependencies": {
+    "@walletconnect/sign-client": "^2.22.4",
+    "@web3modal/standalone": "^2.4.3",
     "authenticity-zkapp": "^0.2.0",
     "comlink": "^4.4.2",
+    "mina-signer": "^3.1.0",
     "next": "^15.4.6",
     "o1js": "^2.*",
     "react": "^18",

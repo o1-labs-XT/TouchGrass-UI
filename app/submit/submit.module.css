@@ -107,9 +107,15 @@
 
 .buttonGroup {
   display: flex;
-  gap: 1rem;
+  gap: 0.6rem;
   justify-content: center;
-  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.buttonGroup button {
+  flex: 0 0 auto;
+  min-width: 140px;
 }
 
 .backLink {

@@ -1,6 +1,6 @@
 'use client';
 import { useRef, useState, useEffect } from 'react';
-import Button from './Button';
+import GrassyButton from './GrassyButton';
 import styles from './CameraCapture.module.css';
 
 interface CameraCaptureProps {
@@ -249,9 +249,9 @@ export default function CameraCapture({ onCapture }: CameraCaptureProps) {
           </div>
         )}
         <div className={styles.controls}>
-          <Button variant="primary" onClick={() => fileInputRef.current?.click()}>
+          <GrassyButton variant="primary" onClick={() => fileInputRef.current?.click()}>
             Take Photo
-          </Button>
+          </GrassyButton>
         </div>
       </div>
     );
@@ -278,21 +278,21 @@ export default function CameraCapture({ onCapture }: CameraCaptureProps) {
 
       <div className={styles.controls}>
         {!isCameraActive ? (
-          <Button variant="primary" onClick={startCamera}>
+          <GrassyButton variant="primary" onClick={startCamera}>
             Open Camera
-          </Button>
+          </GrassyButton>
         ) : (
           <>
-            <Button
+            <GrassyButton
               variant="primary"
               onClick={capturePhoto}
               disabled={isCapturing}
             >
               {isCapturing ? 'Capturing...' : 'Capture'}
-            </Button>
-            <Button variant="primary" onClick={stopCamera}>
+            </GrassyButton>
+            <GrassyButton variant="secondary" onClick={stopCamera}>
               Cancel
-            </Button>
+            </GrassyButton>
           </>
         )}
       </div>

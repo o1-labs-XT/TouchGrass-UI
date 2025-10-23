@@ -1,0 +1,72 @@
+.grassyButton {
+  position: relative;
+  display: block;
+  width: 100%;
+  min-width: 100%;
+  height: 48px;
+  border: none;
+  outline: none;
+  background-color: transparent;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  background-position: center;
+  cursor: pointer;
+  padding: 0;
+  transition: background-image 300ms ease-out;
+}
+
+.primary {
+  background-image: url('/assets/grassy-button-primary.svg');
+}
+
+.primary:hover:not(.disabled) {
+  background-image: url('/assets/grassy-button-primary-hover.svg');
+}
+
+.secondary {
+  background-image: url('/assets/grassy-button-secondary.svg');
+}
+
+.secondary:hover:not(.disabled) {
+  background-image: url('/assets/grassy-button-secondary-hover.svg');
+}
+
+.grassyButton:focus {
+  outline: none;
+}
+
+.grassyButton:active:not(.disabled) {
+  transform: scale(0.98);
+}
+
+.text {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 48px;
+  font-family: 'Figtree', var(--font-ibm-plex), -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-weight: 700;
+  font-size: 13px;
+  line-height: 1.2;
+  color: #FFFFFF;
+  text-align: center;
+  padding: 0 16px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  pointer-events: none;
+}
+
+.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.secondary .text {
+  color: #003712;
+}
+
+.secondary:hover:not(.disabled) .text {
+  color: #2C8C3E;
+}

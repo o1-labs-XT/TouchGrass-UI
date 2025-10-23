@@ -4,10 +4,11 @@ import {
   PrivateKey,
   Signature,
   Field,
-  fetchAccount
+  fetchAccount,
 } from "o1js";
 import { computeOnChainCommitmentCrossPlatform } from "authenticity-zkapp/browser";
 import * as Comlink from "comlink";
+import Client from "mina-signer";
 
 export const api = {
   /**
@@ -29,7 +30,7 @@ export const api = {
       return {
         sha256Hash: result.sha256,
         high128String: result.high128.toString(),
-        low128String: result.low128.toString()
+        low128String: result.low128.toString(),
       };
     } catch (error) {
       console.error("Failed to compute commitment:", error);
@@ -49,8 +50,8 @@ export const api = {
 
       console.log("Keypair generated successfully");
       return {
-        privateKeyBase58: privateKey.toBase58(),
-        publicKeyBase58: publicKey.toBase58()
+        privateKey: privateKey.toBase58(),
+        publicKey: publicKey.toBase58(),
       };
     } catch (error) {
       console.error("Failed to generate keypair:", error);
@@ -58,6 +59,29 @@ export const api = {
     }
   },
 
+  /**
+   * Sign field elements using mina-signer (compatible with Auro Wallet signatures)
+   */
+  signFieldsMinaSigner: async (privateKeyBase58: string, fields: string[]) => {
+    console.log("Signing fields with mina-signer...");
+
+    try {
+      const client = new Client({ network: "testnet" });
+
+      const fieldsBigInt = fields.map((f) => BigInt(f));
+
+      const signResult = client.signFields(fieldsBigInt, privateKeyBase58);
+
+      console.log("Fields signed successfully");
+      return {
+        signature: signResult.signature,
+        publicKey: signResult.publicKey,
+      };
+    } catch (error) {
+      console.error("Failed to sign fields:", error);
+      throw error;
+    }
+  },
 
   /**
    * Sign an image commitment with a Mina private key
@@ -79,7 +103,7 @@ export const api = {
       console.log("Commitment signed successfully");
       return {
         signatureBase58: signature.toBase58(),
-        publicKeyBase58: publicKey.toBase58()
+        publicKeyBase58: publicKey.toBase58(),
       };
     } catch (error) {
       console.error("Failed to sign commitment:", error);
@@ -111,14 +135,13 @@ export const api = {
       console.log("SHA256 hash signed successfully");
       return {
         signatureBase58: signature.toBase58(),
-        publicKeyBase58: publicKey.toBase58()
+        publicKeyBase58: publicKey.toBase58(),
       };
     } catch (error) {
       console.error("Failed to sign SHA256 hash:", error);
       throw error;
     }
   },
-
 
   /**
    * Read contract state from a token account to verify image authenticity
@@ -166,7 +189,7 @@ export const api = {
       console.log("Raw contract state:", {
         poseidonHash: poseidonHash.toString(),
         creatorX: creatorX.toString(),
-        creatorIsOdd: creatorIsOdd.toString()
+        creatorIsOdd: creatorIsOdd.toString(),
       });
 
       // Convert Fields to strings for serialization across worker boundary
@@ -174,7 +197,7 @@ export const api = {
         poseidonHash: poseidonHash.toString(),
         creatorX: creatorX.toString(),
         creatorIsOdd: creatorIsOdd.toString(),
-        isValid: true
+        isValid: true,
       };
     } catch (error) {
       console.error("Failed to read contract state:", error);
@@ -183,10 +206,10 @@ export const api = {
         creatorX: "0",
         creatorIsOdd: "0",
         isValid: false,
-        error: String(error)
+        error: String(error),
       };
     }
-  }
+  },
 };
 
 export type TouchGrassWorker = typeof api;
