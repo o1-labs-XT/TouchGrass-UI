@@ -34,7 +34,7 @@
 
 .controls button {
   flex: 1;
-  min-width: 150px;
+  min-width: 200px;
 }
 
 .error {
