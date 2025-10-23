@@ -15,12 +15,12 @@ import SubmissionCard from "../components/SubmissionCard";
 import StatusMessage from "../components/StatusMessage";
 import ErrorMessage from "../components/ErrorMessage";
 import WalletStatus from "../components/WalletStatus";
-import { useAuroWallet } from "../hooks/useAuroWallet";
+import { useWallet } from "../contexts/WalletContext";
 import styles from "./submit.module.css";
 
 export default function SubmitPage() {
   const router = useRouter();
-  const { isConnected, isConnecting, address, signFields } = useAuroWallet();
+  const { walletChoice, isConnected, isConnecting, address, signFields } = useWallet();
   const [challenge, setChallenge] = useState<Challenge | null>(null);
   const [chainId, setChainId] = useState<string | null>(null);
   const [imageBlob, setImageBlob] = useState<Blob | null>(null);
@@ -28,11 +28,6 @@ export default function SubmitPage() {
   const [isProcessing, setIsProcessing] = useState(false);
   const [status, setStatus] = useState<string>("");
   const [error, setError] = useState<string | null>(null);
-  const [walletChoice, setWalletChoice] = useState<string | null>(null);
-
-  useEffect(() => {
-    setWalletChoice(sessionStorage.getItem("walletChoice"));
-  }, []);
 
   useEffect(() => {
     // Get chainId from URL params
