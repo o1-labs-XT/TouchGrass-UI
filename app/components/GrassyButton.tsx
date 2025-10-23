@@ -24,7 +24,7 @@ export default function GrassyButton({
       disabled={disabled}
       className={`${styles.grassyButton} ${disabled ? styles.disabled : ''} ${className}`}
     >
-      {children}
+      <span className={styles.text}>{children}</span>
     </button>
   );
 }
