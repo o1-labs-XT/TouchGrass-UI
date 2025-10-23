@@ -7,7 +7,6 @@
   border: none;
   outline: none;
   background-color: transparent;
-  background-image: url('/assets/grassy-button-primary.svg');
   background-size: 100% 100%;
   background-repeat: no-repeat;
   background-position: center;
@@ -16,8 +15,20 @@
   transition: background-image 300ms ease-out;
 }
 
-.grassyButton:hover:not(.disabled) {
+.primary {
+  background-image: url('/assets/grassy-button-primary.svg');
+}
+
+.primary:hover:not(.disabled) {
   background-image: url('/assets/grassy-button-primary-hover.svg');
+}
+
+.secondary {
+  background-image: url('/assets/grassy-button-secondary.svg');
+}
+
+.secondary:hover:not(.disabled) {
+  background-image: url('/assets/grassy-button-secondary-hover.svg');
 }
 
 .grassyButton:focus {
