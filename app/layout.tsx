@@ -2,6 +2,7 @@ import "../styles/globals.css";
 import { IBM_Plex_Sans, IBM_Plex_Mono } from 'next/font/google';
 import ServiceWorkerRegistration from './components/ServiceWorkerRegistration';
 import ErrorBoundary from './components/ErrorBoundary';
+import { WalletProvider } from './contexts/WalletContext';
 
 const ibmPlexSans = IBM_Plex_Sans({
   subsets: ['latin'],
@@ -40,7 +41,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className={`${ibmPlexSans.variable} ${ibmPlexMono.variable}`}>
         <ServiceWorkerRegistration />
         <ErrorBoundary>
-          {children}
+          <WalletProvider>
+            {children}
+          </WalletProvider>
         </ErrorBoundary>
       </body>
     </html>
