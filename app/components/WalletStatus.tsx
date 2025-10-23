@@ -1,10 +1,10 @@
 'use client';
-import { useAuroWallet } from '../hooks/useAuroWallet';
+import { useWallet } from '../contexts/WalletContext';
 import Button from './Button';
 import styles from './WalletStatus.module.css';
 
 export default function WalletStatus() {
-  const { isInstalled, isConnecting, isConnected, address, error, reconnect } = useAuroWallet();
+  const { isInstalled, isConnecting, isConnected, address, error, reconnect } = useWallet();
 
   // Don't show anything while checking
   if (!isInstalled && !error) {
