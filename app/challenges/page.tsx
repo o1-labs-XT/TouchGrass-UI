@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { getAllChallenges, getActiveChallenges, getChainsByChallenge } from '../lib/backendClient';
 import type { Challenge } from '../lib/backendClient';
-import Button from '../components/Button';
+import GrassyButton from '../components/GrassyButton';
 import SubmissionCard from '../components/SubmissionCard';
 import StatBox from '../components/StatBox';
 import styles from './challenges.module.css';
@@ -67,9 +67,9 @@ export default function ChallengesPage() {
     return (
       <main className={styles.error}>
         <p className={styles.errorMessage}>Error: {error}</p>
-        <Button variant="primary" onClick={() => window.location.reload()}>
+        <GrassyButton variant="primary" onClick={() => window.location.reload()}>
           Try Again
-        </Button>
+        </GrassyButton>
       </main>
     );
   }
