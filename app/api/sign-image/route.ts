@@ -8,14 +8,18 @@ export async function POST(request: NextRequest) {
     const origin = request.headers.get("origin");
     const allowedOrigins = [
       "http://localhost:3000",
-      "https://touch-grass-ui.vercel.app/",
+      "https://touch-grass-ui.vercel.app",
     ];
 
-    // Only validate origin in production
-    if (
-      process.env.NODE_ENV === "production" &&
-      !allowedOrigins.includes(origin || "")
-    ) {
+    // Check if origin is allowed (including Vercel preview deployments)
+    const isOriginAllowed =
+      origin &&
+      (allowedOrigins.includes(origin) ||
+        /^https:\/\/touch-grass-ui.*\.vercel\.app$/.test(origin));
+
+    // Only validate origin in production deployments
+    // VERCEL_ENV is 'production' for production, 'preview' for branch deploys, 'development' for local
+    if (process.env.VERCEL_ENV === "production" && !isOriginAllowed) {
       return NextResponse.json({ error: "Invalid origin" }, { status: 403 });
     }
 
