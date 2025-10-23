@@ -76,7 +76,7 @@ export default function WelcomePage() {
           </ul>
 
           <div className={styles.buttons}>
-            <GrassyButton onClick={handleAuroWallet}>
+            <GrassyButton variant="primary" onClick={handleAuroWallet}>
               Connect Wallet & Start Playing
             </GrassyButton>
             <Button variant="primary" onClick={handleWithoutWallet}>
