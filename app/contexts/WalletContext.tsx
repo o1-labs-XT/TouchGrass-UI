@@ -1,5 +1,5 @@
 'use client';
-import { createContext, useContext, ReactNode } from 'react';
+import { createContext, useContext, useState, ReactNode } from 'react';
 
 type WalletChoice = 'auro' | 'generated' | null;
 
@@ -24,10 +24,27 @@ interface WalletContextType {
 const WalletContext = createContext<WalletContextType | undefined>(undefined);
 
 export function WalletProvider({ children }: { children: ReactNode }) {
-  const value = {};
+  const [walletChoice, setWalletChoiceState] = useState<WalletChoice>(null);
+
+  const setWalletChoice = (choice: 'auro' | 'generated') => {
+    setWalletChoiceState(choice);
+  };
+
+  const value = {
+    walletChoice,
+    setWalletChoice,
+    // Temporary placeholders for Auro wallet state
+    isInstalled: false,
+    isConnecting: false,
+    isConnected: false,
+    address: null,
+    error: null,
+    reconnect: async () => {},
+    signFields: async () => ({ data: [], signature: '' }),
+  };
 
   return (
-    <WalletContext.Provider value={value as WalletContextType}>
+    <WalletContext.Provider value={value}>
       {children}
     </WalletContext.Provider>
   );
