@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { getChain, getSubmissionsByChain, getImageUrl } from '../../lib/backendClient';
 import type { Chain, Submission } from '../../lib/backendClient';
-import Button from '../../components/Button';
+import GrassyButton from '../../components/GrassyButton';
 import BackButton from '../../components/BackButton';
 import SubmissionCard from '../../components/SubmissionCard';
 import StatBox from '../../components/StatBox';
@@ -64,9 +64,9 @@ export default function ChainDetailPage({ params }: { params: Promise<{ id: stri
     return (
       <div className={styles.error}>
         <p>Error: {error}</p>
-        <Button variant="primary" onClick={() => window.location.reload()}>
+        <GrassyButton variant="primary" onClick={() => window.location.reload()}>
           Try Again
-        </Button>
+        </GrassyButton>
       </div>
     );
   }
@@ -85,9 +85,9 @@ export default function ChainDetailPage({ params }: { params: Promise<{ id: stri
             <StatBox value={chain.length} label="Images" />
             <StatBox value={submissions.length} label="Submissions" />
           </div>
-          <Button variant="primary" onClick={() => router.push(`/submit?chainId=${chainId}`)}>
+          <GrassyButton variant="primary" onClick={() => router.push(`/submit?chainId=${chainId}`)}>
             Extend Chain
-          </Button>
+          </GrassyButton>
         </SubmissionCard>
       )}
 
