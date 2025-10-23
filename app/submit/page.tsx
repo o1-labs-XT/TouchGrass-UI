@@ -234,7 +234,7 @@ export default function SubmitPage() {
       console.log("[6/7] Building form data");
       const formData = new FormData();
       formData.append('image', imageBlob);
-      formData.append('walletAddress', walletKeypair.publicKeyBase58);
+      formData.append('walletAddress', walletKeypair.publicKey);
       formData.append('signatureR', signature.signatureR);
       formData.append('signatureS', signature.signatureS);
       formData.append('publicKeyX', STATIC_ECDSA_PUBLIC_KEY.x);
