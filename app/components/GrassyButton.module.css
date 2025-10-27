@@ -15,20 +15,36 @@
   transition: background-image 300ms ease-out;
 }
 
-.primary {
+.wide.primary {
   background-image: url('/assets/grassy-button-primary.svg');
 }
 
-.primary:hover:not(.disabled) {
+.wide.primary:hover:not(.disabled) {
   background-image: url('/assets/grassy-button-primary-hover.svg');
 }
 
-.secondary {
+.wide.secondary {
   background-image: url('/assets/grassy-button-secondary.svg');
 }
 
-.secondary:hover:not(.disabled) {
+.wide.secondary:hover:not(.disabled) {
   background-image: url('/assets/grassy-button-secondary-hover.svg');
+}
+
+.short.primary {
+  background-image: url('/assets/grassy-button-short-primary.svg');
+}
+
+.short.primary:hover:not(.disabled) {
+  background-image: url('/assets/grassy-button-short-primary-hover.svg');
+}
+
+.short.secondary {
+  background-image: url('/assets/grassy-button-short-secondary.svg');
+}
+
+.short.secondary:hover:not(.disabled) {
+  background-image: url('/assets/grassy-button-short-secondary-hover.svg');
 }
 
 .grassyButton:focus {
