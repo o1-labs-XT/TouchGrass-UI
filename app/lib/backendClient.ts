@@ -383,3 +383,28 @@ async function fetchSubmissionFresh(submissionId: string): Promise<Submission> {
   setCachedSubmission(submission);
   return submission;
 }
+
+/**
+ * Like a submission
+ */
+export async function likeSubmission(
+  submissionId: string,
+  walletAddress: string
+): Promise<Like> {
+  const response = await fetch(`${BACKEND_URL}/submissions/${submissionId}/likes`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ walletAddress }),
+  });
+
+  if (!response.ok) {
+    const errorData = await response.json().catch(() => ({}));
+    throw new Error(
+      errorData.error?.message || errorData.error || `Failed to like submission: ${response.statusText}`
+    );
+  }
+
+  return response.json();
+}
