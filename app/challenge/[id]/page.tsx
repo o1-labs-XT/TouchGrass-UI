@@ -118,6 +118,7 @@ export default function ChallengePage({
                 {new Date(challenge.endTime) > new Date() && (
                   <GrassyButton
                     variant="primary"
+                    size="short"
                     onClick={() =>
                       router.push(`/submit?chainId=${chain?.id || "1"}`)
                     }
@@ -129,6 +130,7 @@ export default function ChallengePage({
                 {chain && (
                   <GrassyButton
                     variant="secondary"
+                    size="short"
                     onClick={() => router.push(`/chain/${chain.id}`)}
                   >
                     View Chain
