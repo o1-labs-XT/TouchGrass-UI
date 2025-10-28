@@ -63,7 +63,7 @@ export async function POST(request: NextRequest) {
     const hashBytes = Bytes32.fromHex(sha256Hash);
 
     // Convert private key hex to bigint and create scalar
-    const privateKeyBigInt = BigInt("0x" + privateKeyHex);
+    const privateKeyBigInt = BigInt(privateKeyHex);
     const privateKey = Secp256r1.Scalar.from(privateKeyBigInt);
 
     // Sign the hash
