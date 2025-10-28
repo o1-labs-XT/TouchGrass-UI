@@ -430,3 +430,35 @@ export async function unlikeSubmission(
     );
   }
 }
+
+/**
+ * Get like count for a submission
+ */
+export async function getLikeCount(
+  submissionId: string
+): Promise<{ submissionId: string; count: number }> {
+  const response = await fetch(`${BACKEND_URL}/submissions/${submissionId}/likes/count`);
+
+  if (!response.ok) {
+    throw new Error(`Failed to get like count: ${response.statusText}`);
+  }
+
+  return response.json();
+}
+
+/**
+ * Check if user has liked a submission
+ */
+export async function checkUserLiked(
+  submissionId: string,
+  walletAddress: string
+): Promise<boolean> {
+  const response = await fetch(`${BACKEND_URL}/submissions/${submissionId}/likes`);
+
+  if (!response.ok) {
+    throw new Error(`Failed to check if user liked: ${response.statusText}`);
+  }
+
+  const likes: Like[] = await response.json();
+  return likes.some((like) => like.walletAddress === walletAddress);
+}
