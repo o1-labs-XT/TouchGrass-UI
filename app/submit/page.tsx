@@ -290,6 +290,7 @@ export default function SubmitPage() {
                 <div className={styles.buttonGroup}>
                   <GrassyButton
                     variant="primary"
+                    size="short"
                     onClick={handleSubmit}
                     disabled={walletChoice === "auro" && isConnecting}
                   >
@@ -297,7 +298,7 @@ export default function SubmitPage() {
                       ? "Connecting wallet..."
                       : "Submit"}
                   </GrassyButton>
-                  <GrassyButton variant="secondary" onClick={handleReset}>
+                  <GrassyButton variant="secondary" size="short" onClick={handleReset}>
                     Retake
                   </GrassyButton>
                 </div>
