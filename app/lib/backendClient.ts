@@ -408,3 +408,25 @@ export async function likeSubmission(
 
   return response.json();
 }
+
+/**
+ * Unlike a submission
+ */
+export async function unlikeSubmission(
+  submissionId: string,
+  walletAddress: string
+): Promise<void> {
+  const response = await fetch(
+    `${BACKEND_URL}/submissions/${submissionId}/likes/${encodeURIComponent(walletAddress)}`,
+    {
+      method: 'DELETE',
+    }
+  );
+
+  if (!response.ok) {
+    const errorData = await response.json().catch(() => ({}));
+    throw new Error(
+      errorData.error?.message || errorData.error || `Failed to unlike submission: ${response.statusText}`
+    );
+  }
+}
