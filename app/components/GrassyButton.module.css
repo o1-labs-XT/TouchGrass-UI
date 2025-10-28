@@ -1,9 +1,6 @@
 .grassyButton {
   position: relative;
-  display: block;
-  width: 100%;
-  min-width: 100%;
-  height: 48px;
+  display: inline-block;
   border: none;
   outline: none;
   background-color: transparent;
@@ -13,22 +10,50 @@
   cursor: pointer;
   padding: 0;
   transition: background-image 300ms ease-out;
+  -webkit-tap-highlight-color: transparent;
 }
 
-.primary {
+/* Size variants */
+.short {
+  width: 122px;
+  height: 39px;
+}
+
+.wide {
+  width: 259px;
+  height: 39px;
+}
+
+.wide.primary {
   background-image: url('/assets/grassy-button-primary.svg');
 }
 
-.primary:hover:not(.disabled) {
+.wide.primary:hover:not(.disabled) {
   background-image: url('/assets/grassy-button-primary-hover.svg');
 }
 
-.secondary {
+.wide.secondary {
   background-image: url('/assets/grassy-button-secondary.svg');
 }
 
-.secondary:hover:not(.disabled) {
+.wide.secondary:hover:not(.disabled) {
   background-image: url('/assets/grassy-button-secondary-hover.svg');
+}
+
+.short.primary {
+  background-image: url('/assets/grassy-button-short-primary.svg');
+}
+
+.short.primary:hover:not(.disabled) {
+  background-image: url('/assets/grassy-button-short-primary-hover.svg');
+}
+
+.short.secondary {
+  background-image: url('/assets/grassy-button-short-secondary.svg');
+}
+
+.short.secondary:hover:not(.disabled) {
+  background-image: url('/assets/grassy-button-short-secondary-hover.svg');
 }
 
 .grassyButton:focus {
@@ -44,7 +69,7 @@
   align-items: center;
   justify-content: center;
   width: 100%;
-  height: 48px;
+  height: 39px;
   font-family: 'Figtree', var(--font-ibm-plex), -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   font-weight: 700;
   font-size: 13px;
