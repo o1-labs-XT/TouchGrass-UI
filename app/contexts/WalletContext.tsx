@@ -76,7 +76,13 @@ export function WalletProvider({ children }: { children: ReactNode }) {
   const value = {
     walletChoice,
     setWalletChoice,
-    ...auroWallet, // Spread actual Auro wallet state
+    ...(walletChoice === 'generated'
+      ? {
+          ...auroWallet,
+          address: generatedAddress,
+          isConnected: !!generatedAddress,
+        }
+      : auroWallet),
   };
 
   return (
