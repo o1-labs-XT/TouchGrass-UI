@@ -32,7 +32,7 @@ export default function LikeButton({
       try {
         const [likeCountData, userLiked] = await Promise.all([
           getLikeCount(submissionId),
-          checkUserLiked(submissionId, address),
+          checkUserLiked(submissionId, address!),
         ]);
 
         setCount(likeCountData.count);
@@ -59,9 +59,9 @@ export default function LikeButton({
 
     try {
       if (!liked) {
-        await likeSubmission(submissionId, address);
+        await likeSubmission(submissionId, address!);
       } else {
-        await unlikeSubmission(submissionId, address);
+        await unlikeSubmission(submissionId, address!);
       }
     } catch (err) {
       // Rollback on error
