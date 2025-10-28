@@ -23,6 +23,7 @@ const WalletContext = createContext<WalletContextType | undefined>(undefined);
 
 export function WalletProvider({ children }: { children: ReactNode }) {
   const [walletChoice, setWalletChoiceState] = useState<WalletChoice>(null);
+  const [generatedAddress, setGeneratedAddress] = useState<string | null>(null);
   const auroWallet = useAuroWallet();
 
   // Load from sessionStorage on mount
@@ -32,6 +33,21 @@ export function WalletProvider({ children }: { children: ReactNode }) {
       setWalletChoiceState(stored);
     }
   }, []);
+
+  // Load existing keypair from localStorage for generated wallets
+  useEffect(() => {
+    if (walletChoice === 'generated') {
+      const keypairData = localStorage.getItem('minaKeypair');
+      if (keypairData) {
+        try {
+          const keypair = JSON.parse(keypairData);
+          setGeneratedAddress(keypair.publicKey);
+        } catch (err) {
+          console.error('Failed to parse minaKeypair:', err);
+        }
+      }
+    }
+  }, [walletChoice]);
 
   const setWalletChoice = (choice: 'auro' | 'generated') => {
     sessionStorage.setItem('walletChoice', choice);
