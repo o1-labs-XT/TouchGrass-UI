@@ -62,6 +62,8 @@ export function WalletProvider({ children }: { children: ReactNode }) {
         } catch (err) {
           console.error('Failed to parse minaKeypair:', err);
         }
+      } else {
+        generateKeypair();
       }
     }
   }, [walletChoice]);
