@@ -285,12 +285,13 @@ export default function CameraCapture({ onCapture }: CameraCaptureProps) {
           <>
             <GrassyButton
               variant="primary"
+              size="short"
               onClick={capturePhoto}
               disabled={isCapturing}
             >
               {isCapturing ? 'Capturing...' : 'Capture'}
             </GrassyButton>
-            <GrassyButton variant="secondary" onClick={stopCamera}>
+            <GrassyButton variant="secondary" size="short" onClick={stopCamera}>
               Cancel
             </GrassyButton>
           </>
