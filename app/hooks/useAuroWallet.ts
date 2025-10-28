@@ -174,6 +174,7 @@ export function useAuroWallet() {
       console.log('[DEBUG] Accounts received:', accounts);
 
       if (accounts.length > 0) {
+        localStorage.setItem('walletChoice', 'auro');
         setWalletState({
           isInstalled: true,
           isConnecting: false,
