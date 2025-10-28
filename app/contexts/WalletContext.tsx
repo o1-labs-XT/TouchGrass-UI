@@ -43,9 +43,9 @@ export function WalletProvider({ children }: { children: ReactNode }) {
     }
   }
 
-  // Load from sessionStorage on mount
+  // Load from localStorage on mount
   useEffect(() => {
-    const stored = sessionStorage.getItem('walletChoice');
+    const stored = localStorage.getItem('walletChoice');
     if (stored === 'auro' || stored === 'generated') {
       setWalletChoiceState(stored);
     }
@@ -69,7 +69,7 @@ export function WalletProvider({ children }: { children: ReactNode }) {
   }, [walletChoice]);
 
   const setWalletChoice = (choice: 'auro' | 'generated') => {
-    sessionStorage.setItem('walletChoice', choice);
+    localStorage.setItem('walletChoice', choice);
     setWalletChoiceState(choice);
   };
 
