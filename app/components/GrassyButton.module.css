@@ -1,9 +1,6 @@
 .grassyButton {
   position: relative;
-  display: block;
-  width: 100%;
-  min-width: 100%;
-  height: 48px;
+  display: inline-block;
   border: none;
   outline: none;
   background-color: transparent;
@@ -13,6 +10,17 @@
   cursor: pointer;
   padding: 0;
   transition: background-image 300ms ease-out;
+}
+
+/* Size variants */
+.short {
+  width: 122px;
+  height: 39px;
+}
+
+.wide {
+  width: 259px;
+  height: 39px;
 }
 
 .wide.primary {
@@ -60,7 +68,7 @@
   align-items: center;
   justify-content: center;
   width: 100%;
-  height: 48px;
+  height: 39px;
   font-family: 'Figtree', var(--font-ibm-plex), -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   font-weight: 700;
   font-size: 13px;
