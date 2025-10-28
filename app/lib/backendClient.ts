@@ -75,6 +75,14 @@ export interface Submission {
   updatedAt: string;
 }
 
+export interface Like {
+  id: string;
+  submissionId: string;
+  walletAddress: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
 export function getImageUrl(submissionId: string): string {
   return `${BACKEND_URL}/submissions/${submissionId}/image`;
 }
