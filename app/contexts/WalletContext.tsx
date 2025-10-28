@@ -26,6 +26,23 @@ export function WalletProvider({ children }: { children: ReactNode }) {
   const [generatedAddress, setGeneratedAddress] = useState<string | null>(null);
   const auroWallet = useAuroWallet();
 
+  async function generateKeypair() {
+    try {
+      const TouchGrassWorkerClient = (await import('./TouchGrassWorkerClient')).default;
+      const worker = new TouchGrassWorkerClient();
+
+      const minaKeypair = await worker.generateKeypair();
+      localStorage.setItem('minaKeypair', JSON.stringify({
+        privateKey: minaKeypair.privateKey,
+        publicKey: minaKeypair.publicKey
+      }));
+
+      setGeneratedAddress(minaKeypair.publicKey);
+    } catch (err) {
+      console.error('Failed to generate keypair:', err);
+    }
+  }
+
   // Load from sessionStorage on mount
   useEffect(() => {
     const stored = sessionStorage.getItem('walletChoice');
