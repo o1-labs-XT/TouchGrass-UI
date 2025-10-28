@@ -10,6 +10,7 @@
   cursor: pointer;
   padding: 0;
   transition: background-image 300ms ease-out;
+  -webkit-tap-highlight-color: transparent;
 }
 
 /* Size variants */
