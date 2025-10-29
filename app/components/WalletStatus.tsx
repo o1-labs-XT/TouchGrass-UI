@@ -17,7 +17,7 @@ export default function WalletStatus() {
       <div className={styles.walletStatus}>
         <GrassyButton
           variant="secondary"
-          size="short"
+          size="wide"
           onClick={() => window.open('https://www.aurowallet.com/', '_blank')}
         >
           Install Auro Wallet
