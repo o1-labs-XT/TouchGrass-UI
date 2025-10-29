@@ -127,6 +127,39 @@
   }
 }
 
+/* Floating heart animation */
+.floatingHeart {
+  position: absolute;
+  left: 50%;
+  bottom: 100%;
+  transform: translateX(-50%);
+  pointer-events: none;
+  animation: floatUp 1s ease-out forwards;
+  z-index: 1001;
+}
+
+.floatingHeart svg {
+  width: 32px;
+  height: 32px;
+  fill: var(--brand-chlorophyll-green);
+  stroke: var(--brand-chlorophyll-green);
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+}
+
+@keyframes floatUp {
+  0% {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0) scale(1);
+  }
+  50% {
+    transform: translateX(-50%) translateY(-40px) scale(1.2);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-80px) scale(0.8);
+  }
+}
+
 /* Mobile optimizations */
 @media (max-width: 768px) {
   .likeButton {
