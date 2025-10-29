@@ -50,8 +50,8 @@
 }
 
 .heartFilled {
-  fill: #2C8C3E;
-  stroke: #2C8C3E;
+  fill: var(--brand-chlorophyll-green);
+  stroke: var(--brand-chlorophyll-green);
   animation: heartPop 0.3s ease;
 }
 
@@ -61,12 +61,13 @@
 }
 
 .likeButton:hover:not(:disabled) .heartUnfilled {
-  stroke: #2C8C3E;
+  stroke: var(--brand-chlorophyll-green);
 }
 
 .likeButton:hover:not(:disabled) .heartFilled {
-  fill: #238735;
-  stroke: #238735;
+  fill: var(--brand-chlorophyll-green);
+  stroke: var(--brand-chlorophyll-green);
+  opacity: 0.8;
 }
 
 /* Heart animation */
