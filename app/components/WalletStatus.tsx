@@ -40,7 +40,6 @@ export default function WalletStatus() {
     return (
       <div className={styles.walletStatus}>
         <div className={styles.connected}>
-          <span className={styles.dot}>●</span>
           <span className={styles.address}>
             {address.slice(0, 6)}...{address.slice(-4)}
           </span>
