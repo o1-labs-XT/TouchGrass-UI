@@ -1,6 +1,7 @@
 'use client';
 import { useWallet } from '../contexts/WalletContext';
 import Button from './Button';
+import GrassyButton from './GrassyButton';
 import styles from './WalletStatus.module.css';
 
 export default function WalletStatus() {
@@ -52,13 +53,13 @@ export default function WalletStatus() {
   // Not connected - show Connect Wallet button
   return (
     <div className={styles.walletStatus}>
-      <Button
-        variant="clean"
+      <GrassyButton
+        variant="primary"
+        size="short"
         onClick={reconnect}
-        className={styles.compactButton}
       >
         Connect Wallet
-      </Button>
+      </GrassyButton>
     </div>
   );
 }
