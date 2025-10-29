@@ -23,6 +23,7 @@ export default function LikeButton({
   const [count, setCount] = useState(initialCount);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [showFloatingHeart, setShowFloatingHeart] = useState(false);
 
   // Fetch initial like count (lazy load - don't check if user liked)
   useEffect(() => {
@@ -123,6 +124,20 @@ export default function LikeButton({
       {error && (
         <div className={styles.errorToast}>
           {error}
+        </div>
+      )}
+      {showFloatingHeart && (
+        <div
+          className={styles.floatingHeart}
+          onAnimationEnd={() => setShowFloatingHeart(false)}
+        >
+          <svg viewBox="0 0 24 24">
+            <path
+              d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
         </div>
       )}
     </div>
