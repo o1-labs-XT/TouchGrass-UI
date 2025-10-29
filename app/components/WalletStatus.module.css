@@ -29,9 +29,10 @@
 }
 
 .dot {
-  color: var(--mina-green);
-  font-size: 0.75rem;
+  color: var(--brand-chlorophyll-green);
+  font-size: 1rem;
   animation: pulse 2s ease-in-out infinite;
+  cursor: default;
 }
 
 @keyframes pulse {
@@ -49,7 +50,7 @@
   color: var(--brand-secondary-text);
   font-weight: 500;
   transition: color 0.2s ease;
-  cursor: pointer;
+  cursor: default;
   user-select: all;
 }
 
