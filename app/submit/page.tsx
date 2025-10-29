@@ -15,7 +15,6 @@ import SubmissionCard from "../components/SubmissionCard";
 import StatusMessage from "../components/StatusMessage";
 import ErrorMessage from "../components/ErrorMessage";
 import WalletStatus from "../components/WalletStatus";
-import DebugPanel from "../components/DebugPanel";
 import { useWallet } from "../contexts/WalletContext";
 import styles from "./submit.module.css";
 
@@ -307,7 +306,6 @@ export default function SubmitPage() {
               )}
             </div>
           </div>
-          <DebugPanel />
         </main>
       ) : (
         <main className={styles.container}>
@@ -359,7 +357,6 @@ export default function SubmitPage() {
               <CameraCapture onCapture={handleCapture} />
             </SubmissionCard>
           </div>
-          <DebugPanel />
         </main>
       )}
     </>
