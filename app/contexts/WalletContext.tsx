@@ -46,8 +46,25 @@ export function WalletProvider({ children }: { children: ReactNode }) {
   // Load from localStorage on mount
   useEffect(() => {
     const stored = localStorage.getItem('walletChoice');
+    console.log('[WalletContext] localStorage.walletChoice:', stored);
+    console.log('[WalletContext] window.mina exists:', typeof window.mina !== 'undefined');
+    console.log('[WalletContext] All localStorage keys:', Object.keys(localStorage));
+
     if (stored === 'auro' || stored === 'generated') {
       setWalletChoiceState(stored);
+    } else {
+      console.log('[WalletContext] walletChoice is null - checking URL params');
+      // Check URL parameter as fallback for Auro browser redirect
+      const params = new URLSearchParams(window.location.search);
+      const walletParam = params.get('wallet');
+      console.log('[WalletContext] URL wallet param:', walletParam);
+
+      if (walletParam === 'auro' || walletParam === 'generated') {
+        console.log('[WalletContext] Setting walletChoice from URL param:', walletParam);
+        setWalletChoice(walletParam);
+        // Clean up URL
+        window.history.replaceState({}, '', window.location.pathname);
+      }
     }
   }, []);
 
