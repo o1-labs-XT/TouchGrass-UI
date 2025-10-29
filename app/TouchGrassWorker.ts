@@ -42,16 +42,16 @@ export const api = {
    * Generate a random Mina keypair for browser-based signing
    */
   generateKeypair: async () => {
-    console.log("Generating random keypair...");
+    console.log("Generating random keypair with mina-signer...");
 
     try {
-      const privateKey = PrivateKey.random();
-      const publicKey = privateKey.toPublicKey();
+      const client = new Client({ network: "testnet" });
+      const keypair = client.genKeys();
 
       console.log("Keypair generated successfully");
       return {
-        privateKey: privateKey.toBase58(),
-        publicKey: publicKey.toBase58(),
+        privateKey: keypair.privateKey,
+        publicKey: keypair.publicKey,
       };
     } catch (error) {
       console.error("Failed to generate keypair:", error);
@@ -83,65 +83,6 @@ export const api = {
     }
   },
 
-  /**
-   * Sign an image commitment with a Mina private key
-   */
-  signCommitment: async (
-    privateKeyBase58: string,
-    commitmentString: string
-  ) => {
-    console.log("Signing commitment...");
-
-    try {
-      // Reconstruct objects from serializable strings
-      const privateKey = PrivateKey.fromBase58(privateKeyBase58);
-      const publicKey = privateKey.toPublicKey();
-      const commitment = Field(commitmentString);
-
-      const signature = Signature.create(privateKey, [commitment]);
-
-      console.log("Commitment signed successfully");
-      return {
-        signatureBase58: signature.toBase58(),
-        publicKeyBase58: publicKey.toBase58(),
-      };
-    } catch (error) {
-      console.error("Failed to sign commitment:", error);
-      throw error;
-    }
-  },
-
-  /**
-   * Sign a SHA256 hash with a Mina private key (for backend compatibility)
-   */
-  signSHA256Hash: async (privateKeyBase58: string, sha256Hex: string) => {
-    console.log("Signing SHA256 hash...");
-
-    try {
-      // Import Bytes to create Bytes32
-      const { Bytes } = await import("o1js");
-      class Bytes32 extends Bytes(32) {}
-
-      const privateKey = PrivateKey.fromBase58(privateKeyBase58);
-      const publicKey = privateKey.toPublicKey();
-
-      // Convert SHA256 hex string to Bytes32 representation
-      // This matches what the backend expects for signature validation
-      const commitment = Bytes32.fromHex(sha256Hex);
-
-      // The backend's verifySignature expects this format
-      const signature = Signature.create(privateKey, commitment.toFields());
-
-      console.log("SHA256 hash signed successfully");
-      return {
-        signatureBase58: signature.toBase58(),
-        publicKeyBase58: publicKey.toBase58(),
-      };
-    } catch (error) {
-      console.error("Failed to sign SHA256 hash:", error);
-      throw error;
-    }
-  },
 
   /**
    * Read contract state from a token account to verify image authenticity
