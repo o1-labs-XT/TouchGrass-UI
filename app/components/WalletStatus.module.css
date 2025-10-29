@@ -2,6 +2,7 @@
   display: flex;
   align-items: center;
   gap: 0.75rem;
+  justify-content: flex-end;
 }
 
 .compactButton {
@@ -45,6 +46,14 @@
 .address {
   font-family: var(--font-ibm-plex-mono);
   font-size: 0.875rem;
-  color: var(--mina-white);
+  color: var(--brand-secondary-text);
   font-weight: 500;
+  transition: color 0.2s ease;
+  cursor: pointer;
+  user-select: all;
+}
+
+.address:hover,
+.address:active {
+  color: var(--mina-white);
 }
