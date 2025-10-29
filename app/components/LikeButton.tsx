@@ -61,6 +61,8 @@ export default function LikeButton({
     try {
       if (!liked) {
         await likeSubmission(submissionId, address!);
+        // Show floating heart animation on successful like
+        setShowFloatingHeart(true);
       } else {
         await unlikeSubmission(submissionId, address!);
       }
@@ -73,6 +75,8 @@ export default function LikeButton({
         // But rollback count increment (no new like was created)
         setLiked(true);
         setCount(previousCount);
+        // Show floating heart since they liked it
+        setShowFloatingHeart(true);
         // Don't show error - this is expected in lazy load approach
       } else {
         // Rollback on other errors
