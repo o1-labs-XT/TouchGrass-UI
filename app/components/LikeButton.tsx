@@ -64,25 +64,32 @@ export default function LikeButton({
         await unlikeSubmission(submissionId, address!);
       }
     } catch (err) {
-      // Rollback on error
-      setLiked(previousLiked);
-      setCount(previousCount);
-
       const errorMessage = err instanceof Error ? err.message : 'Failed to update like';
 
-      // User-friendly error messages
-      if (errorMessage.includes('403') || errorMessage.includes('approved submission')) {
-        setError('You need an approved submission before you can like others');
-      } else if (errorMessage.includes('404')) {
-        setError('This submission could not be found');
-      } else if (errorMessage.includes('409') || errorMessage.includes('already')) {
-        setError("You've already liked this submission");
+      // Special handling for 409: user already liked (lazy load discovery)
+      if (errorMessage.includes('409') || errorMessage.includes('already')) {
+        // Keep liked=true (user discovered they already liked this)
+        // But rollback count increment (no new like was created)
+        setLiked(true);
+        setCount(previousCount);
+        // Don't show error - this is expected in lazy load approach
       } else {
-        setError('Something went wrong. Please try again');
-      }
+        // Rollback on other errors
+        setLiked(previousLiked);
+        setCount(previousCount);
 
-      // Clear error after 3 seconds
-      setTimeout(() => setError(null), 3000);
+        // User-friendly error messages
+        if (errorMessage.includes('403') || errorMessage.includes('approved submission')) {
+          setError('You need an approved submission before you can like others');
+        } else if (errorMessage.includes('404')) {
+          setError('This submission could not be found');
+        } else {
+          setError('Something went wrong. Please try again');
+        }
+
+        // Clear error after 3 seconds
+        setTimeout(() => setError(null), 3000);
+      }
     } finally {
       setLoading(false);
     }
