@@ -185,26 +185,14 @@ export default function SubmitPage() {
         }
       } else if (walletChoice === "generated") {
         // Sign with generated keypair
-        let keypairData = sessionStorage.getItem("minaKeypair");
+        const keypairData = localStorage.getItem("minaKeypair");
 
         if (!keypairData) {
-          // First submit - generate and store
-          setStatus("Generating Mina keypair...");
-          console.log("[5/7] Generating Mina keypair for first use");
-          const minaKeypair = await worker.generateKeypair();
-          sessionStorage.setItem(
-            "minaKeypair",
-            JSON.stringify({
-              privateKey: minaKeypair.privateKey,
-              publicKey: minaKeypair.publicKey
-            })
-          );
-          keypairData = JSON.stringify(minaKeypair);
-          console.log("[5/7] Mina keypair generated and stored");
-        } else {
-          console.log("[5/7] Using existing Mina keypair from sessionStorage");
+          console.error("[5/7] No keypair found - wallet not ready");
+          throw new Error("Wallet not ready. Please refresh and try again.");
         }
 
+        console.log("[5/7] Using existing Mina keypair from localStorage");
         const minaKeypair = JSON.parse(keypairData);
 
         setStatus("Signing with generated keypair...");

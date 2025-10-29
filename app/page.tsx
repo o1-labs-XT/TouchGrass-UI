@@ -19,11 +19,13 @@ export default function WelcomePage() {
 
     if (isMobile && !hasWindowMina) {
       // Mobile without window.mina - redirect to AppLinks
-      const returnUrl = window.location.origin + "/challenges";
+      // Include wallet=auro in URL so it survives the redirect to Auro browser
+      const returnUrl = window.location.origin + "/challenges?wallet=auro";
       const encodedUrl = encodeURIComponent(returnUrl);
       const networkId = encodeURIComponent("mina:devnet");
       const appLinksUrl = `https://applinks.aurowallet.com/applinks?action=openurl&&networkid=${networkId}&url=${encodedUrl}`;
 
+      console.log('[WelcomePage] Redirecting to Auro AppLinks with wallet=auro in return URL');
       window.location.href = appLinksUrl;
     } else {
       // Already in Auro browser or desktop - navigate directly
