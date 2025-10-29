@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import { getAllChallenges, getActiveChallenges, getChainsByChallenge } from '../lib/backendClient';
 import type { Challenge } from '../lib/backendClient';
 import GrassyButton from '../components/GrassyButton';
@@ -10,7 +10,6 @@ import StatBox from '../components/StatBox';
 import styles from './challenges.module.css';
 
 export default function ChallengesPage() {
-  const router = useRouter();
   const [activeChallenges, setActiveChallenges] = useState<Challenge[]>([]);
   const [completedChallenges, setCompletedChallenges] = useState<Challenge[]>([]);
   const [loading, setLoading] = useState(true);
@@ -26,10 +25,10 @@ export default function ChallengesPage() {
         // Get all challenges and categorize them
         const allChallenges = await getAllChallenges();
         const now = new Date();
-        
+
         const active: Challenge[] = [];
         const completed: Challenge[] = [];
-        
+
         allChallenges.forEach(challenge => {
           const endTime = new Date(challenge.endTime);
           if (endTime > now) {
@@ -50,10 +49,6 @@ export default function ChallengesPage() {
 
     fetchChallenges();
   }, []);
-
-  const handleChallengeClick = (challengeId: string) => {
-    router.push(`/challenge/${challengeId}`);
-  };
 
   if (loading) {
     return (
@@ -100,26 +95,30 @@ export default function ChallengesPage() {
           ) : (
             <div className={styles.challengesGrid}>
               {activeChallenges.map((challenge) => (
-                <SubmissionCard 
-                  key={challenge.id} 
-                  className={styles.challengeCard}
-                  onClick={() => handleChallengeClick(challenge.id)}
+                <Link
+                  key={challenge.id}
+                  href={`/challenge/${challenge.id}`}
+                  style={{ textDecoration: 'none', color: 'inherit' }}
                 >
-                  <div className={styles.challengeIcon}>🌱</div>
-                  <h3 className={styles.challengeTitle}>{challenge.title}</h3>
-                  <p className={styles.challengeDescription}>{challenge.description}</p>
-                  
-                  <div className={styles.statsGrid}>
-                    <StatBox value={challenge.participantCount} label="Participants" />
-                    <StatBox value={challenge.chainCount} label="Chains" />
-                  </div>
-                  
-                  <div className={styles.challengeStatus}>
-                    <p className={styles.activeStatus}>
-                      🟢 Active until {new Date(challenge.endTime).toLocaleDateString()}
-                    </p>
-                  </div>
-                </SubmissionCard>
+                  <SubmissionCard
+                    className={styles.challengeCard}
+                  >
+                    <div className={styles.challengeIcon}>🌱</div>
+                    <h3 className={styles.challengeTitle}>{challenge.title}</h3>
+                    <p className={styles.challengeDescription}>{challenge.description}</p>
+
+                    <div className={styles.statsGrid}>
+                      <StatBox value={challenge.participantCount} label="Participants" />
+                      <StatBox value={challenge.chainCount} label="Chains" />
+                    </div>
+
+                    <div className={styles.challengeStatus}>
+                      <p className={styles.activeStatus}>
+                        🟢 Active until {new Date(challenge.endTime).toLocaleDateString()}
+                      </p>
+                    </div>
+                  </SubmissionCard>
+                </Link>
               ))}
             </div>
           )}
@@ -145,26 +144,30 @@ export default function ChallengesPage() {
             {showCompleted && (
               <div className={styles.challengesGrid}>
                 {completedChallenges.map((challenge) => (
-                  <SubmissionCard 
-                    key={challenge.id} 
-                    className={`${styles.challengeCard} ${styles.completedCard}`}
-                    onClick={() => handleChallengeClick(challenge.id)}
+                  <Link
+                    key={challenge.id}
+                    href={`/challenge/${challenge.id}`}
+                    style={{ textDecoration: 'none', color: 'inherit' }}
                   >
-                    <div className={styles.challengeIcon}>✅</div>
-                    <h3 className={styles.challengeTitle}>{challenge.title}</h3>
-                    <p className={styles.challengeDescription}>{challenge.description}</p>
-                    
-                    <div className={styles.statsGrid}>
-                      <StatBox value={challenge.participantCount} label="Participants" />
-                      <StatBox value={challenge.chainCount} label="Chains" />
-                    </div>
-                    
-                    <div className={styles.challengeStatus}>
-                      <p className={styles.completedStatus}>
-                        ✅ Completed on {new Date(challenge.endTime).toLocaleDateString()}
-                      </p>
-                    </div>
-                  </SubmissionCard>
+                    <SubmissionCard
+                      className={`${styles.challengeCard} ${styles.completedCard}`}
+                    >
+                      <div className={styles.challengeIcon}>✅</div>
+                      <h3 className={styles.challengeTitle}>{challenge.title}</h3>
+                      <p className={styles.challengeDescription}>{challenge.description}</p>
+
+                      <div className={styles.statsGrid}>
+                        <StatBox value={challenge.participantCount} label="Participants" />
+                        <StatBox value={challenge.chainCount} label="Chains" />
+                      </div>
+
+                      <div className={styles.challengeStatus}>
+                        <p className={styles.completedStatus}>
+                          ✅ Completed on {new Date(challenge.endTime).toLocaleDateString()}
+                        </p>
+                      </div>
+                    </SubmissionCard>
+                  </Link>
                 ))}
               </div>
             )}
