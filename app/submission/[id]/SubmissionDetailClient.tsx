@@ -238,7 +238,11 @@ export default function SubmissionDetailClient({ params }: SubmissionDetailClien
             )}
 
             <div className={styles.likeSection}>
-              <LikeButton submissionId={submission.id} size="large" />
+              <LikeButton
+                submissionId={submission.id}
+                initialCount={submission.likeCount}
+                size="large"
+              />
             </div>
 
             <div className={styles.metadata}>
