@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { likeSubmission, unlikeSubmission, getLikeCount, checkUserLiked } from '../lib/backendClient';
+import { likeSubmission, unlikeSubmission, getLikeCount } from '../lib/backendClient';
 import { useWallet } from '../contexts/WalletContext';
 import styles from './LikeButton.module.css';
 
@@ -24,26 +24,26 @@ export default function LikeButton({
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  // Fetch initial like state and count
+  // Fetch initial like count (lazy load - don't check if user liked)
   useEffect(() => {
     if (!address) return;
 
-    async function fetchLikeData() {
+    async function fetchLikeCount() {
       try {
-        const [likeCountData, userLiked] = await Promise.all([
-          getLikeCount(submissionId),
-          checkUserLiked(submissionId, address!),
-        ]);
-
-        setCount(likeCountData.count);
-        setLiked(userLiked);
+        // Only fetch count if not provided via initialCount prop
+        if (initialCount === undefined) {
+          const likeCountData = await getLikeCount(submissionId);
+          setCount(likeCountData.count);
+        }
+        // Note: We don't check if user liked - hearts show gray initially
+        // User discovers they already liked when clicking (409 response)
       } catch (err) {
-        console.error('Failed to fetch like data:', err);
+        console.error('Failed to fetch like count:', err);
       }
     }
 
-    fetchLikeData();
-  }, [submissionId, address]);
+    fetchLikeCount();
+  }, [submissionId, address, initialCount]);
 
   const handleToggleLike = async () => {
     if (!address || loading) return;
