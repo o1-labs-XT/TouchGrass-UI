@@ -68,6 +68,7 @@ export interface Submission {
   storageKey: string;
   tagline?: string;
   chainPosition: number;
+  likeCount: number;
   status: "awaiting_review" | "rejected" | "processing" | "complete";
   transactionId?: string;
   failureReason?: string;
