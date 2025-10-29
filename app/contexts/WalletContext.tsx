@@ -28,7 +28,7 @@ export function WalletProvider({ children }: { children: ReactNode }) {
 
   async function generateKeypair() {
     try {
-      const TouchGrassWorkerClient = (await import('./TouchGrassWorkerClient')).default;
+      const TouchGrassWorkerClient = (await import('../TouchGrassWorkerClient')).default;
       const worker = new TouchGrassWorkerClient();
 
       const minaKeypair = await worker.generateKeypair();
