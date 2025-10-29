@@ -41,8 +41,4 @@ export default class TouchGrassWorkerClient {
   }> {
     return this.remoteApi.signFieldsMinaSigner(privateKeyBase58, fields);
   }
-
-  async readContractState(tokenOwnerAddress: string) {
-    return this.remoteApi.readContractState(tokenOwnerAddress);
-  }
 }
