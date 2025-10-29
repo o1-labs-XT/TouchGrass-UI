@@ -54,7 +54,7 @@ export default function WalletStatus() {
   return (
     <div className={styles.walletStatus}>
       <GrassyButton
-        variant="primary"
+        variant="secondary"
         size="short"
         onClick={reconnect}
       >
