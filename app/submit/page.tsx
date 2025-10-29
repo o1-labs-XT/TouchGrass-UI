@@ -17,6 +17,7 @@ import ErrorMessage from "../components/ErrorMessage";
 import WalletStatus from "../components/WalletStatus";
 import { useWallet } from "../contexts/WalletContext";
 import styles from "./submit.module.css";
+import { STATIC_ECDSA_PUBLIC_KEY } from "../lib/staticEcdsaKeys";
 
 export default function SubmitPage() {
   const router = useRouter();
@@ -130,11 +131,11 @@ export default function SubmitPage() {
         .default;
       const worker = new TouchGrassWorkerClient();
 
-      // Generate ECDSA keypair for image signing
-      setStatus("Generating signing keypair...");
-      console.log("[2/7] Generating ECDSA keypair");
-      const ecKeypair = await worker.generateECKeypair();
-      console.log("[2/7] Keypair generated");
+      // Generate Mina keypair for wallet address (user identity)
+      setStatus('Generating wallet address...');
+      const walletKeypair = await worker.generateKeypair();
+
+      // ECDSA signing now handled by server-side API
 
       // Convert blob to buffer for processing
       const arrayBuffer = await imageBlob.arrayBuffer();
@@ -145,13 +146,22 @@ export default function SubmitPage() {
       const commitment = await worker.computeOnChainCommitmentWeb(imageBuffer);
       console.log("[3/7] Image hash:", commitment.sha256Hash);
 
-      setStatus("Creating ECDSA signature...");
-      console.log("[4/7] Creating ECDSA signature");
-      const signature = await worker.signECDSA(
-        ecKeypair.privateKeyHex,
-        commitment.sha256Hash
-      );
-      console.log("[4/7] ECDSA signature created");
+      setStatus('Creating ECDSA signature...');
+      const signResponse = await fetch('/api/sign-image', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          sha256Hash: commitment.sha256Hash
+        })
+      });
+
+      if (!signResponse.ok) {
+        throw new Error('Failed to generate signature');
+      }
+
+      const signature = await signResponse.json();
 
       // Sign with wallet choice
       let walletSignResult: { signature: string } | undefined;
@@ -175,26 +185,14 @@ export default function SubmitPage() {
         }
       } else if (walletChoice === "generated") {
         // Sign with generated keypair
-        let keypairData = sessionStorage.getItem("minaKeypair");
+        const keypairData = localStorage.getItem("minaKeypair");
 
         if (!keypairData) {
-          // First submit - generate and store
-          setStatus("Generating Mina keypair...");
-          console.log("[5/7] Generating Mina keypair for first use");
-          const minaKeypair = await worker.generateKeypair();
-          sessionStorage.setItem(
-            "minaKeypair",
-            JSON.stringify({
-              privateKey: minaKeypair.privateKey,
-              publicKey: minaKeypair.publicKey
-            })
-          );
-          keypairData = JSON.stringify(minaKeypair);
-          console.log("[5/7] Mina keypair generated and stored");
-        } else {
-          console.log("[5/7] Using existing Mina keypair from sessionStorage");
+          console.error("[5/7] No keypair found - wallet not ready");
+          throw new Error("Wallet not ready. Please refresh and try again.");
         }
 
+        console.log("[5/7] Using existing Mina keypair from localStorage");
         const minaKeypair = JSON.parse(keypairData);
 
         setStatus("Signing with generated keypair...");
@@ -223,15 +221,13 @@ export default function SubmitPage() {
       setStatus("Submitting image...");
       console.log("[6/7] Building form data");
       const formData = new FormData();
-      formData.append("image", imageBlob);
-      formData.append("walletAddress", minaPublicKey);
-      formData.append("walletSignature", walletSignResult.signature);
-      formData.append("signatureR", signature.signatureR);
-      formData.append("signatureS", signature.signatureS);
-      formData.append("publicKeyX", ecKeypair.publicKeyXHex);
-      formData.append("publicKeyY", ecKeypair.publicKeyYHex);
-      formData.append("chainId", chainId);
-      console.log("[6/7] Form data ready, uploading to:", BACKEND_URL);
+      formData.append('image', imageBlob);
+      formData.append('walletAddress', walletKeypair.publicKey);
+      formData.append('signatureR', signature.signatureR);
+      formData.append('signatureS', signature.signatureS);
+      formData.append('publicKeyX', STATIC_ECDSA_PUBLIC_KEY.x);
+      formData.append('publicKeyY', STATIC_ECDSA_PUBLIC_KEY.y);
+      formData.append('chainId', chainId);
 
       const response = await fetch(`${BACKEND_URL}/submissions`, {
         method: "POST",

@@ -60,7 +60,7 @@ export function useAuroWallet() {
       }
 
       // Only auto-connect if user chose Auro wallet
-      const walletChoice = sessionStorage.getItem('walletChoice');
+      const walletChoice = localStorage.getItem('walletChoice');
       console.log('[DEBUG] window.mina found, walletChoice:', walletChoice);
 
       if (walletChoice !== 'auro') {
@@ -174,6 +174,7 @@ export function useAuroWallet() {
       console.log('[DEBUG] Accounts received:', accounts);
 
       if (accounts.length > 0) {
+        localStorage.setItem('walletChoice', 'auro');
         setWalletState({
           isInstalled: true,
           isConnecting: false,

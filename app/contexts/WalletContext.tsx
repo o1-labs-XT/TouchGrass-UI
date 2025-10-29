@@ -23,25 +23,83 @@ const WalletContext = createContext<WalletContextType | undefined>(undefined);
 
 export function WalletProvider({ children }: { children: ReactNode }) {
   const [walletChoice, setWalletChoiceState] = useState<WalletChoice>(null);
+  const [generatedAddress, setGeneratedAddress] = useState<string | null>(null);
   const auroWallet = useAuroWallet();
 
-  // Load from sessionStorage on mount
+  async function generateKeypair() {
+    try {
+      const TouchGrassWorkerClient = (await import('../TouchGrassWorkerClient')).default;
+      const worker = new TouchGrassWorkerClient();
+
+      const minaKeypair = await worker.generateKeypair();
+      localStorage.setItem('minaKeypair', JSON.stringify({
+        privateKey: minaKeypair.privateKey,
+        publicKey: minaKeypair.publicKey
+      }));
+
+      setGeneratedAddress(minaKeypair.publicKey);
+    } catch (err) {
+      console.error('Failed to generate keypair:', err);
+    }
+  }
+
+  // Load from localStorage on mount
   useEffect(() => {
-    const stored = sessionStorage.getItem('walletChoice');
+    const stored = localStorage.getItem('walletChoice');
+    console.log('[WalletContext] localStorage.walletChoice:', stored);
+    console.log('[WalletContext] window.mina exists:', typeof window.mina !== 'undefined');
+    console.log('[WalletContext] All localStorage keys:', Object.keys(localStorage));
+
     if (stored === 'auro' || stored === 'generated') {
       setWalletChoiceState(stored);
+    } else {
+      console.log('[WalletContext] walletChoice is null - checking URL params');
+      // Check URL parameter as fallback for Auro browser redirect
+      const params = new URLSearchParams(window.location.search);
+      const walletParam = params.get('wallet');
+      console.log('[WalletContext] URL wallet param:', walletParam);
+
+      if (walletParam === 'auro' || walletParam === 'generated') {
+        console.log('[WalletContext] Setting walletChoice from URL param:', walletParam);
+        setWalletChoice(walletParam);
+        // Clean up URL
+        window.history.replaceState({}, '', window.location.pathname);
+      }
     }
   }, []);
 
+  // Load existing keypair from localStorage for generated wallets
+  useEffect(() => {
+    if (walletChoice === 'generated') {
+      const keypairData = localStorage.getItem('minaKeypair');
+      if (keypairData) {
+        try {
+          const keypair = JSON.parse(keypairData);
+          setGeneratedAddress(keypair.publicKey);
+        } catch (err) {
+          console.error('Failed to parse minaKeypair:', err);
+        }
+      } else {
+        generateKeypair();
+      }
+    }
+  }, [walletChoice]);
+
   const setWalletChoice = (choice: 'auro' | 'generated') => {
-    sessionStorage.setItem('walletChoice', choice);
+    localStorage.setItem('walletChoice', choice);
     setWalletChoiceState(choice);
   };
 
   const value = {
     walletChoice,
     setWalletChoice,
-    ...auroWallet, // Spread actual Auro wallet state
+    ...(walletChoice === 'generated'
+      ? {
+          ...auroWallet,
+          address: generatedAddress,
+          isConnected: !!generatedAddress,
+        }
+      : auroWallet),
   };
 
   return (

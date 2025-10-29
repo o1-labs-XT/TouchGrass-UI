@@ -8,10 +8,12 @@ const submissionCache = new Map<string, Submission>();
 const cacheTimestamps = new Map<string, number>();
 const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes
 
-const USE_MOCK_API = process.env.NEXT_PUBLIC_USE_MOCK_API === 'true';
+const USE_MOCK_API = process.env.NEXT_PUBLIC_USE_MOCK_API === "true";
+console.log(process.env.NEXT_PUBLIC_USE_MOCK_API);
 export const BACKEND_URL = USE_MOCK_API
-  ? '/api/mock'
-  : (process.env.NEXT_PUBLIC_BACKEND_URL || "https://authenticity-api-staging.up.railway.app/api");
+  ? "/api/mock"
+  : process.env.NEXT_PUBLIC_BACKEND_URL ||
+    "https://authenticity-api-staging.up.railway.app/api";
 console.log("Backend URL:", BACKEND_URL, "Mock mode:", USE_MOCK_API);
 
 export interface UploadResponse {
@@ -106,7 +108,9 @@ function setCachedSubmission(submission: Submission): void {
   cacheTimestamps.set(submission.id, Date.now());
 }
 
-export function getCachedSubmissionSync(submissionId: string): Submission | null {
+export function getCachedSubmissionSync(
+  submissionId: string
+): Submission | null {
   return getCachedSubmission(submissionId);
 }
 
@@ -125,7 +129,7 @@ export async function uploadImage(
 
   const response = await fetch(`${BACKEND_URL}/api/upload`, {
     method: "POST",
-    body: formData
+    body: formData,
   });
 
   if (!response.ok) {
@@ -214,7 +218,7 @@ export async function checkBackendHealth(): Promise<boolean> {
   try {
     const response = await fetch(`${BACKEND_URL}/health`, {
       method: "GET",
-      signal: AbortSignal.timeout(5000) // 5 second timeout
+      signal: AbortSignal.timeout(5000), // 5 second timeout
     });
     return response.ok;
   } catch {
@@ -258,13 +262,15 @@ export async function getCurrentChallenge(): Promise<Challenge> {
   const response = await fetch(`${BACKEND_URL}/challenges/active`);
 
   if (!response.ok) {
-    throw new Error(`Failed to fetch active challenges: ${response.statusText}`);
+    throw new Error(
+      `Failed to fetch active challenges: ${response.statusText}`
+    );
   }
 
   const challenges = await response.json();
 
   if (!challenges || challenges.length === 0) {
-    throw new Error('No active challenges found');
+    throw new Error("No active challenges found");
   }
 
   return challenges[0];
@@ -276,15 +282,15 @@ export async function getCurrentChallenge(): Promise<Challenge> {
 export async function getActiveChallenges(): Promise<Challenge[]> {
   try {
     const response = await fetch(`${BACKEND_URL}/challenges/active`);
-    
+
     if (!response.ok) {
       return [];
     }
-    
+
     const challenges = await response.json();
     return challenges || [];
   } catch (err) {
-    console.error('Failed to fetch active challenges:', err);
+    console.error("Failed to fetch active challenges:", err);
     return [];
   }
 }
@@ -308,8 +314,12 @@ export async function getChain(chainId: string): Promise<Chain> {
 /**
  * Get chains for a specific challenge
  */
-export async function getChainsByChallenge(challengeId: string): Promise<Chain[]> {
-  const response = await fetch(`${BACKEND_URL}/chains?challengeId=${challengeId}`);
+export async function getChainsByChallenge(
+  challengeId: string
+): Promise<Chain[]> {
+  const response = await fetch(
+    `${BACKEND_URL}/chains?challengeId=${challengeId}`
+  );
 
   if (!response.ok) {
     throw new Error(`Failed to fetch chains: ${response.statusText}`);
@@ -334,7 +344,9 @@ export async function getSubmissions(): Promise<Submission[]> {
 /**
  * Get submissions filtered by chain ID
  */
-export async function getSubmissionsByChain(chainId: string): Promise<Submission[]> {
+export async function getSubmissionsByChain(
+  chainId: string
+): Promise<Submission[]> {
   const response = await fetch(`${BACKEND_URL}/submissions?chainId=${chainId}`);
 
   if (!response.ok) {
@@ -342,7 +354,7 @@ export async function getSubmissionsByChain(chainId: string): Promise<Submission
   }
 
   const submissions = await response.json();
-  
+
   // Cache all submissions for faster access later
   submissions.forEach((submission: Submission) => {
     setCachedSubmission(submission);

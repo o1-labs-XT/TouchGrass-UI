@@ -4,13 +4,9 @@ import {
   PrivateKey,
   Signature,
   Field,
-  fetchAccount
+  fetchAccount,
 } from "o1js";
-import {
-  computeOnChainCommitmentCrossPlatform,
-  generateECKeypairCrossPlatform
-} from "authenticity-zkapp/browser";
-import { Secp256r1, Ecdsa, Bytes32 } from "authenticity-zkapp";
+import { computeOnChainCommitmentCrossPlatform } from "authenticity-zkapp/browser";
 import * as Comlink from "comlink";
 import Client from "mina-signer";
 
@@ -34,7 +30,7 @@ export const api = {
       return {
         sha256Hash: result.sha256,
         high128String: result.high128.toString(),
-        low128String: result.low128.toString()
+        low128String: result.low128.toString(),
       };
     } catch (error) {
       console.error("Failed to compute commitment:", error);
@@ -55,7 +51,7 @@ export const api = {
       console.log("Keypair generated successfully");
       return {
         privateKey: privateKey.toBase58(),
-        publicKey: publicKey.toBase58()
+        publicKey: publicKey.toBase58(),
       };
     } catch (error) {
       console.error("Failed to generate keypair:", error);
@@ -72,42 +68,17 @@ export const api = {
     try {
       const client = new Client({ network: "testnet" });
 
-      const fieldsBigInt = fields.map(f => BigInt(f));
+      const fieldsBigInt = fields.map((f) => BigInt(f));
 
       const signResult = client.signFields(fieldsBigInt, privateKeyBase58);
 
       console.log("Fields signed successfully");
       return {
         signature: signResult.signature,
-        publicKey: signResult.publicKey
+        publicKey: signResult.publicKey,
       };
     } catch (error) {
       console.error("Failed to sign fields:", error);
-      throw error;
-    }
-  },
-
-  /**
-   * Generate a random ECDSA keypair for browser-based signing
-   * Uses P-256 curve (same as prime256v1 in Node.js)
-   */
-  generateECKeypair: async () => {
-    console.log("Generating ECDSA keypair...");
-
-    try {
-      const keyPair = await generateECKeypairCrossPlatform();
-
-      console.log("ECDSA keypair generated successfully");
-      return {
-        privateKeyHex: keyPair.privateKeyHex,
-        publicKeyXHex: keyPair.publicKeyXHex,
-        publicKeyYHex: keyPair.publicKeyYHex,
-        privateKeyBigInt: keyPair.privateKeyBigInt.toString(), // Serialize for Comlink
-        publicKeyXBigInt: keyPair.publicKeyXBigInt.toString(),
-        publicKeyYBigInt: keyPair.publicKeyYBigInt.toString()
-      };
-    } catch (error) {
-      console.error("Failed to generate ECDSA keypair:", error);
       throw error;
     }
   },
@@ -132,7 +103,7 @@ export const api = {
       console.log("Commitment signed successfully");
       return {
         signatureBase58: signature.toBase58(),
-        publicKeyBase58: publicKey.toBase58()
+        publicKeyBase58: publicKey.toBase58(),
       };
     } catch (error) {
       console.error("Failed to sign commitment:", error);
@@ -164,50 +135,10 @@ export const api = {
       console.log("SHA256 hash signed successfully");
       return {
         signatureBase58: signature.toBase58(),
-        publicKeyBase58: publicKey.toBase58()
+        publicKeyBase58: publicKey.toBase58(),
       };
     } catch (error) {
       console.error("Failed to sign SHA256 hash:", error);
-      throw error;
-    }
-  },
-
-  /**
-   * Sign a SHA256 hash with ECDSA private key
-   * Matches the backend signature format (signatureR, signatureS)
-   */
-  signECDSA: async (privateKeyHex: string, sha256Hex: string) => {
-    console.log("Signing with ECDSA...");
-
-    try {
-      // Import Bytes to create Bytes32
-      const { Bytes } = await import("o1js");
-      class Bytes32 extends Bytes(32) {}
-
-      // Convert sha256 hex to Bytes32
-      const hashBytes = Bytes32.fromHex(sha256Hex);
-
-      // Convert private key hex to bigint
-      const privateKeyBigInt = BigInt("0x" + privateKeyHex);
-
-      // Create Secp256r1 scalar from private key
-      const creatorKey = Secp256r1.Scalar.from(privateKeyBigInt);
-
-      // Sign the hash using ECDSA
-      const signature = Ecdsa.signHash(hashBytes, creatorKey.toBigInt());
-
-      // Extract r and s components as hex strings (64 chars each)
-      const signatureData = signature.toBigInt();
-      const signatureR = signatureData.r.toString(16).padStart(64, "0");
-      const signatureS = signatureData.s.toString(16).padStart(64, "0");
-
-      console.log("ECDSA signature created successfully");
-      return {
-        signatureR,
-        signatureS
-      };
-    } catch (error) {
-      console.error("Failed to sign with ECDSA:", error);
       throw error;
     }
   },
@@ -258,7 +189,7 @@ export const api = {
       console.log("Raw contract state:", {
         poseidonHash: poseidonHash.toString(),
         creatorX: creatorX.toString(),
-        creatorIsOdd: creatorIsOdd.toString()
+        creatorIsOdd: creatorIsOdd.toString(),
       });
 
       // Convert Fields to strings for serialization across worker boundary
@@ -266,7 +197,7 @@ export const api = {
         poseidonHash: poseidonHash.toString(),
         creatorX: creatorX.toString(),
         creatorIsOdd: creatorIsOdd.toString(),
-        isValid: true
+        isValid: true,
       };
     } catch (error) {
       console.error("Failed to read contract state:", error);
@@ -275,10 +206,10 @@ export const api = {
         creatorX: "0",
         creatorIsOdd: "0",
         isValid: false,
-        error: String(error)
+        error: String(error),
       };
     }
-  }
+  },
 };
 
 export type TouchGrassWorker = typeof api;
