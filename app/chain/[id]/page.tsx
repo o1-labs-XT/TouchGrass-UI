@@ -105,7 +105,11 @@ export default function ChainDetailPage({ params }: { params: Promise<{ id: stri
                 className={styles.submissionCard}
               >
                 <div className={styles.likeButtonContainer}>
-                  <LikeButton submissionId={submission.id} size="small" />
+                  <LikeButton
+                    submissionId={submission.id}
+                    initialCount={submission.likeCount}
+                    size="small"
+                  />
                 </div>
                 <div className={styles.position}>#{submission.chainPosition}</div>
                 <img
