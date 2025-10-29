@@ -1,12 +1,3 @@
-import {
-  Mina,
-  PublicKey,
-  PrivateKey,
-  Signature,
-  Field,
-  fetchAccount,
-} from "o1js";
-import { computeOnChainCommitmentCrossPlatform } from "authenticity-zkapp/browser";
 import * as Comlink from "comlink";
 import Client from "mina-signer";
 
