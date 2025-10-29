@@ -24,6 +24,7 @@ export const api = {
     console.log("Computing commitment using authenticity-zkapp...");
 
     try {
+      const { computeOnChainCommitmentCrossPlatform } = await import("authenticity-zkapp/browser");
       const result = await computeOnChainCommitmentCrossPlatform(imageBuffer);
 
       console.log("Commitment computed successfully");
