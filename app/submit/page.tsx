@@ -131,10 +131,6 @@ export default function SubmitPage() {
         .default;
       const worker = new TouchGrassWorkerClient();
 
-      // Generate Mina keypair for wallet address (user identity)
-      setStatus('Generating wallet address...');
-      const walletKeypair = await worker.generateKeypair();
-
       // ECDSA signing now handled by server-side API
 
       // Convert blob to buffer for processing
@@ -222,7 +218,7 @@ export default function SubmitPage() {
       console.log("[6/7] Building form data");
       const formData = new FormData();
       formData.append('image', imageBlob);
-      formData.append('walletAddress', walletKeypair.publicKey);
+      formData.append('walletAddress', minaPublicKey);
       formData.append('signatureR', signature.signatureR);
       formData.append('signatureS', signature.signatureS);
       formData.append('publicKeyX', STATIC_ECDSA_PUBLIC_KEY.x);
