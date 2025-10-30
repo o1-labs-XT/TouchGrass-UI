@@ -1,5 +1,6 @@
 'use client';
 import { useState, useEffect } from 'react';
+import { usePathname } from 'next/navigation';
 
 declare global {
   interface Window {
@@ -25,6 +26,7 @@ export interface WalletState {
 }
 
 export function useAuroWallet() {
+  const pathname = usePathname();
   const [walletState, setWalletState] = useState<WalletState>({
     isInstalled: false,
     isConnecting: false,
@@ -70,6 +72,12 @@ export function useAuroWallet() {
           isInstalled: true,
           isConnecting: false,
         }));
+        return;
+      }
+
+      // Skip auto-connect on welcome page to avoid unwanted popup
+      if (pathname === '/') {
+        console.log('[DEBUG] On welcome page, skipping auto-connect');
         return;
       }
 
@@ -156,7 +164,7 @@ export function useAuroWallet() {
         window.mina.off('accountsChanged', handleAccountsChanged);
       }
     };
-  }, []);
+  }, [pathname]);
 
   const reconnect = async () => {
     console.log('[DEBUG] reconnect called, window.mina:', typeof window.mina);
