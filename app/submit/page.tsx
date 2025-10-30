@@ -33,6 +33,7 @@ export default function SubmitPage() {
   const [chainId, setChainId] = useState<string | null>(null);
   const [imageBlob, setImageBlob] = useState<Blob | null>(null);
   const [imageUrl, setImageUrl] = useState<string | null>(null);
+  const [tagline, setTagline] = useState<string>("");
   const [isProcessing, setIsProcessing] = useState(false);
   const [status, setStatus] = useState<string>("");
   const [error, setError] = useState<string | null>(null);
@@ -94,6 +95,7 @@ export default function SubmitPage() {
   const handleReset = () => {
     setImageBlob(null);
     setImageUrl(null);
+    setTagline("");
     setStatus("");
     setError(null);
   };
@@ -224,6 +226,9 @@ export default function SubmitPage() {
       formData.append('publicKeyX', STATIC_ECDSA_PUBLIC_KEY.x);
       formData.append('publicKeyY', STATIC_ECDSA_PUBLIC_KEY.y);
       formData.append('chainId', chainId);
+      if (tagline.trim()) {
+        formData.append('tagline', tagline.trim());
+      }
 
       const response = await fetch(`${BACKEND_URL}/submissions`, {
         method: "POST",
@@ -278,6 +283,33 @@ export default function SubmitPage() {
                   className={styles.capturedImage}
                 />
               </div>
+              {!isProcessing && !status && (
+                <div className={styles.taglineContainer}>
+                  <label htmlFor="tagline" className={styles.taglineLabel}>
+                    Add a tagline (optional)
+                  </label>
+                  <textarea
+                    id="tagline"
+                    className={styles.taglineInput}
+                    placeholder="Share your thoughts about this moment..."
+                    value={tagline}
+                    onChange={(e) => setTagline(e.target.value)}
+                    onFocus={(e) => {
+                      setTimeout(() => {
+                        const yOffset = -100;
+                        const element = e.target;
+                        const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
+                        window.scrollTo({ top: y, behavior: 'smooth' });
+                      }, 600);
+                    }}
+                    maxLength={200}
+                    rows={3}
+                  />
+                  <div className={styles.charCount}>
+                    {tagline.length}/200
+                  </div>
+                </div>
+              )}
               {!isProcessing && !status && (
                 <div className={styles.buttonGroup}>
                   <GrassyButton
