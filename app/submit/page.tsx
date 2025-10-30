@@ -294,6 +294,14 @@ export default function SubmitPage() {
                     placeholder="Share your thoughts about this moment..."
                     value={tagline}
                     onChange={(e) => setTagline(e.target.value)}
+                    onFocus={(e) => {
+                      setTimeout(() => {
+                        const yOffset = -100;
+                        const element = e.target;
+                        const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
+                        window.scrollTo({ top: y, behavior: 'smooth' });
+                      }, 600);
+                    }}
                     maxLength={200}
                     rows={3}
                   />

@@ -1,6 +1,7 @@
 .container {
   min-height: 100vh;
   padding: 1rem;
+  padding-bottom: 400px;
   background: linear-gradient(to bottom, var(--mina-light-gray), var(--mina-white));
 }
 
@@ -171,6 +172,7 @@
   background: var(--mina-white);
   resize: vertical;
   transition: border-color 0.2s;
+  scroll-margin-bottom: 50vh;
 }
 
 .taglineInput:focus {
