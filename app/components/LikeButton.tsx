@@ -49,6 +49,13 @@ export default function LikeButton({
   const handleToggleLike = async () => {
     if (!address || loading) return;
 
+    console.log('[LikeButton] handleToggleLike called:', {
+      submissionId,
+      walletAddress: address,
+      currentLikedState: liked,
+      currentCount: count,
+    });
+
     // Optimistic update
     const previousLiked = liked;
     const previousCount = count;
@@ -60,14 +67,24 @@ export default function LikeButton({
 
     try {
       if (!liked) {
+        console.log('[LikeButton] Calling likeSubmission API...');
         await likeSubmission(submissionId, address!);
+        console.log('[LikeButton] Like successful!');
         // Show floating heart animation on successful like
         setShowFloatingHeart(true);
       } else {
+        console.log('[LikeButton] Calling unlikeSubmission API...');
         await unlikeSubmission(submissionId, address!);
+        console.log('[LikeButton] Unlike successful!');
       }
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'Failed to update like';
+      console.error('[LikeButton] Error:', {
+        error: err,
+        errorMessage,
+        submissionId,
+        walletAddress: address,
+      });
 
       // Special handling for 409: user already liked (lazy load discovery)
       if (errorMessage.includes('409') || errorMessage.includes('already')) {
