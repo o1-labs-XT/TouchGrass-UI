@@ -100,7 +100,7 @@
 
 .likeSection {
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
   margin-bottom: 1.5rem;
   padding: 1rem 0;
   border-top: 1px solid #eee;
