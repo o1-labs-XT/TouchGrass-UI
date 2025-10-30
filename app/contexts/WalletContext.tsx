@@ -45,6 +45,7 @@ export function WalletProvider({ children }: { children: ReactNode }) {
 
   // Load from localStorage on mount
   useEffect(() => {
+    console.log('[WalletContext] useEffect RUNNING - this should always appear');
     const stored = localStorage.getItem('walletChoice');
     console.log('[WalletContext] localStorage.walletChoice:', stored);
     console.log('[WalletContext] window.mina exists:', typeof window.mina !== 'undefined');
