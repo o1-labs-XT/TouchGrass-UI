@@ -109,6 +109,11 @@ function setCachedSubmission(submission: Submission): void {
   cacheTimestamps.set(submission.id, Date.now());
 }
 
+export function invalidateSubmissionCache(submissionId: string): void {
+  submissionCache.delete(submissionId);
+  cacheTimestamps.delete(submissionId);
+}
+
 export function getCachedSubmissionSync(
   submissionId: string
 ): Submission | null {

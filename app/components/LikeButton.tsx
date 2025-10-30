@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { likeSubmission, unlikeSubmission, getLikeCount } from '../lib/backendClient';
+import { likeSubmission, unlikeSubmission, getLikeCount, invalidateSubmissionCache } from '../lib/backendClient';
 import { useWallet } from '../contexts/WalletContext';
 import styles from './LikeButton.module.css';
 
@@ -74,10 +74,14 @@ export default function LikeButton({
         console.log('[LikeButton] Like successful!');
         // Show floating heart animation on successful like
         setShowFloatingHeart(true);
+        // Invalidate cache so detail page shows fresh data
+        invalidateSubmissionCache(submissionId);
       } else {
         console.log('[LikeButton] Calling unlikeSubmission API...');
         await unlikeSubmission(submissionId, address!);
         console.log('[LikeButton] Unlike successful!');
+        // Invalidate cache so detail page shows fresh data
+        invalidateSubmissionCache(submissionId);
       }
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'Failed to update like';
