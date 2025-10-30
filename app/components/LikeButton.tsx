@@ -61,7 +61,7 @@ export default function LikeButton({
     const previousCount = count;
 
     setLiked(!liked);
-    setCount(!liked ? count + 1 : count - 1);
+    setCount(!liked ? count + 1 : Math.max(0, count - 1));
     setLoading(true);
     setError(null);
 
@@ -89,9 +89,9 @@ export default function LikeButton({
       // Special handling for 409: user already liked (lazy load discovery)
       if (errorMessage.includes('409') || errorMessage.includes('already')) {
         // Keep liked=true (user discovered they already liked this)
-        // But rollback count increment (no new like was created)
+        // Keep the optimistic count increment - it corrects a potentially stale count
         setLiked(true);
-        setCount(previousCount);
+        // Don't rollback count - the optimistic increment is actually correct
         // Show floating heart since they liked it
         setShowFloatingHeart(true);
         // Don't show error - this is expected in lazy load approach
