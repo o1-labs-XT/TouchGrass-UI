@@ -46,7 +46,9 @@ export default function LikeButton({
     fetchLikeCount();
   }, [submissionId, address, initialCount]);
 
-  const handleToggleLike = async () => {
+  const handleToggleLike = async (e: React.MouseEvent) => {
+    e.stopPropagation(); // Prevent click from bubbling to parent elements
+
     if (!address || loading) return;
 
     console.log('[LikeButton] handleToggleLike called:', {
@@ -89,9 +91,9 @@ export default function LikeButton({
       // Special handling for 409: user already liked (lazy load discovery)
       if (errorMessage.includes('409') || errorMessage.includes('already')) {
         // Keep liked=true (user discovered they already liked this)
-        // Keep the optimistic count increment - it corrects a potentially stale count
+        // But rollback count increment (no new like was created)
         setLiked(true);
-        // Don't rollback count - the optimistic increment is actually correct
+        setCount(previousCount);
         // Show floating heart since they liked it
         setShowFloatingHeart(true);
         // Don't show error - this is expected in lazy load approach
