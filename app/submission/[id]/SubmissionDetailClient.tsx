@@ -241,7 +241,7 @@ export default function SubmissionDetailClient({ params }: SubmissionDetailClien
               <LikeButton
                 submissionId={submission.id}
                 initialCount={submission.likeCount}
-                size="large"
+                size="small"
               />
             </div>
 
