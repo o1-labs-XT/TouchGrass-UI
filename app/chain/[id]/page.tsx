@@ -8,6 +8,7 @@ import GrassyButton from '../../components/GrassyButton';
 import BackButton from '../../components/BackButton';
 import SubmissionCard from '../../components/SubmissionCard';
 import StatBox from '../../components/StatBox';
+import LikeButton from '../../components/LikeButton';
 import styles from './ChainDetail.module.css';
 
 export default function ChainDetailPage({ params }: { params: Promise<{ id: string }> }) {
@@ -98,11 +99,18 @@ export default function ChainDetailPage({ params }: { params: Promise<{ id: stri
         ) : (
           <div className={styles.grid}>
             {submissions.map((submission) => (
-              <SubmissionCard 
+              <SubmissionCard
                 key={submission.id}
                 onClick={() => router.push(`/submission/${submission.id}`)}
                 className={styles.submissionCard}
               >
+                <div className={styles.likeButtonContainer}>
+                  <LikeButton
+                    submissionId={submission.id}
+                    initialCount={submission.likeCount}
+                    size="small"
+                  />
+                </div>
                 <div className={styles.position}>#{submission.chainPosition}</div>
                 <img
                   src={getImageUrl(submission.id)}

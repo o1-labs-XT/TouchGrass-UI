@@ -68,11 +68,20 @@ export interface Submission {
   storageKey: string;
   tagline?: string;
   chainPosition: number;
+  likeCount: number;
   status: "awaiting_review" | "rejected" | "processing" | "complete";
   transactionId?: string;
   failureReason?: string;
   retryCount: number;
   challengeVerified: boolean;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface Like {
+  id: string;
+  submissionId: string;
+  walletAddress: string;
   createdAt: string;
   updatedAt: string;
 }
@@ -98,6 +107,11 @@ function getCachedSubmission(submissionId: string): Submission | null {
 function setCachedSubmission(submission: Submission): void {
   submissionCache.set(submission.id, submission);
   cacheTimestamps.set(submission.id, Date.now());
+}
+
+export function invalidateSubmissionCache(submissionId: string): void {
+  submissionCache.delete(submissionId);
+  cacheTimestamps.delete(submissionId);
 }
 
 export function getCachedSubmissionSync(
@@ -386,4 +400,83 @@ async function fetchSubmissionFresh(submissionId: string): Promise<Submission> {
   const submission = await response.json();
   setCachedSubmission(submission);
   return submission;
+}
+
+/**
+ * Like a submission
+ */
+export async function likeSubmission(
+  submissionId: string,
+  walletAddress: string
+): Promise<Like> {
+  const response = await fetch(`${BACKEND_URL}/submissions/${submissionId}/likes`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ walletAddress }),
+  });
+
+  if (!response.ok) {
+    const errorData = await response.json().catch(() => ({}));
+    throw new Error(
+      errorData.error?.message || errorData.error || `Failed to like submission: ${response.statusText}`
+    );
+  }
+
+  return response.json();
+}
+
+/**
+ * Unlike a submission
+ */
+export async function unlikeSubmission(
+  submissionId: string,
+  walletAddress: string
+): Promise<void> {
+  const response = await fetch(
+    `${BACKEND_URL}/submissions/${submissionId}/likes/${encodeURIComponent(walletAddress)}`,
+    {
+      method: 'DELETE',
+    }
+  );
+
+  if (!response.ok) {
+    const errorData = await response.json().catch(() => ({}));
+    throw new Error(
+      errorData.error?.message || errorData.error || `Failed to unlike submission: ${response.statusText}`
+    );
+  }
+}
+
+/**
+ * Get like count for a submission
+ */
+export async function getLikeCount(
+  submissionId: string
+): Promise<{ submissionId: string; count: number }> {
+  const response = await fetch(`${BACKEND_URL}/submissions/${submissionId}/likes/count`);
+
+  if (!response.ok) {
+    throw new Error(`Failed to get like count: ${response.statusText}`);
+  }
+
+  return response.json();
+}
+
+/**
+ * Check if user has liked a submission
+ */
+export async function checkUserLiked(
+  submissionId: string,
+  walletAddress: string
+): Promise<boolean> {
+  const response = await fetch(`${BACKEND_URL}/submissions/${submissionId}/likes`);
+
+  if (!response.ok) {
+    throw new Error(`Failed to check if user liked: ${response.statusText}`);
+  }
+
+  const likes: Like[] = await response.json();
+  return likes.some((like) => like.walletAddress === walletAddress);
 }

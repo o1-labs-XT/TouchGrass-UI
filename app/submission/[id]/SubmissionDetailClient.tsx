@@ -8,6 +8,7 @@ import BackButton from '../../components/BackButton';
 import SubmissionCard from '../../components/SubmissionCard';
 import SubmissionStatus from '../../components/SubmissionStatus';
 import SubmissionProgress from '../../components/SubmissionProgress';
+import LikeButton from '../../components/LikeButton';
 import styles from './SubmissionDetail.module.css';
 
 interface ShareIconProps {
@@ -235,6 +236,14 @@ export default function SubmissionDetailClient({ params }: SubmissionDetailClien
                 <h2>{submission.tagline}</h2>
               </div>
             )}
+
+            <div className={styles.likeSection}>
+              <LikeButton
+                submissionId={submission.id}
+                initialCount={submission.likeCount}
+                size="small"
+              />
+            </div>
 
             <div className={styles.metadata}>
               <div className={styles.metadataItem}>
