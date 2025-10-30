@@ -1,6 +1,5 @@
 'use client';
 import { useWallet } from '../contexts/WalletContext';
-import Button from './Button';
 import GrassyButton from './GrassyButton';
 import styles from './WalletStatus.module.css';
 
@@ -16,13 +15,13 @@ export default function WalletStatus() {
   if (!isInstalled) {
     return (
       <div className={styles.walletStatus}>
-        <Button
+        <GrassyButton
           variant="secondary"
-          href="https://www.aurowallet.com/"
-          className={styles.compactButton}
+          size="short"
+          onClick={() => window.open('https://www.aurowallet.com/', '_blank')}
         >
-          Install Auro Wallet
-        </Button>
+          Get Wallet
+        </GrassyButton>
       </div>
     );
   }

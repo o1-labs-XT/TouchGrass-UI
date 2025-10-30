@@ -41,28 +41,4 @@ export default class TouchGrassWorkerClient {
   }> {
     return this.remoteApi.signFieldsMinaSigner(privateKeyBase58, fields);
   }
-
-  async signCommitment(
-    privateKeyBase58: string,
-    commitmentString: string
-  ): Promise<{
-    signatureBase58: string;
-    publicKeyBase58: string;
-  }> {
-    return this.remoteApi.signCommitment(privateKeyBase58, commitmentString);
-  }
-
-  async signSHA256Hash(
-    privateKeyBase58: string,
-    sha256Hex: string
-  ): Promise<{
-    signatureBase58: string;
-    publicKeyBase58: string;
-  }> {
-    return this.remoteApi.signSHA256Hash(privateKeyBase58, sha256Hex);
-  }
-
-  async readContractState(tokenOwnerAddress: string) {
-    return this.remoteApi.readContractState(tokenOwnerAddress);
-  }
 }

@@ -1,6 +1,5 @@
 "use client";
 
-import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import GrassyButton from "./components/GrassyButton";
@@ -11,11 +10,6 @@ import styles from "./Welcome.module.css";
 export default function WelcomePage() {
   const router = useRouter();
   const { setWalletChoice } = useWallet();
-
-  // Clear wallet choice on welcome page so user can make fresh selection
-  useEffect(() => {
-    localStorage.removeItem('walletChoice');
-  }, []);
 
   const handleAuroWallet = () => {
     const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
