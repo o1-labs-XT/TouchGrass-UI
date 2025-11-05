@@ -64,7 +64,7 @@ export default function SubmissionStatus({ status }: SubmissionStatusProps) {
             </svg>
           ),
           title: "Submission In Progress",
-          subtitle: "Your submission is being processed and verified",
+          subtitle: "The submission is being processed and verified",
           className: styles.inProgress
         };
     }
