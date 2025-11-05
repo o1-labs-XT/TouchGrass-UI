@@ -1,6 +1,6 @@
-'use client';
-import React from 'react';
-import styles from './SubmissionProgress.module.css';
+"use client";
+import React from "react";
+import styles from "./SubmissionProgress.module.css";
 
 interface SubmissionProgressProps {
   status: "awaiting_review" | "rejected" | "processing" | "complete";
@@ -17,43 +17,48 @@ interface ProgressStep {
   link?: string;
 }
 
-export default function SubmissionProgress({ status, transactionId }: SubmissionProgressProps) {
+export default function SubmissionProgress({
+  status,
+  transactionId
+}: SubmissionProgressProps) {
   const getProgressSteps = (): ProgressStep[] => {
-    const isRejected = status === 'rejected';
-    const isProcessing = status === 'processing';
-    const isComplete = status === 'complete';
+    const isRejected = status === "rejected";
+    const isProcessing = status === "processing";
+    const isComplete = status === "complete";
     const hasTransaction = Boolean(transactionId);
 
     return [
       {
-        id: 'admin_review',
-        label: 'Admin Review',
-        description: 'Submission reviewed by administrators',
+        id: "admin_review",
+        label: "Admin Review",
+        description: "Submission reviewed by administrators",
         completed: !isRejected && (isProcessing || isComplete),
-        current: status === 'awaiting_review',
+        current: status === "awaiting_review",
         failed: isRejected
       },
       {
-        id: 'proof_creation',
-        label: 'Proof Created',
-        description: 'Zero-knowledge proof generated for your submission',
+        id: "proof_creation",
+        label: "Proof Created",
+        description: "Zero-knowledge proof generated for submission",
         completed: isComplete || (isProcessing && hasTransaction),
         current: isProcessing && !hasTransaction,
         failed: false
       },
       {
-        id: 'blockchain_tx',
-        label: 'Blockchain Transaction',
-        description: 'Transaction submitted to Mina Protocol',
+        id: "blockchain_tx",
+        label: "Blockchain Transaction",
+        description: "Transaction submitted to Mina Protocol",
         completed: isComplete && hasTransaction,
         current: isProcessing && hasTransaction && !isComplete,
         failed: false,
-        link: transactionId ? `https://minascan.io/devnet/tx/${transactionId}` : undefined
+        link: transactionId
+          ? `https://minascan.io/devnet/tx/${transactionId}`
+          : undefined
       },
       {
-        id: 'complete',
-        label: 'Complete',
-        description: 'Submission verified and finalized on blockchain',
+        id: "complete",
+        label: "Complete",
+        description: "Submission verified and finalized on blockchain",
         completed: isComplete,
         current: false,
         failed: false
@@ -66,23 +71,35 @@ export default function SubmissionProgress({ status, transactionId }: Submission
   const StepIcon = ({ step }: { step: ProgressStep }) => {
     if (step.failed) {
       return (
-        <svg className={`${styles.stepIcon} ${styles.failed}`} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-          <circle cx="12" cy="12" r="10"/>
-          <line x1="15" y1="9" x2="9" y2="15"/>
-          <line x1="9" y1="9" x2="15" y2="15"/>
+        <svg
+          className={`${styles.stepIcon} ${styles.failed}`}
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+        >
+          <circle cx="12" cy="12" r="10" />
+          <line x1="15" y1="9" x2="9" y2="15" />
+          <line x1="9" y1="9" x2="15" y2="15" />
         </svg>
       );
     }
-    
+
     if (step.completed) {
       return (
-        <svg className={`${styles.stepIcon} ${styles.completed}`} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-          <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
-          <polyline points="22,4 12,14.01 9,11.01"/>
+        <svg
+          className={`${styles.stepIcon} ${styles.completed}`}
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+        >
+          <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+          <polyline points="22,4 12,14.01 9,11.01" />
         </svg>
       );
     }
-    
+
     if (step.current) {
       return (
         <div className={`${styles.stepIcon} ${styles.current}`}>
@@ -90,7 +107,7 @@ export default function SubmissionProgress({ status, transactionId }: Submission
         </div>
       );
     }
-    
+
     return (
       <div className={`${styles.stepIcon} ${styles.pending}`}>
         <div className={styles.dot}></div>
@@ -107,9 +124,11 @@ export default function SubmissionProgress({ status, transactionId }: Submission
             <div className={styles.stepHeader}>
               <StepIcon step={step} />
               {index < steps.length - 1 && (
-                <div 
+                <div
                   className={`${styles.connector} ${
-                    step.completed || step.failed ? styles.connectorCompleted : styles.connectorPending
+                    step.completed || step.failed
+                      ? styles.connectorCompleted
+                      : styles.connectorPending
                   }`}
                 />
               )}
@@ -117,26 +136,30 @@ export default function SubmissionProgress({ status, transactionId }: Submission
             <div className={styles.stepContent}>
               <div className={styles.stepLabel}>
                 {step.link ? (
-                  <a 
-                    href={step.link} 
-                    target="_blank" 
+                  <a
+                    href={step.link}
+                    target="_blank"
                     rel="noopener noreferrer"
                     className={styles.stepLink}
                   >
                     {step.label}
-                    <svg className={styles.externalIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                      <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
-                      <polyline points="15,3 21,3 21,9"/>
-                      <line x1="10" y1="14" x2="21" y2="3"/>
+                    <svg
+                      className={styles.externalIcon}
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                    >
+                      <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                      <polyline points="15,3 21,3 21,9" />
+                      <line x1="10" y1="14" x2="21" y2="3" />
                     </svg>
                   </a>
                 ) : (
                   step.label
                 )}
               </div>
-              <div className={styles.stepDescription}>
-                {step.description}
-              </div>
+              <div className={styles.stepDescription}>{step.description}</div>
             </div>
           </div>
         ))}
