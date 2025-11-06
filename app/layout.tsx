@@ -23,8 +23,9 @@ export const metadata = {
   description: 'Complete daily photo challenges and compete with friends on Mina blockchain',
   icons: {
     icon: '/assets/favicon.ico',
+    apple: '/assets/apple-touch-icon.png',
   },
-  manifest: '/manifest.json',
+  manifest: '/manifest.json?v=2',
 };
 
 export const viewport = {

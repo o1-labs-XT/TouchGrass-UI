@@ -1,12 +1,13 @@
 // TouchGrass Service Worker
-const CACHE_NAME = 'touchgrass-v1';
+const CACHE_NAME = 'touchgrass-v2';
 const urlsToCache = [
   '/',
   '/styles/globals.css',
   '/assets/hero-mina-logo.svg',
   '/assets/favicon.ico',
-  '/assets/icon-192x192.svg',
-  '/assets/icon-512x512.svg'
+  '/assets/android-chrome-192x192.png',
+  '/assets/android-chrome-512x512.png',
+  '/assets/apple-touch-icon.png'
 ];
 
 // Install event - cache essential files
