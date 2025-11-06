@@ -10,6 +10,7 @@ interface LikeButtonProps {
   initialLiked?: boolean;
   initialCount?: number;
   size?: 'small' | 'large';
+  variant?: 'default' | 'floating' | 'inline';
 }
 
 export default function LikeButton({
@@ -17,6 +18,7 @@ export default function LikeButton({
   initialLiked = false,
   initialCount = 0,
   size = 'small',
+  variant = 'default',
 }: LikeButtonProps) {
   const { address } = useWallet();
   const [liked, setLiked] = useState(initialLiked);
@@ -128,7 +130,7 @@ export default function LikeButton({
       <button
         onClick={handleToggleLike}
         disabled={loading || !address}
-        className={`${styles.likeButton} ${size === 'large' ? styles.large : ''} ${loading ? styles.loading : ''}`}
+        className={`${styles.likeButton} ${size === 'large' ? styles.large : ''} ${loading ? styles.loading : ''} ${styles[variant]}`}
         aria-label={liked ? 'Unlike submission' : 'Like submission'}
         title={liked ? 'Unlike' : 'Like'}
       >
