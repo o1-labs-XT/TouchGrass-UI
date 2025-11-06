@@ -2,7 +2,7 @@
   "name": "TouchGrass - Social Photo Challenges",
   "short_name": "TouchGrass",
   "description": "Complete daily photo challenges and compete with friends on Mina blockchain",
-  "theme_color": "#5461c8",
+  "theme_color": "#eff4f6",
   "background_color": "#ffffff",
   "display": "standalone",
   "orientation": "portrait",
