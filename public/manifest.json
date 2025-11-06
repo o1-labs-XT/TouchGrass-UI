@@ -11,31 +11,31 @@
   "id": "touchgrass-pwa",
   "icons": [
     {
-      "src": "/assets/favicon.ico?v=2",
+      "src": "/assets/favicon.ico",
       "sizes": "16x16 32x32 48x48",
       "type": "image/x-icon",
       "purpose": "any"
     },
     {
-      "src": "/assets/android-chrome-192x192.png?v=2",
+      "src": "/assets/android-chrome-192x192.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "/assets/android-chrome-192x192.png?v=2",
+      "src": "/assets/android-chrome-192x192.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "maskable"
     },
     {
-      "src": "/assets/android-chrome-512x512.png?v=2",
+      "src": "/assets/android-chrome-512x512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "/assets/android-chrome-512x512.png?v=2",
+      "src": "/assets/android-chrome-512x512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable"
