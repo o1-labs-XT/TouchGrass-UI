@@ -15,10 +15,12 @@ export default function SubmissionCarousel3D({
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
+  const [startY, setStartY] = useState(0);
   const [dragOffset, setDragOffset] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const hasDraggedRef = useRef(false);
+  const touchDirectionRef = useRef<'horizontal' | 'vertical' | null>(null);
 
   const handleMouseDown = (e: React.MouseEvent) => {
     setIsDragging(true);
@@ -83,27 +85,42 @@ export default function SubmissionCarousel3D({
   const handleTouchStart = (e: React.TouchEvent) => {
     setIsDragging(true);
     setStartX(e.touches[0].clientX);
+    setStartY(e.touches[0].clientY);
     setDragOffset(0);
     hasDraggedRef.current = false;
+    touchDirectionRef.current = null;
   };
 
   const handleTouchMove = (e: React.TouchEvent) => {
     if (!isDragging) return;
-    const offset = e.touches[0].clientX - startX;
 
-    if (Math.abs(offset) > 5) {
-      hasDraggedRef.current = true;
+    const offsetX = e.touches[0].clientX - startX;
+    const offsetY = e.touches[0].clientY - startY;
+
+    // Determine scroll direction on first movement
+    if (touchDirectionRef.current === null && (Math.abs(offsetX) > 5 || Math.abs(offsetY) > 5)) {
+      touchDirectionRef.current = Math.abs(offsetX) > Math.abs(offsetY) ? 'horizontal' : 'vertical';
     }
 
-    setDragOffset(offset);
+    // If horizontal swipe, prevent vertical scrolling
+    if (touchDirectionRef.current === 'horizontal') {
+      e.preventDefault();
+      hasDraggedRef.current = true;
+      setDragOffset(offsetX);
+    } else if (touchDirectionRef.current === 'vertical') {
+      // Allow vertical scroll, cancel carousel drag
+      setIsDragging(false);
+      setDragOffset(0);
+    }
   };
 
   const handleTouchEnd = () => {
     if (!isDragging) return;
     setIsDragging(false);
 
-    if (!hasDraggedRef.current) {
+    if (!hasDraggedRef.current || touchDirectionRef.current !== 'horizontal') {
       setDragOffset(0);
+      touchDirectionRef.current = null;
       return;
     }
 
@@ -138,6 +155,7 @@ export default function SubmissionCarousel3D({
 
     setDragOffset(0);
     hasDraggedRef.current = false;
+    touchDirectionRef.current = null;
   };
 
   useEffect(() => {
