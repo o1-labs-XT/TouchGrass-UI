@@ -80,7 +80,6 @@ export default function ChainDetailPage({ params }: { params: Promise<{ id: stri
           <h1 className={styles.pageTitle}>{chain?.name}</h1>
         </div>
 
-      {/* Temporarily removed to test carousel without vertical scroll
       {chain && (
         <SubmissionCard centered>
           <div className={styles.statsGrid}>
@@ -92,7 +91,6 @@ export default function ChainDetailPage({ params }: { params: Promise<{ id: stri
           </GrassyButton>
         </SubmissionCard>
       )}
-      */}
       </div>
 
       <SubmissionCarousel3D submissions={submissions} />
