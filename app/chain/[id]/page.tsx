@@ -8,7 +8,7 @@ import GrassyButton from '../../components/GrassyButton';
 import BackButton from '../../components/BackButton';
 import SubmissionCard from '../../components/SubmissionCard';
 import StatBox from '../../components/StatBox';
-import LikeButton from '../../components/LikeButton';
+import SubmissionCarousel3D from '../../components/SubmissionCarousel3D';
 import styles from './ChainDetail.module.css';
 
 export default function ChainDetailPage({ params }: { params: Promise<{ id: string }> }) {
@@ -91,42 +91,9 @@ export default function ChainDetailPage({ params }: { params: Promise<{ id: stri
           </GrassyButton>
         </SubmissionCard>
       )}
+      </div>
 
-      <div className={styles.submissions}>
-        <h2>Chain Images ({submissions.length})</h2>
-        {submissions.length === 0 ? (
-          <p>No submissions yet</p>
-        ) : (
-          <div className={styles.grid}>
-            {submissions.map((submission) => (
-              <SubmissionCard
-                key={submission.id}
-                onClick={() => router.push(`/submission/${submission.id}`)}
-                className={styles.submissionCard}
-              >
-                <div className={styles.likeButtonContainer}>
-                  <LikeButton
-                    submissionId={submission.id}
-                    initialCount={submission.likeCount}
-                    size="small"
-                  />
-                </div>
-                <div className={styles.position}>#{submission.chainPosition}</div>
-                <img
-                  src={getImageUrl(submission.id)}
-                  alt={submission.tagline || `Position ${submission.chainPosition}`}
-                  className={styles.image}
-                  crossOrigin="anonymous"
-                  loading="lazy"
-                  decoding="async"
-                />
-                {submission.tagline && <p className={styles.tagline}>{submission.tagline}</p>}
-              </SubmissionCard>
-            ))}
-          </div>
-        )}
-      </div>
-      </div>
+      <SubmissionCarousel3D submissions={submissions} />
     </div>
   );
 }
