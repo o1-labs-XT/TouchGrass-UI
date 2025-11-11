@@ -226,6 +226,45 @@ export default function SubmissionCarousel3D({
     };
   };
 
+  const handleCardClick = (submission: Submission, index: number) => {
+    // Only open modal if this is the center card and user didn't drag
+    if (index === currentIndex && !hasDraggedRef.current) {
+      setSelectedSubmission(submission);
+    }
+  };
+
+  const handleShare = async (submission: Submission) => {
+    const url = `${window.location.origin}/chain/${submission.chainId}?submission=${submission.id}`;
+
+    // Try Web Share API first (mobile-friendly)
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: `TouchGrass - ${submission.tagline || `Submission #${submission.chainPosition}`}`,
+          text: submission.tagline || 'Check out this TouchGrass submission!',
+          url: url,
+        });
+        return;
+      } catch (err) {
+        console.log('Web Share cancelled:', err);
+      }
+    }
+
+    // Fallback to clipboard
+    if (navigator.clipboard && window.isSecureContext) {
+      try {
+        await navigator.clipboard.writeText(url);
+        alert('Link copied to clipboard!');
+        return;
+      } catch (err) {
+        console.error('Clipboard failed:', err);
+      }
+    }
+
+    // Final fallback
+    alert(`Please copy: ${url}`);
+  };
+
   return (
     <div className={styles.container}>
       {/* Heading */}
@@ -260,6 +299,7 @@ export default function SubmissionCarousel3D({
                 style={{
                   cursor: index === currentIndex ? "pointer" : "default"
                 }}
+                onClick={() => handleCardClick(submission, index)}
               >
                 <img
                   src={getImageUrl(submission.id)}
