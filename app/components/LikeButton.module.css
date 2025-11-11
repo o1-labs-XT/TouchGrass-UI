@@ -110,6 +110,10 @@
   gap: 0;
 }
 
+.likeButton.carousel:hover:not(:disabled) {
+  transform: translateX(-50%);
+}
+
 .likeButton.carousel .heart {
   width: 20px;
   height: 20px;
@@ -120,6 +124,10 @@
 }
 
 .likeButton.carousel .heartUnfilled {
+  stroke: #4D4D4D;
+}
+
+.likeButton.carousel:hover:not(:disabled) .heartUnfilled {
   stroke: #4D4D4D;
 }
 

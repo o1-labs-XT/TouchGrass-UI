@@ -258,9 +258,11 @@ export default function SubmissionCarousel3D({
               </div>
 
               {index === currentIndex && (
-                <button className={styles.likeButton} aria-label="Like image">
-                  <Heart className={styles.heartIcon} />
-                </button>
+                <LikeButton
+                  submissionId={submission.id}
+                  variant="carousel"
+                  size="small"
+                />
               )}
             </div>
           ))}
