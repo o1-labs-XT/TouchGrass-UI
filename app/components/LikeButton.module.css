@@ -130,6 +130,13 @@
   stroke: #4D4D4D;
 }
 
+.container.carousel .errorToast {
+  top: auto;
+  bottom: 100%;
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+}
+
 /* Heart Icon */
 .heart {
   transition: all 0.2s ease;
