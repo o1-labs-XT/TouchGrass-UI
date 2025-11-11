@@ -309,6 +309,12 @@
   margin-bottom: 24px;
 }
 
+.imagePreview > button {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+}
+
 .previewImage {
   width: 100%;
   height: 100%;

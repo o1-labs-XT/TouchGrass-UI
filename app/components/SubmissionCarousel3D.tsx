@@ -414,6 +414,12 @@ export default function SubmissionCarousel3D({
                   alt={selectedSubmission.tagline || `Submission ${selectedSubmission.chainPosition}`}
                   className={styles.previewImage}
                 />
+                <LikeButton
+                  submissionId={selectedSubmission.id}
+                  initialCount={selectedSubmission.likeCount}
+                  size="small"
+                  variant="floating"
+                />
               </div>
 
               {selectedSubmission.tagline && (
