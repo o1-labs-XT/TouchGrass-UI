@@ -9,3 +9,13 @@ function TooltipProvider({
 }: React.ComponentProps<typeof TooltipPrimitive.Provider>) {
   return <TooltipPrimitive.Provider delayDuration={delayDuration} {...props} />;
 }
+
+function Tooltip({
+  ...props
+}: React.ComponentProps<typeof TooltipPrimitive.Root>) {
+  return (
+    <TooltipProvider>
+      <TooltipPrimitive.Root {...props} />
+    </TooltipProvider>
+  );
+}
