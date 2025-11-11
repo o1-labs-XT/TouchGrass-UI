@@ -91,6 +91,38 @@
   stroke: #ef4444;
 }
 
+/* Variant: Carousel (for 3D carousel below center card) */
+.likeButton.carousel {
+  background-color: rgba(77, 77, 77, 0.1);
+  border: 1px solid rgba(77, 77, 77, 0.2);
+  border-radius: 50%;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  padding: 12px;
+  width: 44px;
+  height: 44px;
+  position: absolute;
+  bottom: -70px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 50;
+  pointer-events: auto;
+  gap: 0;
+}
+
+.likeButton.carousel .heart {
+  width: 20px;
+  height: 20px;
+}
+
+.likeButton.carousel .count {
+  display: none;
+}
+
+.likeButton.carousel .heartUnfilled {
+  stroke: #4D4D4D;
+}
+
 /* Heart Icon */
 .heart {
   transition: all 0.2s ease;
