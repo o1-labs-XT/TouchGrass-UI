@@ -1,15 +1,18 @@
 "use client";
 
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import GrassyButton from "./components/GrassyButton";
 import Card from "./components/Card";
+import InfoModal from "./components/InfoModal";
 import { useWallet } from "./contexts/WalletContext";
 import styles from "./Welcome.module.css";
 
 export default function WelcomePage() {
   const router = useRouter();
   const { setWalletChoice } = useWallet();
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleAuroWallet = () => {
     const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
@@ -43,6 +46,31 @@ export default function WelcomePage() {
       <div className={styles.background} />
       <div className={styles.wrapper}>
         <Card centered>
+          <button
+            onClick={() => setIsModalOpen(true)}
+            style={{
+              position: 'absolute',
+              top: '15px',
+              right: '15px',
+              background: 'none',
+              border: 'none',
+              cursor: 'pointer',
+              fontSize: '24px',
+              padding: '8px',
+              borderRadius: '50%',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              opacity: 0.6,
+              transition: 'opacity 0.2s',
+              zIndex: 10
+            }}
+            onMouseEnter={(e) => (e.target as HTMLElement).style.opacity = '1'}
+            onMouseLeave={(e) => (e.target as HTMLElement).style.opacity = '0.6'}
+            title="Learn more about TouchGrass"
+          >
+            ❓
+          </button>
           <Image
             src="/assets/touchgrass-logo.png"
             alt="TouchGrass"
@@ -53,26 +81,18 @@ export default function WelcomePage() {
           />
           <h1 className={styles.title}>TouchGrass</h1>
           <p className={styles.subtitle}>
-            Join daily photo challenges and earn rewards for authentic outdoor
-            experiences
+            Authentic image challenges powered by Mina Protocol
           </p>
 
           <ul className={styles.features}>
             <li>
-              <img
-                src="/assets/daly-challenges-icon.svg"
-                alt=""
-                className={styles.featureIcon}
-              />
-              DAILY CHALLENGES & COMPETITIONS
+              📸 VERIFIED REAL PHOTOS
             </li>
             <li>
-              <img
-                src="/assets/blockchain-rewards-icon.svg"
-                alt=""
-                className={styles.featureIcon}
-              />
-              MINA BLOCKCHAIN REWARDS
+              👍 EARN LIKES
+            </li>
+            <li>
+              💰 GET MINA REWARDS
             </li>
           </ul>
 
@@ -86,6 +106,10 @@ export default function WelcomePage() {
           </div>
         </Card>
       </div>
+      <InfoModal 
+        isOpen={isModalOpen} 
+        onClose={() => setIsModalOpen(false)} 
+      />
     </main>
   );
 }
