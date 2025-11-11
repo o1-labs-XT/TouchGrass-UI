@@ -237,15 +237,8 @@ export default function SubmissionCarousel3D({
               style={getCardStyle(index)}
             >
               <div
+                className={styles.card}
                 style={{
-                  position: "relative",
-                  width: "300px",
-                  height: "420px",
-                  borderRadius: "1rem",
-                  overflow: "hidden",
-                  backgroundColor: "#18181b",
-                  boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)",
-                  border: "1px solid #E6E6E6",
                   cursor: index === currentIndex ? "pointer" : "default"
                 }}
               >
