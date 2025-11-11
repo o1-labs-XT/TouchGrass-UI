@@ -1,9 +1,9 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { Heart } from "lucide-react";
 import type { Submission } from "../lib/backendClient";
 import { getImageUrl } from "../lib/backendClient";
+import LikeButton from "./LikeButton";
 import styles from "./SubmissionCarousel3D.module.css";
 
 interface SubmissionCarousel3DProps {
