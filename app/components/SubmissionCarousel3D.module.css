@@ -1,0 +1,81 @@
+/* Container */
+.container {
+  position: relative;
+  width: 100%;
+  margin-top: 4rem;
+  padding-bottom: 2rem;
+}
+
+.heading {
+  text-align: center;
+  margin: 0 0 1.5rem 0;
+  color: #003712;
+  font-family: Figtree, sans-serif;
+  font-weight: bold;
+  font-size: 13pt;
+}
+
+/* Carousel Scene */
+.carouselWrapper {
+  position: relative;
+  width: 100%;
+  height: 500px;
+  perspective: 1200px;
+  perspective-origin: 50% 250px;
+}
+
+.carouselTrack {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+}
+
+.carouselTrack.grabbing {
+  cursor: grabbing;
+}
+
+.carouselTrack.grab {
+  cursor: grab;
+}
+
+/* Card positioning wrapper */
+.cardPositioner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-left: -150px;
+  margin-top: -210px;
+  transform-style: preserve-3d;
+}
+
+/* Indicators */
+.indicators {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  border-radius: 9999px;
+  backdrop-filter: blur(4px);
+  background-color: rgba(153, 153, 153, 0.1);
+  border: 1px solid rgba(153, 153, 153, 0.2);
+  width: fit-content;
+  margin: 3rem auto 0;
+}
+
+.indicator {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 9999px;
+  background-color: rgba(153, 153, 153, 0.3);
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s;
+  padding: 0;
+}
+
+.indicatorActive {
+  width: 2rem;
+  border-radius: 0.25rem;
+  background-color: #999999;
+}
