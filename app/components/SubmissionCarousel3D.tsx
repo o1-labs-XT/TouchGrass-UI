@@ -5,7 +5,8 @@ import type { Submission } from "../lib/backendClient";
 import { getImageUrl } from "../lib/backendClient";
 import LikeButton from "./LikeButton";
 import { Tooltip, TooltipTrigger, TooltipContent } from "./Tooltip";
-import { Clock } from "lucide-react";
+import { Clock, Share2, X } from "lucide-react";
+import SubmissionProgress from "./SubmissionProgress";
 import styles from "./SubmissionCarousel3D.module.css";
 
 interface SubmissionCarousel3DProps {
@@ -36,6 +37,7 @@ export default function SubmissionCarousel3D({
   const [startY, setStartY] = useState(0);
   const [dragOffset, setDragOffset] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
+  const [selectedSubmission, setSelectedSubmission] = useState<Submission | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const hasDraggedRef = useRef(false);
   const touchDirectionRef = useRef<'horizontal' | 'vertical' | null>(null);
