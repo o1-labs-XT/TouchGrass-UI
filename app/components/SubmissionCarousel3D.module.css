@@ -324,3 +324,50 @@
   font-family: Figtree, sans-serif;
   font-size: 16px;
 }
+
+/* Details Grid */
+.detailsGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin-bottom: 24px;
+}
+
+.detailRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid #E6E6E6;
+}
+
+.detailRow:last-child {
+  border-bottom: none;
+}
+
+.detailLabel {
+  color: #4D4D4D;
+  font-size: 14px;
+  font-family: Figtree, sans-serif;
+}
+
+.detailValue {
+  font-weight: 500;
+  color: #003712;
+  font-size: 14px;
+  font-family: Figtree, sans-serif;
+}
+
+/* Progress Section */
+.progressSection {
+  margin-top: 32px;
+  padding-top: 8px;
+}
+
+.progressTitle {
+  color: #003712;
+  margin: 0 0 16px 0;
+  font-size: 16px;
+  font-weight: 600;
+  font-family: Figtree, sans-serif;
+}
