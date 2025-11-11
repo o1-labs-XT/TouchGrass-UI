@@ -26,3 +26,25 @@ function TooltipTrigger({
 }: React.ComponentProps<typeof TooltipPrimitive.Trigger>) {
   return <TooltipPrimitive.Trigger {...props} />;
 }
+
+function TooltipContent({
+  className,
+  sideOffset = 0,
+  children,
+  ...props
+}: React.ComponentProps<typeof TooltipPrimitive.Content>) {
+  return (
+    <TooltipPrimitive.Portal>
+      <TooltipPrimitive.Content
+        sideOffset={sideOffset}
+        className={`${styles.content} ${className || ""}`}
+        {...props}
+      >
+        {children}
+        <TooltipPrimitive.Arrow className={styles.arrow} />
+      </TooltipPrimitive.Content>
+    </TooltipPrimitive.Portal>
+  );
+}
+
+export { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider };
