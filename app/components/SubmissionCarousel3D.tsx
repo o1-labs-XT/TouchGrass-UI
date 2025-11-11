@@ -216,13 +216,7 @@ export default function SubmissionCarousel3D({
 
       <div
         ref={containerRef}
-        style={{
-          position: "relative",
-          width: "100%",
-          height: "500px",
-          perspective: "1200px",
-          perspectiveOrigin: "50% 250px"
-        }}
+        className={styles.carouselWrapper}
         onMouseDown={handleMouseDown}
         onMouseMove={handleMouseMove}
         onMouseUp={handleMouseUp}
