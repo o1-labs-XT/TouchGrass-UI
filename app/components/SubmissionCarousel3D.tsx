@@ -381,6 +381,15 @@ export default function SubmissionCarousel3D({
           />
         ))}
       </div>
+
+      {/* Modal */}
+      {selectedSubmission && (
+        <div className={styles.modalOverlay} onClick={() => setSelectedSubmission(null)}>
+          <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
+            {/* Modal content will go here */}
+          </div>
+        </div>
+      )}
     </div>
   );
 }
