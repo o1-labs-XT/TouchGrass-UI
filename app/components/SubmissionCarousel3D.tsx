@@ -226,13 +226,9 @@ export default function SubmissionCarousel3D({
         onTouchEnd={handleTouchEnd}
       >
         <div
-          style={{
-            position: "relative",
-            width: "100%",
-            height: "100%",
-            transformStyle: "preserve-3d",
-            cursor: isDragging ? "grabbing" : "grab"
-          }}
+          className={`${styles.carouselTrack} ${
+            isDragging ? styles.grabbing : styles.grab
+          }`}
         >
           {submissions.map((submission, index) => (
             <div
