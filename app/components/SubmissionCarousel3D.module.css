@@ -171,3 +171,59 @@
   height: 1rem;
   stroke: rgba(255, 255, 255, 0.9);
 }
+
+/* Modal Overlay */
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Modal Content */
+.modalContent {
+  position: relative;
+  width: 100%;
+  max-width: 28rem;
+  max-height: 90vh;
+  background-color: #F7F4EF;
+  border: 1px solid #E6E6E6;
+  border-radius: 12px;
+  overflow-y: auto;
+  animation: zoomIn 0.2s ease;
+  transform: scale(0.81);
+  color: #4D4D4D;
+}
+
+@keyframes zoomIn {
+  from {
+    transform: scale(0.71);
+    opacity: 0;
+  }
+  to {
+    transform: scale(0.81);
+    opacity: 1;
+  }
+}
+
+.modalContent::-webkit-scrollbar {
+  width: 8px;
+}
+
+.modalContent::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.modalContent::-webkit-scrollbar-thumb {
+  background: rgba(77, 77, 77, 0.2);
+  border-radius: 4px;
+}
