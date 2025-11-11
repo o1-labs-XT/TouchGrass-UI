@@ -253,15 +253,7 @@ export default function SubmissionCarousel3D({
                 />
                 <div className={styles.gradientOverlay} />
                 {index === currentIndex && !isDragging && (
-                  <div
-                    style={{
-                      position: "absolute",
-                      inset: 0,
-                      backgroundColor: "rgba(255,255,255,0)",
-                      transition: "background-color 0.3s",
-                      pointerEvents: "none"
-                    }}
-                  />
+                  <div className={styles.activeOverlay} />
                 )}
               </div>
 
