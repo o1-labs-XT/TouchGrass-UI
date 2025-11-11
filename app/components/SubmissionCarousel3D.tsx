@@ -393,6 +393,14 @@ export default function SubmissionCarousel3D({
             >
               <X size={20} />
             </button>
+
+            <button
+              className={styles.shareButtonTop}
+              onClick={() => handleShare(selectedSubmission)}
+              aria-label="Share submission"
+            >
+              <Share2 size={16} />
+            </button>
           </div>
         </div>
       )}
