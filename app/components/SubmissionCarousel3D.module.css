@@ -319,6 +319,10 @@
   display: none;
 }
 
+.imagePreview button svg {
+  stroke: var(--brand-chlorophyll-green);
+}
+
 .previewImage {
   width: 100%;
   height: 100%;

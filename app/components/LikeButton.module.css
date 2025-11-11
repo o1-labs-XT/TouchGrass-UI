@@ -62,8 +62,8 @@
 }
 
 .likeButton.floating .heartFilled {
-  fill: #ef4444;
-  stroke: #ef4444;
+  fill: var(--brand-chlorophyll-green);
+  stroke: var(--brand-chlorophyll-green);
 }
 
 .likeButton.floating .heartUnfilled {
@@ -71,12 +71,12 @@
 }
 
 .likeButton.floating:hover:not(:disabled) .heartUnfilled {
-  stroke: #ef4444;
+  stroke: var(--brand-chlorophyll-green);
 }
 
 .likeButton.floating .floatingHeart svg {
-  fill: #ef4444;
-  stroke: #ef4444;
+  fill: var(--brand-chlorophyll-green);
+  stroke: var(--brand-chlorophyll-green);
 }
 
 /* Variant: Inline (for modal details row) */
@@ -127,7 +127,7 @@
 }
 
 .likeButton.carousel:hover:not(:disabled) .heartUnfilled {
-  stroke: #4D4D4D;
+  stroke: var(--brand-chlorophyll-green);
 }
 
 .container.carousel .errorToast {
