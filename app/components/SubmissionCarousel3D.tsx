@@ -386,7 +386,13 @@ export default function SubmissionCarousel3D({
       {selectedSubmission && (
         <div className={styles.modalOverlay} onClick={() => setSelectedSubmission(null)}>
           <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
-            {/* Modal content will go here */}
+            <button
+              className={styles.closeButton}
+              onClick={() => setSelectedSubmission(null)}
+              aria-label="Close"
+            >
+              <X size={20} />
+            </button>
           </div>
         </div>
       )}
