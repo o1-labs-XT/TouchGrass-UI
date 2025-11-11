@@ -19,3 +19,9 @@ function Tooltip({
     </TooltipProvider>
   );
 }
+
+function TooltipTrigger({
+  ...props
+}: React.ComponentProps<typeof TooltipPrimitive.Trigger>) {
+  return <TooltipPrimitive.Trigger {...props} />;
+}
