@@ -227,3 +227,46 @@
   background: rgba(77, 77, 77, 0.2);
   border-radius: 4px;
 }
+
+/* Close Button */
+.closeButton {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  padding: 8px;
+  border-radius: 4px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  z-index: 10;
+  opacity: 0.7;
+  transition: opacity 0.3s;
+  color: #4D4D4D;
+}
+
+.closeButton:hover {
+  opacity: 1;
+  background-color: rgba(77, 77, 77, 0.1);
+}
+
+/* Share Button Top */
+.shareButtonTop {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  padding: 8px;
+  border-radius: 50%;
+  background-color: rgba(77, 77, 77, 0.1);
+  border: 1px solid rgba(77, 77, 77, 0.2);
+  cursor: pointer;
+  z-index: 10;
+  transition: background-color 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #4D4D4D;
+}
+
+.shareButtonTop:hover {
+  background-color: rgba(77, 77, 77, 0.15);
+}
