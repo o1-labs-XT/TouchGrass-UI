@@ -10,7 +10,7 @@ interface LikeButtonProps {
   initialLiked?: boolean;
   initialCount?: number;
   size?: 'small' | 'large';
-  variant?: 'default' | 'floating' | 'inline';
+  variant?: 'default' | 'floating' | 'inline' | 'carousel';
 }
 
 export default function LikeButton({
