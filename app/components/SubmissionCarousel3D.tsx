@@ -258,31 +258,8 @@ export default function SubmissionCarousel3D({
               </div>
 
               {index === currentIndex && (
-                <button
-                  style={{
-                    position: "absolute",
-                    bottom: "-70px",
-                    left: "50%",
-                    transform: "translateX(-50%)",
-                    width: "44px",
-                    height: "44px",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    borderRadius: "50%",
-                    backdropFilter: "blur(4px)",
-                    backgroundColor: "rgba(77, 77, 77, 0.1)",
-                    border: "1px solid rgba(77, 77, 77, 0.2)",
-                    cursor: "pointer",
-                    zIndex: 50,
-                    pointerEvents: "auto",
-                    transition: "all 0.3s"
-                  }}
-                  aria-label="Like image"
-                >
-                  <Heart
-                    style={{ width: "20px", height: "20px", stroke: "#4D4D4D" }}
-                  />
+                <button className={styles.likeButton} aria-label="Like image">
+                  <Heart className={styles.heartIcon} />
                 </button>
               )}
             </div>
