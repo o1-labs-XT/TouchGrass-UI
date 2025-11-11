@@ -401,6 +401,11 @@ export default function SubmissionCarousel3D({
             >
               <Share2 size={16} />
             </button>
+
+            <div className={styles.modalHeader}>
+              <h2 className={styles.modalTitle}>Submission Details</h2>
+              <p className={styles.modalSubtitle}>View information about this submission</p>
+            </div>
           </div>
         </div>
       )}
