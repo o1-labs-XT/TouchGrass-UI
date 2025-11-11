@@ -233,15 +233,8 @@ export default function SubmissionCarousel3D({
           {submissions.map((submission, index) => (
             <div
               key={submission.id}
-              style={{
-                position: "absolute",
-                top: "50%",
-                left: "50%",
-                marginLeft: "-150px",
-                marginTop: "-210px",
-                ...getCardStyle(index),
-                transformStyle: "preserve-3d"
-              }}
+              className={styles.cardPositioner}
+              style={getCardStyle(index)}
             >
               <div
                 style={{
