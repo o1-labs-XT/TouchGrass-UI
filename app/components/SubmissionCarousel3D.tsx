@@ -267,20 +267,7 @@ export default function SubmissionCarousel3D({
         </div>
       </div>
 
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          gap: "0.5rem",
-          padding: "0.75rem 1rem",
-          borderRadius: "9999px",
-          backdropFilter: "blur(4px)",
-          backgroundColor: "rgba(153, 153, 153, 0.1)",
-          border: "1px solid rgba(153, 153, 153, 0.2)",
-          width: "fit-content",
-          margin: "3rem auto 0"
-        }}
-      >
+      <div className={styles.indicators}>
         {submissions.map((_, index) => (
           <button
             key={index}
@@ -290,17 +277,9 @@ export default function SubmissionCarousel3D({
               setCurrentIndex(index);
               setTimeout(() => setIsTransitioning(false), 600);
             }}
-            style={{
-              width: index === currentIndex ? "2rem" : "0.5rem",
-              height: "0.5rem",
-              borderRadius: index === currentIndex ? "0.25rem" : "9999px",
-              backgroundColor:
-                index === currentIndex ? "#999999" : "rgba(153, 153, 153, 0.3)",
-              border: "none",
-              cursor: "pointer",
-              transition: "all 0.3s",
-              padding: 0
-            }}
+            className={`${styles.indicator} ${
+              index === currentIndex ? styles.indicatorActive : ""
+            }`}
             aria-label={`Go to slide ${index + 1}`}
           />
         ))}
