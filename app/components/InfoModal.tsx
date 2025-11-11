@@ -68,7 +68,7 @@ export default function InfoModal({ isOpen, onClose }: InfoModalProps) {
           </p>
           <p className={styles.text}>
             Want the technical details?<br />
-            👉 <a href="#" className={styles.link}>Read the code →</a>
+            👉 <a href="https://github.com/o1-labs-XT/TouchGrass-UI" className={styles.link}>Read the code →</a>
           </p>
 
           <h3 className={styles.subtitle}>This is cool! How can I get in touch with the team?</h3>
@@ -79,9 +79,9 @@ export default function InfoModal({ isOpen, onClose }: InfoModalProps) {
             After the event, join us on:
           </p>
           <ul className={styles.list}>
-            <li><a href="#" className={styles.link}>Discord↗</a> to chat</li>
-            <li><a href="#" className={styles.link}>X (Twitter)↗</a> for updates</li>
-            <li>or <a href="#" className={styles.link}>submit a Grant Proposal↗</a> to collaborate on future experiments</li>
+            <li><a href="https://discord.gg/minaprotocol" className={styles.link}>Discord↗</a> to chat</li>
+            <li><a href="https://x.com/MinaProtocol" className={styles.link}>X (Twitter)↗</a> for updates</li>
+            <li>or <a href="https://minaprotocol.com/builder-grants-program" className={styles.link}>submit a Grant Proposal↗</a> to collaborate on future experiments</li>
           </ul>
         </div>
       </div>
