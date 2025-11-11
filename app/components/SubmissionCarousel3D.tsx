@@ -444,6 +444,15 @@ export default function SubmissionCarousel3D({
                   </span>
                 </div>
               </div>
+
+              <div className={styles.progressSection}>
+                <h3 className={styles.progressTitle}>Progress Timeline</h3>
+                <SubmissionProgress
+                  status={selectedSubmission.status}
+                  transactionId={selectedSubmission.transactionId}
+                  variant="inline"
+                />
+              </div>
             </div>
           </div>
         </div>
