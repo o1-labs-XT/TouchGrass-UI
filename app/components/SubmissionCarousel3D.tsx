@@ -415,6 +415,10 @@ export default function SubmissionCarousel3D({
                   className={styles.previewImage}
                 />
               </div>
+
+              {selectedSubmission.tagline && (
+                <div className={styles.tagline}>{selectedSubmission.tagline}</div>
+              )}
             </div>
           </div>
         </div>
