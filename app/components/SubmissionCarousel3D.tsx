@@ -269,6 +269,31 @@ export default function SubmissionCarousel3D({
                   draggable="false"
                 />
                 <div className={styles.gradientOverlay} />
+
+                {submission.status !== 'complete' && (
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <button
+                        onClick={(e) => e.stopPropagation()}
+                        className={styles.statusButton}
+                        aria-label="View submission status"
+                      >
+                        <Clock className={styles.clockIcon} />
+                      </button>
+                    </TooltipTrigger>
+                    <TooltipContent side="left">
+                      <div>
+                        <p style={{ fontWeight: 500 }}>
+                          Status: {getStatusInfo(submission.status, !!submission.transactionId).stage}
+                        </p>
+                        <p style={{ fontSize: '0.75rem', opacity: 0.6, marginTop: '0.25rem' }}>
+                          {getStatusInfo(submission.status, !!submission.transactionId).description}
+                        </p>
+                      </div>
+                    </TooltipContent>
+                  </Tooltip>
+                )}
+
                 {index === currentIndex && !isDragging && (
                   <div className={styles.activeOverlay} />
                 )}
