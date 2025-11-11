@@ -5,7 +5,7 @@ import type { Submission } from "../lib/backendClient";
 import { getImageUrl } from "../lib/backendClient";
 import LikeButton from "./LikeButton";
 import { Tooltip, TooltipTrigger, TooltipContent } from "./Tooltip";
-import { Clock, Share2, X } from "lucide-react";
+import { Clock, Heart, Share2, X } from "lucide-react";
 import SubmissionProgress from "./SubmissionProgress";
 import styles from "./SubmissionCarousel3D.module.css";
 
@@ -428,12 +428,10 @@ export default function SubmissionCarousel3D({
 
               <div className={styles.detailsGrid}>
                 <div className={styles.detailRow}>
-                  <LikeButton
-                    submissionId={selectedSubmission.id}
-                    initialCount={selectedSubmission.likeCount}
-                    size="small"
-                    variant="inline"
-                  />
+                  <span style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                    <Heart style={{ width: '1rem', height: '1rem', stroke: '#003712' }} />
+                  </span>
+                  <span className={styles.detailValue}>{selectedSubmission.likeCount}</span>
                 </div>
                 <div className={styles.detailRow}>
                   <span className={styles.detailLabel}>Position in Chain</span>
