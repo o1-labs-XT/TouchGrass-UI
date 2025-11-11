@@ -84,6 +84,33 @@
   pointer-events: none;
 }
 
+/* Like button */
+.likeButton {
+  position: absolute;
+  bottom: -70px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  backdrop-filter: blur(4px);
+  background-color: rgba(77, 77, 77, 0.1);
+  border: 1px solid rgba(77, 77, 77, 0.2);
+  cursor: pointer;
+  z-index: 50;
+  pointer-events: auto;
+  transition: all 0.3s;
+}
+
+.heartIcon {
+  width: 20px;
+  height: 20px;
+  stroke: #4D4D4D;
+}
+
 /* Indicators */
 .indicators {
   display: flex;
