@@ -210,16 +210,7 @@ export default function SubmissionCarousel3D({
   return (
     <div className={styles.container}>
       {/* Heading */}
-      <h2
-        style={{
-          textAlign: "center",
-          margin: "0 0 1.5rem 0",
-          color: "#003712",
-          fontFamily: "Figtree, sans-serif",
-          fontWeight: "bold",
-          fontSize: "13pt"
-        }}
-      >
+      <h2 className={styles.heading}>
         Chain Images ({submissions.length})
       </h2>
 
