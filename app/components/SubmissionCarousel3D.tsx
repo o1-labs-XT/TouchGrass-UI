@@ -189,6 +189,17 @@ export default function SubmissionCarousel3D({
     };
   }, [isDragging]);
 
+  // ESC key to close modal
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && selectedSubmission) {
+        setSelectedSubmission(null);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [selectedSubmission]);
+
   const getCardStyle = (index: number) => {
     let position = index - currentIndex;
 
