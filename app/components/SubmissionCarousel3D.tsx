@@ -12,6 +12,21 @@ interface SubmissionCarousel3DProps {
   submissions: Submission[];
 }
 
+function getStatusInfo(status: Submission['status'], hasTransactionId: boolean) {
+  switch (status) {
+    case 'awaiting_review':
+      return { stage: 'Admin Review', description: 'Under review' };
+    case 'processing':
+      return hasTransactionId
+        ? { stage: 'Blockchain Transaction', description: 'Processing transaction' }
+        : { stage: 'Proof Created', description: 'Generating proof' };
+    case 'rejected':
+      return { stage: 'Rejected', description: 'Submission rejected' };
+    case 'complete':
+      return { stage: 'Complete', description: 'Completed' };
+  }
+}
+
 export default function SubmissionCarousel3D({
   submissions
 }: SubmissionCarousel3DProps) {
