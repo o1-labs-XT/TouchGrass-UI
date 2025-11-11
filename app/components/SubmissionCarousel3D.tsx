@@ -248,13 +248,7 @@ export default function SubmissionCarousel3D({
                     submission.tagline ||
                     `Submission #${submission.chainPosition}`
                   }
-                  style={{
-                    width: "100%",
-                    height: "100%",
-                    objectFit: "cover",
-                    userSelect: "none",
-                    pointerEvents: "none"
-                  }}
+                  className={styles.cardImage}
                   draggable="false"
                 />
                 <div
