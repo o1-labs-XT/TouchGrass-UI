@@ -309,7 +309,7 @@
   margin-bottom: 24px;
 }
 
-.imagePreview > button {
+.imagePreview > div {
   position: absolute;
   top: 16px;
   right: 16px;
