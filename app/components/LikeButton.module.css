@@ -3,6 +3,14 @@
   display: inline-block;
 }
 
+.container.carousel {
+  position: absolute;
+  bottom: -70px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 50;
+}
+
 .likeButton {
   display: flex;
   align-items: center;
@@ -101,17 +109,8 @@
   padding: 12px;
   width: 44px;
   height: 44px;
-  position: absolute;
-  bottom: -70px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 50;
   pointer-events: auto;
   gap: 0;
-}
-
-.likeButton.carousel:hover:not(:disabled) {
-  transform: translateX(-50%);
 }
 
 .likeButton.carousel .heart {

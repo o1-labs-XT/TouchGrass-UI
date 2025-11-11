@@ -126,7 +126,7 @@ export default function LikeButton({
   };
 
   return (
-    <div className={styles.container}>
+    <div className={`${styles.container} ${styles[variant]}`}>
       <button
         onClick={handleToggleLike}
         disabled={loading || !address}
