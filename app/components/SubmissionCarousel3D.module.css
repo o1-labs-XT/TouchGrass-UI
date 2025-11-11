@@ -270,3 +270,57 @@
 .shareButtonTop:hover {
   background-color: rgba(77, 77, 77, 0.15);
 }
+
+/* Modal Header */
+.modalHeader {
+  padding: 24px;
+  padding-bottom: 8px;
+  padding-top: 48px;
+}
+
+.modalTitle {
+  font-size: 20px;
+  color: #003712;
+  margin: 0;
+  font-weight: 600;
+  font-family: Figtree, sans-serif;
+}
+
+.modalSubtitle {
+  color: #4D4D4D;
+  margin: 4px 0 0 0;
+  font-size: 14px;
+  font-family: Figtree, sans-serif;
+}
+
+/* Modal Body */
+.modalBody {
+  padding: 0 24px 24px;
+}
+
+/* Image Preview */
+.imagePreview {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  border-radius: 12px;
+  overflow: hidden;
+  background-color: #E6E6E6;
+  margin-bottom: 24px;
+}
+
+.previewImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Tagline */
+.tagline {
+  font-style: italic;
+  color: #003712;
+  margin-bottom: 24px;
+  padding: 0 4px;
+  font-family: Figtree, sans-serif;
+  font-size: 16px;
+}
