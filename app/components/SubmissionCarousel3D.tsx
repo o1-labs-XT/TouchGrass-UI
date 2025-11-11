@@ -406,6 +406,16 @@ export default function SubmissionCarousel3D({
               <h2 className={styles.modalTitle}>Submission Details</h2>
               <p className={styles.modalSubtitle}>View information about this submission</p>
             </div>
+
+            <div className={styles.modalBody}>
+              <div className={styles.imagePreview}>
+                <img
+                  src={getImageUrl(selectedSubmission.id)}
+                  alt={selectedSubmission.tagline || `Submission ${selectedSubmission.chainPosition}`}
+                  className={styles.previewImage}
+                />
+              </div>
+            </div>
           </div>
         </div>
       )}
