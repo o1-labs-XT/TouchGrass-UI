@@ -251,15 +251,7 @@ export default function SubmissionCarousel3D({
                   className={styles.cardImage}
                   draggable="false"
                 />
-                <div
-                  style={{
-                    position: "absolute",
-                    inset: 0,
-                    background:
-                      "linear-gradient(to top, rgba(0,0,0,0.3), transparent)",
-                    pointerEvents: "none"
-                  }}
-                />
+                <div className={styles.gradientOverlay} />
                 {index === currentIndex && !isDragging && (
                   <div
                     style={{
