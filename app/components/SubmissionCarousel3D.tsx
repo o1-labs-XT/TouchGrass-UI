@@ -419,6 +419,31 @@ export default function SubmissionCarousel3D({
               {selectedSubmission.tagline && (
                 <div className={styles.tagline}>{selectedSubmission.tagline}</div>
               )}
+
+              <div className={styles.detailsGrid}>
+                <div className={styles.detailRow}>
+                  <LikeButton
+                    submissionId={selectedSubmission.id}
+                    initialCount={selectedSubmission.likeCount}
+                    size="small"
+                    variant="inline"
+                  />
+                </div>
+                <div className={styles.detailRow}>
+                  <span className={styles.detailLabel}>Position in Chain</span>
+                  <span className={styles.detailValue}>#{selectedSubmission.chainPosition}</span>
+                </div>
+                <div className={styles.detailRow}>
+                  <span className={styles.detailLabel}>Date Created</span>
+                  <span className={styles.detailValue}>
+                    {new Date(selectedSubmission.createdAt).toLocaleDateString('en-US', {
+                      month: 'short',
+                      day: 'numeric',
+                      year: 'numeric',
+                    })}
+                  </span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
