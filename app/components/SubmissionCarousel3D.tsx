@@ -4,6 +4,7 @@ import { useState, useRef, useEffect } from "react";
 import { Heart } from "lucide-react";
 import type { Submission } from "../lib/backendClient";
 import { getImageUrl } from "../lib/backendClient";
+import styles from "./SubmissionCarousel3D.module.css";
 
 interface SubmissionCarousel3DProps {
   submissions: Submission[];
@@ -207,14 +208,7 @@ export default function SubmissionCarousel3D({
   };
 
   return (
-    <div
-      style={{
-        position: "relative",
-        width: "100%",
-        marginTop: "4rem",
-        paddingBottom: "2rem"
-      }}
-    >
+    <div className={styles.container}>
       {/* Heading */}
       <h2
         style={{
