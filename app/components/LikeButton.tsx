@@ -11,6 +11,7 @@ interface LikeButtonProps {
   initialCount?: number;
   size?: 'small' | 'large';
   variant?: 'default' | 'floating' | 'inline' | 'carousel';
+  onCountChange?: (newCount: number) => void;
 }
 
 export default function LikeButton({
@@ -19,6 +20,7 @@ export default function LikeButton({
   initialCount = 0,
   size = 'small',
   variant = 'default',
+  onCountChange,
 }: LikeButtonProps) {
   const { address } = useWallet();
   const [liked, setLiked] = useState(initialLiked);
@@ -63,9 +65,11 @@ export default function LikeButton({
     // Optimistic update
     const previousLiked = liked;
     const previousCount = count;
+    const newCount = !liked ? count + 1 : Math.max(0, count - 1);
 
     setLiked(!liked);
-    setCount(!liked ? count + 1 : Math.max(0, count - 1));
+    setCount(newCount);
+    onCountChange?.(newCount); // Notify parent of optimistic update
     setLoading(true);
     setError(null);
 
@@ -100,6 +104,7 @@ export default function LikeButton({
         // But rollback count increment (no new like was created)
         setLiked(true);
         setCount(previousCount);
+        onCountChange?.(previousCount); // Notify parent of rollback
         // Show floating heart since they liked it
         setShowFloatingHeart(true);
         // Don't show error - this is expected in lazy load approach
@@ -107,6 +112,7 @@ export default function LikeButton({
         // Rollback on other errors
         setLiked(previousLiked);
         setCount(previousCount);
+        onCountChange?.(previousCount); // Notify parent of rollback
 
         // User-friendly error messages
         if (errorMessage.includes('403') || errorMessage.includes('approved submission')) {
