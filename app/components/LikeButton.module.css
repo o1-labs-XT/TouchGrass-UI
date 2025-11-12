@@ -58,7 +58,19 @@
   border-radius: 50%;
   backdrop-filter: blur(4px);
   -webkit-backdrop-filter: blur(4px);
-  padding: 12px;
+  width: 2rem;
+  height: 2rem;
+  min-width: 2rem;
+  min-height: 2rem;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.likeButton.floating .heart {
+  width: 1rem !important;
+  height: 1rem !important;
 }
 
 .likeButton.floating .count {
