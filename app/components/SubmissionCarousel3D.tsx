@@ -402,12 +402,15 @@ export default function SubmissionCarousel3D({
           ))}
         </div>
 
-        <GrassyButton
-          variant="primary"
-          size="icon"
-          onClick={() => router.push(`/submit?chainId=${chainId}`)}
-          className={styles.extendChainButton}
-        />
+        <div style={{ position: 'absolute', bottom: '10px', left: '50%', zIndex: 50 }}>
+          <div style={{ position: 'relative', left: '-50%' }}>
+            <GrassyButton
+              variant="primary"
+              size="icon"
+              onClick={() => router.push(`/submit?chainId=${chainId}`)}
+            />
+          </div>
+        </div>
       </div>
 
       <div className={styles.indicators}>

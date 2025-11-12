@@ -97,19 +97,6 @@
   pointer-events: auto;
 }
 
-/* Extend chain button positioning */
-.extendChainButton {
-  position: absolute;
-  bottom: 10px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 50;
-}
-
-.extendChainButton:active {
-  transform: translateX(-50%) scale(0.98);
-}
-
 /* Indicators */
 .indicators {
   display: flex;
