@@ -98,7 +98,7 @@ export default function ChainDetailClient({ params, initialSubmissionId }: Chain
       )}
       </div>
 
-      <SubmissionCarousel3D submissions={submissions} initialSubmissionId={initialSubmissionId} />
+      <SubmissionCarousel3D submissions={submissions} initialSubmissionId={initialSubmissionId} chainId={chainId} />
     </div>
   );
 }

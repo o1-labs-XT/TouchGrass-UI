@@ -20,6 +20,7 @@
   position: relative;
   width: 100%;
   height: 500px;
+  padding-bottom: 120px;
   perspective: 1200px;
   perspective-origin: 50% 250px;
 }
@@ -93,6 +94,40 @@
   pointer-events: auto;
 }
 
+/* Extend chain button - green circular button below center card */
+.extendChainButton {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 44px;
+  height: 44px;
+  background-image: url('/assets/grassy-button-plus-primary.svg');
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  background-position: center;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  z-index: 50;
+  pointer-events: auto;
+  transition: background-image 300ms ease-out;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.extendChainButton:focus-visible {
+  outline: 2px solid var(--brand-chlorophyll-green);
+  outline-offset: 2px;
+}
+
+.extendChainButton:hover {
+  background-image: url('/assets/grassy-button-plus-primary-hover.svg');
+}
+
+.extendChainButton:active {
+  transform: translateX(-50%) scale(0.98);
+}
+
 /* Indicators */
 .indicators {
   display: flex;
@@ -104,7 +139,8 @@
   background-color: rgba(153, 153, 153, 0.1);
   border: 1px solid rgba(153, 153, 153, 0.2);
   width: fit-content;
-  margin: 3rem auto 0;
+  margin: 2rem auto 0;
+  transform: scale(0.8);
 }
 
 .indicator {

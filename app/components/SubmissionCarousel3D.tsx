@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import type { Submission } from "../lib/backendClient";
 import { getImageUrl } from "../lib/backendClient";
 import LikeButton from "./LikeButton";
@@ -12,6 +13,7 @@ import styles from "./SubmissionCarousel3D.module.css";
 interface SubmissionCarousel3DProps {
   submissions: Submission[];
   initialSubmissionId?: string;
+  chainId: string;
 }
 
 function getStatusInfo(status: Submission['status'], hasTransactionId: boolean) {
@@ -31,8 +33,10 @@ function getStatusInfo(status: Submission['status'], hasTransactionId: boolean) 
 
 export default function SubmissionCarousel3D({
   submissions: initialSubmissions,
-  initialSubmissionId
+  initialSubmissionId,
+  chainId
 }: SubmissionCarousel3DProps) {
+  const router = useRouter();
   // Local copy of submissions to track like count updates
   const [submissions, setSubmissions] = useState(initialSubmissions);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -377,7 +381,6 @@ export default function SubmissionCarousel3D({
                   </Tooltip>
                 )}
 
-                {/* Like button on all cards */}
                 <div className={styles.likeButtonOnCard}>
                   <LikeButton
                     submissionId={submission.id}
@@ -395,6 +398,12 @@ export default function SubmissionCarousel3D({
             </div>
           ))}
         </div>
+
+        <button
+          onClick={() => router.push(`/submit?chainId=${chainId}`)}
+          className={styles.extendChainButton}
+          aria-label="Extend chain"
+        />
       </div>
 
       <div className={styles.indicators}>
