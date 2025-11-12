@@ -27,7 +27,7 @@ export default function SubmissionProgress({
     const isComplete = status === "complete";
     const hasTransaction = Boolean(transactionId);
 
-    const network = process.env.MINA_NETWORK === "mainnet" ? "mainnet" : "devnet";
+    const network = process.env.NEXT_PUBLIC_MINA_NETWORK === "mainnet" ? "mainnet" : "devnet";
     return [
       {
         id: "admin_review",
