@@ -202,6 +202,16 @@ export default function SubmissionCarousel3D({
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [selectedSubmission]);
 
+  // Auto-open modal if initialSubmissionId provided
+  useEffect(() => {
+    if (initialSubmissionId && submissions.length > 0) {
+      const submission = submissions.find(s => s.id === initialSubmissionId);
+      if (submission) {
+        setSelectedSubmission(submission);
+      }
+    }
+  }, [initialSubmissionId, submissions]);
+
   const getCardStyle = (index: number) => {
     let position = index - currentIndex;
 
