@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { getChain, getSubmissionsByChain, getImageUrl } from '../../lib/backendClient';
 import type { Chain, Submission } from '../../lib/backendClient';
+import GrassyButton from '../../components/GrassyButton';
 import BackButton from '../../components/BackButton';
 import SubmissionCarousel3D from '../../components/SubmissionCarousel3D';
 import styles from './ChainDetail.module.css';
