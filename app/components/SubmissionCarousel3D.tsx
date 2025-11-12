@@ -377,20 +377,21 @@ export default function SubmissionCarousel3D({
                   </Tooltip>
                 )}
 
+                {/* Like button on all cards */}
+                <div className={styles.likeButtonOnCard}>
+                  <LikeButton
+                    submissionId={submission.id}
+                    initialCount={submission.likeCount}
+                    variant="floating"
+                    size="small"
+                    onCountChange={(newCount) => handleLikeCountChange(submission.id, newCount)}
+                  />
+                </div>
+
                 {index === currentIndex && !isDragging && (
                   <div className={styles.activeOverlay} />
                 )}
               </div>
-
-              {index === currentIndex && (
-                <LikeButton
-                  submissionId={submission.id}
-                  initialCount={submission.likeCount}
-                  variant="carousel"
-                  size="small"
-                  onCountChange={(newCount) => handleLikeCountChange(submission.id, newCount)}
-                />
-              )}
             </div>
           ))}
         </div>

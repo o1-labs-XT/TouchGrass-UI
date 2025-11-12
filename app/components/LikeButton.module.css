@@ -61,6 +61,10 @@
   padding: 12px;
 }
 
+.likeButton.floating .count {
+  display: none;
+}
+
 .likeButton.floating .heartFilled {
   fill: var(--brand-chlorophyll-green);
   stroke: var(--brand-chlorophyll-green);
