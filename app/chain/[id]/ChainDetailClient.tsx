@@ -22,6 +22,14 @@ export default function ChainDetailClient({ params, initialSubmissionId }: Chain
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
+  // Prevent body scroll on this page
+  useEffect(() => {
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, []);
+
   // Preload images for better navigation performance
   useEffect(() => {
     if (submissions.length > 0) {
