@@ -4,10 +4,7 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { getChain, getSubmissionsByChain, getImageUrl } from '../../lib/backendClient';
 import type { Chain, Submission } from '../../lib/backendClient';
-import GrassyButton from '../../components/GrassyButton';
 import BackButton from '../../components/BackButton';
-import SubmissionCard from '../../components/SubmissionCard';
-import StatBox from '../../components/StatBox';
 import SubmissionCarousel3D from '../../components/SubmissionCarousel3D';
 import styles from './ChainDetail.module.css';
 
@@ -80,22 +77,7 @@ export default function ChainDetailClient({ params, initialSubmissionId }: Chain
   return (
     <div className={styles.container}>
       <div className={styles.wrapper}>
-        <div className={styles.header}>
-          <BackButton onClick={() => router.push(`/challenge/${chain?.challengeId}`)} />
-          <h1 className={styles.pageTitle}>{chain?.name}</h1>
-        </div>
-
-      {chain && (
-        <SubmissionCard centered>
-          <div className={styles.statsGrid}>
-            <StatBox value={chain.length} label="Images" />
-            <StatBox value={submissions.length} label="Submissions" />
-          </div>
-          <GrassyButton variant="primary" onClick={() => router.push(`/submit?chainId=${chainId}`)}>
-            Extend Chain
-          </GrassyButton>
-        </SubmissionCard>
-      )}
+        <BackButton onClick={() => router.push(`/challenge/${chain?.challengeId}`)} />
       </div>
 
       <SubmissionCarousel3D submissions={submissions} initialSubmissionId={initialSubmissionId} chainId={chainId} />
