@@ -24,11 +24,11 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     const absoluteImageUrl = imageUrl.startsWith('http') ? imageUrl : `${baseUrl}${imageUrl}`;
 
     return {
-      title: `TouchGrass - ${submission.tagline || `Submission #${submission.chainPosition}`}`,
-      description: `Check out this submission from TouchGrass! Position #${submission.chainPosition} in the chain. ${submission.tagline || 'A verified photo submission on the Mina blockchain.'}`,
+      title: `TouchGrass`,
+      description: `Check out this authentic image on TouchGrass! ${submission.tagline || 'A verified photo submission on the Mina blockchain.'}`,
       openGraph: {
-        title: `TouchGrass - ${submission.tagline || `Submission #${submission.chainPosition}`}`,
-        description: `Check out this submission from TouchGrass! Position #${submission.chainPosition} in the chain.`,
+        title: `TouchGrass`,
+        description: `Check out this authentic image on TouchGrass!`,
         url: pageUrl,
         siteName: 'TouchGrass',
         images: [
@@ -36,7 +36,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
             url: absoluteImageUrl,
             width: 1200,
             height: 630,
-            alt: submission.tagline || `TouchGrass submission #${submission.chainPosition}`,
+            alt: submission.tagline || `TouchGrass`,
           },
         ],
         locale: 'en_US',
@@ -44,8 +44,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       },
       twitter: {
         card: 'summary_large_image',
-        title: `TouchGrass - ${submission.tagline || `Submission #${submission.chainPosition}`}`,
-        description: `Check out this submission from TouchGrass! Position #${submission.chainPosition} in the chain.`,
+        title: `TouchGrass`,
+        description: `Check out this authentic image on TouchGrass!`,
         images: [absoluteImageUrl],
       },
     };
