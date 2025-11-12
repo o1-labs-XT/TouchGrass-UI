@@ -364,7 +364,7 @@ export default function SubmissionCarousel3D({
                         <Clock className={styles.clockIcon} />
                       </button>
                     </TooltipTrigger>
-                    <TooltipContent side="left">
+                    <TooltipContent side="right">
                       <div>
                         <p style={{ fontWeight: 500 }}>
                           Status: {getStatusInfo(submission.status, !!submission.transactionId).stage}
