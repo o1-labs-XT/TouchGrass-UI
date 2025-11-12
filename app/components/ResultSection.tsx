@@ -28,12 +28,12 @@ export default function ResultSection({
   };
 
   const getMinaScanUrl = (address: string) => {
-    const network = process.env.VERCEL_ENV === "production" ? "mainnet" : "devnet";
+    const network = process.env.MINA_NETWORK === "mainnet" ? "mainnet" : "devnet";
     return `https://minascan.io/${network}/account/${address}`;
   };
 
   const getTransactionUrl = (txHash: string) => {
-    const network = process.env.VERCEL_ENV === "production" ? "mainnet" : "devnet";
+    const network = process.env.MINA_NETWORK === "mainnet" ? "mainnet" : "devnet";
     return `https://minascan.io/${network}/tx/${txHash}`;
   };
 
