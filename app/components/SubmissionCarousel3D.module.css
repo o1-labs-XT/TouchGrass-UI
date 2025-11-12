@@ -297,6 +297,8 @@
 /* Modal Body */
 .modalBody {
   padding: 0 24px 24px;
+  overflow-y: auto;
+  flex: 1;
 }
 
 /* Image Preview */
