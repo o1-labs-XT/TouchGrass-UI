@@ -22,9 +22,10 @@ function Tooltip({
 }
 
 function TooltipTrigger({
+  className,
   ...props
 }: React.ComponentProps<typeof TooltipPrimitive.Trigger>) {
-  return <TooltipPrimitive.Trigger {...props} />;
+  return <TooltipPrimitive.Trigger className={`${styles.trigger || ''} ${className || ""}`} {...props} />;
 }
 
 function TooltipContent({

@@ -42,3 +42,8 @@
   fill: #18181b;
   z-index: 50;
 }
+
+.trigger {
+  pointer-events: auto;
+  touch-action: manipulation;
+}
