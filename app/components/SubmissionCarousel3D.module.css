@@ -94,38 +94,13 @@
   pointer-events: auto;
 }
 
-/* Extend chain button - green circular button below center card */
+/* Extend chain button positioning */
 .extendChainButton {
   position: absolute;
   bottom: 10px;
   left: 50%;
   transform: translateX(-50%);
-  width: 44px;
-  height: 44px;
-  background-image: url('/assets/grassy-button-plus-primary.svg');
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
-  background-position: center;
-  border: none;
-  outline: none;
-  cursor: pointer;
   z-index: 50;
-  pointer-events: auto;
-  transition: background-image 300ms ease-out;
-  -webkit-tap-highlight-color: transparent;
-}
-
-.extendChainButton:focus-visible {
-  outline: 2px solid var(--brand-chlorophyll-green);
-  outline-offset: 2px;
-}
-
-.extendChainButton:hover {
-  background-image: url('/assets/grassy-button-plus-primary-hover.svg');
-}
-
-.extendChainButton:active {
-  transform: translateX(-50%) scale(0.98);
 }
 
 /* Indicators */

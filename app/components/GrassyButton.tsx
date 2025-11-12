@@ -4,8 +4,8 @@ import styles from './GrassyButton.module.css';
 
 interface GrassyButtonProps {
   variant: 'primary' | 'secondary';
-  size?: 'wide' | 'short';
-  children: React.ReactNode;
+  size?: 'wide' | 'short' | 'icon';
+  children?: React.ReactNode;
   onClick?: () => void;
   disabled?: boolean;
   type?: 'button' | 'submit';

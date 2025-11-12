@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import type { Submission } from "../lib/backendClient";
 import { getImageUrl } from "../lib/backendClient";
 import LikeButton from "./LikeButton";
+import GrassyButton from "./GrassyButton";
 import { Tooltip, TooltipTrigger, TooltipContent } from "./Tooltip";
 import { Clock, Heart, Share2, X } from "lucide-react";
 import SubmissionProgress from "./SubmissionProgress";
@@ -399,10 +400,11 @@ export default function SubmissionCarousel3D({
           ))}
         </div>
 
-        <button
+        <GrassyButton
+          variant="primary"
+          size="icon"
           onClick={() => router.push(`/submit?chainId=${chainId}`)}
           className={styles.extendChainButton}
-          aria-label="Extend chain"
         />
       </div>
 

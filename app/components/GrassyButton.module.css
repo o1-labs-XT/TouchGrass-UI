@@ -24,6 +24,11 @@
   height: 39px;
 }
 
+.icon {
+  width: 44px;
+  height: 44px;
+}
+
 .wide.primary {
   background-image: url('/assets/grassy-button-primary.svg');
 }
@@ -54,6 +59,14 @@
 
 .short.secondary:hover:not(.disabled) {
   background-image: url('/assets/grassy-button-short-secondary-hover.svg');
+}
+
+.icon.primary {
+  background-image: url('/assets/grassy-button-plus-primary.svg');
+}
+
+.icon.primary:hover:not(.disabled) {
+  background-image: url('/assets/grassy-button-plus-primary-hover.svg');
 }
 
 .grassyButton:focus {
