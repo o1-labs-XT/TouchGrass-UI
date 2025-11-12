@@ -30,9 +30,11 @@ function getStatusInfo(status: Submission['status'], hasTransactionId: boolean) 
 }
 
 export default function SubmissionCarousel3D({
-  submissions,
+  submissions: initialSubmissions,
   initialSubmissionId
 }: SubmissionCarousel3DProps) {
+  // Local copy of submissions to track like count updates
+  const [submissions, setSubmissions] = useState(initialSubmissions);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
@@ -43,6 +45,22 @@ export default function SubmissionCarousel3D({
   const containerRef = useRef<HTMLDivElement>(null);
   const hasDraggedRef = useRef(false);
   const touchDirectionRef = useRef<'horizontal' | 'vertical' | null>(null);
+
+  // Update local submissions when prop changes
+  useEffect(() => {
+    setSubmissions(initialSubmissions);
+  }, [initialSubmissions]);
+
+  // Handle like count changes from LikeButton
+  const handleLikeCountChange = (submissionId: string, newCount: number) => {
+    setSubmissions(prev => prev.map(s =>
+      s.id === submissionId ? { ...s, likeCount: newCount } : s
+    ));
+    // Also update selectedSubmission if it's the one being liked
+    setSelectedSubmission(prev =>
+      prev?.id === submissionId ? { ...prev, likeCount: newCount } : prev
+    );
+  };
 
   const handleMouseDown = (e: React.MouseEvent) => {
     setIsDragging(true);
@@ -367,8 +385,10 @@ export default function SubmissionCarousel3D({
               {index === currentIndex && (
                 <LikeButton
                   submissionId={submission.id}
+                  initialCount={submission.likeCount}
                   variant="carousel"
                   size="small"
+                  onCountChange={(newCount) => handleLikeCountChange(submission.id, newCount)}
                 />
               )}
             </div>
@@ -431,6 +451,7 @@ export default function SubmissionCarousel3D({
                   initialCount={selectedSubmission.likeCount}
                   size="small"
                   variant="floating"
+                  onCountChange={(newCount) => handleLikeCountChange(selectedSubmission.id, newCount)}
                 />
               </div>
 
