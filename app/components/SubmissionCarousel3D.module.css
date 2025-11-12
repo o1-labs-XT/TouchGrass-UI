@@ -232,8 +232,8 @@
 /* Close Button */
 .closeButton {
   position: absolute;
-  top: 16px;
-  left: 16px;
+  top: 12px;
+  left: 12px;
   padding: 8px;
   border-radius: 4px;
   background-color: transparent;
