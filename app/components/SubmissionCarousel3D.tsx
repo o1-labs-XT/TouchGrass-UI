@@ -363,6 +363,8 @@ export default function SubmissionCarousel3D({
                     <TooltipTrigger asChild>
                       <button
                         onClick={(e) => e.stopPropagation()}
+                        onTouchStart={(e) => e.stopPropagation()}
+                        onTouchEnd={(e) => e.stopPropagation()}
                         className={styles.statusButton}
                         aria-label="View submission status"
                       >
@@ -433,6 +435,8 @@ export default function SubmissionCarousel3D({
             <button
               className={styles.closeButton}
               onClick={() => setSelectedSubmission(null)}
+              onTouchStart={(e) => e.stopPropagation()}
+              onTouchEnd={(e) => e.stopPropagation()}
               aria-label="Close"
             >
               <X size={20} />
@@ -441,6 +445,8 @@ export default function SubmissionCarousel3D({
             <button
               className={styles.shareButtonTop}
               onClick={() => handleShare(selectedSubmission)}
+              onTouchStart={(e) => e.stopPropagation()}
+              onTouchEnd={(e) => e.stopPropagation()}
               aria-label="Share submission"
             >
               <Share2 size={16} />
