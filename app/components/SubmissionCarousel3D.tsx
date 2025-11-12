@@ -11,6 +11,7 @@ import styles from "./SubmissionCarousel3D.module.css";
 
 interface SubmissionCarousel3DProps {
   submissions: Submission[];
+  initialSubmissionId?: string;
 }
 
 function getStatusInfo(status: Submission['status'], hasTransactionId: boolean) {
@@ -29,7 +30,8 @@ function getStatusInfo(status: Submission['status'], hasTransactionId: boolean) 
 }
 
 export default function SubmissionCarousel3D({
-  submissions
+  submissions,
+  initialSubmissionId
 }: SubmissionCarousel3DProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
