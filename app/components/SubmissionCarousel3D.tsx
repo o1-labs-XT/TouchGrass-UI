@@ -6,7 +6,7 @@ import type { Submission } from "../lib/backendClient";
 import { getImageUrl } from "../lib/backendClient";
 import LikeButton from "./LikeButton";
 import GrassyButton from "./GrassyButton";
-import { Tooltip, TooltipTrigger, TooltipContent } from "./Tooltip";
+import SimpleTooltip from "./SimpleTooltip";
 import { Clock, Heart, Share2, X } from "lucide-react";
 import SubmissionProgress from "./SubmissionProgress";
 import styles from "./SubmissionCarousel3D.module.css";
@@ -359,29 +359,29 @@ export default function SubmissionCarousel3D({
                 <div className={styles.gradientOverlay} />
 
                 {submission.status !== 'complete' && (
-                  <Tooltip>
-                    <TooltipTrigger asChild>
+                  <div style={{ position: 'absolute', top: '0.75rem', left: '0.75rem', zIndex: 10 }}>
+                    <SimpleTooltip
+                      side="right"
+                      content={
+                        <div>
+                          <p style={{ fontWeight: 500 }}>
+                            Status: {getStatusInfo(submission.status, !!submission.transactionId).stage}
+                          </p>
+                          <p style={{ fontSize: '0.75rem', opacity: 0.6, marginTop: '0.25rem' }}>
+                            {getStatusInfo(submission.status, !!submission.transactionId).description}
+                          </p>
+                        </div>
+                      }
+                    >
                       <button
-                        onClick={(e) => e.stopPropagation()}
-                        onTouchStart={(e) => e.stopPropagation()}
-                        onTouchEnd={(e) => e.stopPropagation()}
                         className={styles.statusButton}
+                        style={{ position: 'static' }}
                         aria-label="View submission status"
                       >
                         <Clock className={styles.clockIcon} />
                       </button>
-                    </TooltipTrigger>
-                    <TooltipContent side="right">
-                      <div>
-                        <p style={{ fontWeight: 500 }}>
-                          Status: {getStatusInfo(submission.status, !!submission.transactionId).stage}
-                        </p>
-                        <p style={{ fontSize: '0.75rem', opacity: 0.6, marginTop: '0.25rem' }}>
-                          {getStatusInfo(submission.status, !!submission.transactionId).description}
-                        </p>
-                      </div>
-                    </TooltipContent>
-                  </Tooltip>
+                    </SimpleTooltip>
+                  </div>
                 )}
 
                 <div className={styles.likeButtonOnCard}>
