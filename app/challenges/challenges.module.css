@@ -1,4 +1,5 @@
 .container {
+  font-family: var(--font-figtree);
   min-height: 100vh;
   padding: 1rem;
   background: linear-gradient(to bottom, var(--mina-light-gray), var(--mina-white));

@@ -37,6 +37,13 @@
   display: block;
 }
 
+.logotype {
+  width: 100%;
+  max-width: 259px;
+  margin: 0 auto 0.5rem;
+  display: block;
+}
+
 .title {
   font-family: var(--font-figtree);
   font-size: 1.75rem;
@@ -54,6 +61,7 @@
   line-height: normal;
   margin: 0 auto 1.5rem;
   max-width: 259px;
+  width: 100%;
 }
 
 .features {

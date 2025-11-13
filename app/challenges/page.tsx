@@ -80,7 +80,7 @@ export default function ChallengesPage() {
         {/* Active Challenges Section */}
         <section className={styles.section}>
           <h2 className={styles.sectionTitle}>
-            🌟 Active Challenges
+            Active Challenges
             {activeChallenges.length > 0 && (
               <span className={styles.count}>({activeChallenges.length})</span>
             )}
@@ -133,7 +133,7 @@ export default function ChallengesPage() {
               aria-expanded={showCompleted}
             >
               <h2 className={styles.sectionTitle}>
-                📚 Previous Challenges
+                Previous Challenges
                 <span className={styles.count}>({completedChallenges.length})</span>
               </h2>
               <span className={`${styles.toggleIcon} ${showCompleted ? styles.expanded : ''}`}>

@@ -55,21 +55,24 @@ export default function WelcomePage() {
               background: 'none',
               border: 'none',
               cursor: 'pointer',
-              fontSize: '24px',
-              padding: '8px',
-              borderRadius: '50%',
+              padding: '4px',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              opacity: 0.6,
+              opacity: 0.8,
               transition: 'opacity 0.2s',
               zIndex: 10
             }}
             onMouseEnter={(e) => (e.target as HTMLElement).style.opacity = '1'}
-            onMouseLeave={(e) => (e.target as HTMLElement).style.opacity = '0.6'}
+            onMouseLeave={(e) => (e.target as HTMLElement).style.opacity = '0.8'}
             title="Learn more about TouchGrass"
           >
-            ❓
+            <Image
+              src="/assets/question.svg"
+              alt="Help"
+              width={32}
+              height={32}
+            />
           </button>
           <Image
             src="/assets/touchgrass-logo.png"
@@ -79,20 +82,50 @@ export default function WelcomePage() {
             className={styles.logo}
             priority
           />
-          <h1 className={styles.title}>TouchGrass</h1>
+          <div className={styles.logotype}>
+            <Image
+              src="/assets/logotype.svg"
+              alt="TouchGrass"
+              width={300}
+              height={60}
+              style={{ width: '100%', height: 'auto' }}
+              priority
+            />
+          </div>
           <p className={styles.subtitle}>
             Authentic image challenges powered by Mina Protocol
           </p>
 
           <ul className={styles.features}>
             <li>
-              📸 VERIFIED REAL PHOTOS
+              <Image
+                src="/assets/verified.svg"
+                alt=""
+                width={18}
+                height={18}
+                className={styles.featureIcon}
+              />
+              <span>VERIFIED REAL PHOTOS</span>
             </li>
             <li>
-              👍 EARN LIKES
+              <Image
+                src="/assets/likes.svg"
+                alt=""
+                width={18}
+                height={18}
+                className={styles.featureIcon}
+              />
+              <span>EARN LIKES</span>
             </li>
             <li>
-              💰 GET MINA REWARDS
+              <Image
+                src="/assets/rewards.svg"
+                alt=""
+                width={18}
+                height={18}
+                className={styles.featureIcon}
+              />
+              <span>GET MINA REWARDS</span>
             </li>
           </ul>
 
