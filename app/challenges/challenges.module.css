@@ -1,4 +1,5 @@
 .container {
+  font-family: var(--font-figtree);
   min-height: 100vh;
   padding: 1rem;
   background: linear-gradient(to bottom, var(--mina-light-gray), var(--mina-white));
@@ -16,7 +17,6 @@
 }
 
 .pageTitle {
-  font-family: var(--font-figtree);
   font-size: 2.5rem;
   font-weight: 700;
   margin: 0 0 1rem 0;
