@@ -89,8 +89,8 @@ export default function SubmissionDetailClient({ params }: SubmissionDetailClien
     if (navigator.share) {
       try {
         await navigator.share({
-          title: `TouchGrass - Submission #${submission?.chainPosition}`,
-          text: submission?.tagline || 'Check out this TouchGrass submission!',
+          title: `TouchGrass`,
+          text: submission?.tagline || 'Check out this authentic image on TouchGrass!',
           url: url,
         });
         return;

@@ -28,11 +28,13 @@ export default function ResultSection({
   };
 
   const getMinaScanUrl = (address: string) => {
-    return `https://minascan.io/devnet/account/${address}`;
+    const network = process.env.NEXT_PUBLIC_MINA_NETWORK === "mainnet" ? "mainnet" : "devnet";
+    return `https://minascan.io/${network}/account/${address}`;
   };
 
   const getTransactionUrl = (txHash: string) => {
-    return `https://minascan.io/devnet/tx/${txHash}`;
+    const network = process.env.NEXT_PUBLIC_MINA_NETWORK === "mainnet" ? "mainnet" : "devnet";
+    return `https://minascan.io/${network}/tx/${txHash}`;
   };
 
   const isSuccessState = status === 'complete';

@@ -9,6 +9,7 @@ export async function POST(request: NextRequest) {
     const allowedOrigins = [
       "http://localhost:3000",
       "https://touch-grass-ui.vercel.app",
+      "https://www.touchgrass.party",
     ];
 
     // Check if origin is allowed (including Vercel preview deployments)
