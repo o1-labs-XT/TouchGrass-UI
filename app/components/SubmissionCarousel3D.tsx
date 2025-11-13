@@ -402,7 +402,7 @@ export default function SubmissionCarousel3D({
           ))}
         </div>
 
-        <div style={{ position: 'absolute', bottom: '10px', left: '50%', zIndex: 50 }}>
+        <div className={styles.grassyButtonContainer}>
           <div style={{ position: 'relative', left: '-50%' }}>
             <GrassyButton
               variant="primary"
