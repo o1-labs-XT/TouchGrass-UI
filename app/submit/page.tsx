@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 import {
   getCurrentChallenge,
   getChainsByChallenge,
@@ -362,29 +363,13 @@ export default function SubmitPage() {
             )}
 
             <SubmissionCard centered className={styles.cameraCard}>
-              <div className={styles.cameraIconWrapper}>
-                <svg
-                  className={styles.cameraIcon}
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M9 3L7.17 5H4C2.9 5 2 5.9 2 7V19C2 20.1 2.9 21 4 21H20C21.1 21 22 20.1 22 19V7C22 5.9 21.1 5 20 5H16.83L15 3H9Z"
-                    stroke="#4CAF50"
-                    strokeWidth="1.5"
-                    fill="none"
-                  />
-                  <circle
-                    cx="12"
-                    cy="13"
-                    r="3.5"
-                    stroke="#4CAF50"
-                    strokeWidth="1.5"
-                    fill="none"
-                  />
-                </svg>
-              </div>
+              <Image
+                src="/assets/grassy-camera.svg"
+                alt="Camera"
+                width={80}
+                height={80}
+                className={styles.cameraIcon}
+              />
               <h2 className={styles.cameraTitle}>Take Your Photo</h2>
               <p className={styles.cameraDescription}>
                 Use your device's camera to capture an authentic photo for this
