@@ -55,21 +55,24 @@ export default function WelcomePage() {
               background: 'none',
               border: 'none',
               cursor: 'pointer',
-              fontSize: '24px',
-              padding: '8px',
-              borderRadius: '50%',
+              padding: '4px',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              opacity: 0.6,
+              opacity: 0.8,
               transition: 'opacity 0.2s',
               zIndex: 10
             }}
             onMouseEnter={(e) => (e.target as HTMLElement).style.opacity = '1'}
-            onMouseLeave={(e) => (e.target as HTMLElement).style.opacity = '0.6'}
+            onMouseLeave={(e) => (e.target as HTMLElement).style.opacity = '0.8'}
             title="Learn more about TouchGrass"
           >
-            ❓
+            <Image
+              src="/assets/question.svg"
+              alt="Help"
+              width={32}
+              height={32}
+            />
           </button>
           <Image
             src="/assets/touchgrass-logo.png"
