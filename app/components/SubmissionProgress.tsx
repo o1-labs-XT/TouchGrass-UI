@@ -1,10 +1,12 @@
 "use client";
 import React from "react";
+import { Check } from "lucide-react";
 import styles from "./SubmissionProgress.module.css";
 
 interface SubmissionProgressProps {
   status: "awaiting_review" | "rejected" | "processing" | "complete";
   transactionId?: string;
+  variant?: "default" | "inline";
 }
 
 interface ProgressStep {
@@ -19,7 +21,8 @@ interface ProgressStep {
 
 export default function SubmissionProgress({
   status,
-  transactionId
+  transactionId,
+  variant = "default"
 }: SubmissionProgressProps) {
   const getProgressSteps = (): ProgressStep[] => {
     const isRejected = status === "rejected";
@@ -115,6 +118,89 @@ export default function SubmissionProgress({
       </div>
     );
   };
+
+  if (variant === "inline") {
+    return (
+      <div style={{ position: 'relative' }}>
+        {steps.map((step, index) => {
+          const isLast = index === steps.length - 1;
+          const nextStep = steps[index + 1];
+          const nextIsCompleted = nextStep?.completed;
+
+          return (
+            <div key={step.id} style={{ position: 'relative', display: 'flex', gap: '1rem', paddingBottom: isLast ? 0 : '2rem' }}>
+              {/* Left side - Circle and Line */}
+              <div style={{ position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                {/* Circle */}
+                <div
+                  style={{
+                    width: '2.5rem',
+                    height: '2.5rem',
+                    borderRadius: '50%',
+                    border: '2px solid',
+                    borderColor: step.completed ? '#2C8C3E' : '#E6E6E6',
+                    backgroundColor: step.completed ? '#2C8C3E' : '#F7F4EF',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    flexShrink: 0,
+                    transition: 'all 0.5s'
+                  }}
+                >
+                  {step.completed && (
+                    <Check style={{ width: '1.25rem', height: '1.25rem', stroke: '#F7F4EF', strokeWidth: 3 }} />
+                  )}
+                </div>
+
+                {/* Vertical Line */}
+                {!isLast && (
+                  <div
+                    style={{
+                      width: '2px',
+                      flex: 1,
+                      minHeight: '3rem',
+                      marginTop: '0.5rem',
+                      backgroundColor: nextIsCompleted ? '#2C8C3E' : '#E6E6E6',
+                      transition: 'all 0.5s'
+                    }}
+                  />
+                )}
+              </div>
+
+              {/* Right side - Content */}
+              <div style={{ flex: 1, paddingTop: '0.5rem' }}>
+                <h4
+                  style={{
+                    color: step.completed ? '#003712' : '#4D4D4D',
+                    opacity: step.completed ? 1 : 0.5,
+                    transition: 'color 0.5s',
+                    margin: 0,
+                    fontSize: '1rem',
+                    fontWeight: 600,
+                    fontFamily: 'Figtree, sans-serif'
+                  }}
+                >
+                  {step.label}
+                </h4>
+                <p
+                  style={{
+                    fontSize: '0.75rem',
+                    marginTop: '0.25rem',
+                    color: '#4D4D4D',
+                    opacity: 0.7,
+                    margin: '0.25rem 0 0 0',
+                    fontFamily: 'Figtree, sans-serif'
+                  }}
+                >
+                  {step.description}
+                </p>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    );
+  }
 
   return (
     <div className={styles.container}>

@@ -1,132 +1,78 @@
-'use client';
+import { Metadata } from 'next';
+import ChainDetailClient from './ChainDetailClient';
+import { getSubmission, getImageUrl } from '../../lib/backendClient';
 
-import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-import { getChain, getSubmissionsByChain, getImageUrl } from '../../lib/backendClient';
-import type { Chain, Submission } from '../../lib/backendClient';
-import GrassyButton from '../../components/GrassyButton';
-import BackButton from '../../components/BackButton';
-import SubmissionCard from '../../components/SubmissionCard';
-import StatBox from '../../components/StatBox';
-import LikeButton from '../../components/LikeButton';
-import styles from './ChainDetail.module.css';
+interface PageProps {
+  params: Promise<{ id: string }>;
+  searchParams: Promise<{ submission?: string }>;
+}
 
-export default function ChainDetailPage({ params }: { params: Promise<{ id: string }> }) {
-  const router = useRouter();
-  const [chainId, setChainId] = useState<string>('');
-  const [chain, setChain] = useState<Chain | null>(null);
-  const [submissions, setSubmissions] = useState<Submission[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+export async function generateMetadata({ params, searchParams }: PageProps): Promise<Metadata> {
+  try {
+    const resolvedSearchParams = await searchParams;
+    const submissionId = resolvedSearchParams.submission;
 
-  // Preload images for better navigation performance
-  useEffect(() => {
-    if (submissions.length > 0) {
-      submissions.forEach(submission => {
-        const img = new Image();
-        img.src = getImageUrl(submission.id);
-        // Images are now in browser cache for instant loading
-      });
-    }
-  }, [submissions]);
-
-  useEffect(() => {
-    params.then(p => setChainId(p.id));
-  }, [params]);
-
-  useEffect(() => {
-    if (!chainId) return;
-
-    async function fetchData() {
-      try {
-        setLoading(true);
-        setError(null);
-
-        const chainData = await getChain(chainId);
-        setChain(chainData);
-
-        const submissionsData = await getSubmissionsByChain(chainId);
-        setSubmissions(submissionsData);
-      } catch (err) {
-        setError(err instanceof Error ? err.message : 'Failed to load chain');
-      } finally {
-        setLoading(false);
-      }
+    // If no submission query param, return default chain metadata
+    if (!submissionId) {
+      return {
+        title: 'TouchGrass - Chain',
+        description: 'View photo submissions in this TouchGrass chain.',
+      };
     }
 
-    fetchData();
-  }, [chainId]);
+    // Fetch submission data for rich preview
+    const submission = await getSubmission(submissionId);
+    const imageUrl = getImageUrl(submission.id);
 
-  if (loading) {
-    return <div className={styles.loading}><p>Loading chain...</p></div>;
+    // Construct absolute URLs
+    const baseUrl = process.env.VERCEL_URL
+      ? `https://${process.env.VERCEL_URL}`
+      : process.env.NODE_ENV === 'production'
+      ? 'https://touchgrass-ui.vercel.app'
+      : 'http://localhost:3000';
+
+    const { id } = await params;
+    const pageUrl = `${baseUrl}/chain/${id}?submission=${submissionId}`;
+    const absoluteImageUrl = imageUrl.startsWith('http') ? imageUrl : `${baseUrl}${imageUrl}`;
+
+    return {
+      title: `TouchGrass - ${submission.tagline || `Submission #${submission.chainPosition}`}`,
+      description: `Check out this submission from TouchGrass! Position #${submission.chainPosition} in the chain. ${submission.tagline || 'A verified photo submission on the Mina blockchain.'}`,
+      openGraph: {
+        title: `TouchGrass - ${submission.tagline || `Submission #${submission.chainPosition}`}`,
+        description: `Check out this submission from TouchGrass! Position #${submission.chainPosition} in the chain.`,
+        url: pageUrl,
+        siteName: 'TouchGrass',
+        images: [
+          {
+            url: absoluteImageUrl,
+            width: 1200,
+            height: 630,
+            alt: submission.tagline || `TouchGrass submission #${submission.chainPosition}`,
+          },
+        ],
+        locale: 'en_US',
+        type: 'website',
+      },
+      twitter: {
+        card: 'summary_large_image',
+        title: `TouchGrass - ${submission.tagline || `Submission #${submission.chainPosition}`}`,
+        description: `Check out this submission from TouchGrass! Position #${submission.chainPosition} in the chain.`,
+        images: [absoluteImageUrl],
+      },
+    };
+  } catch (error) {
+    console.error('Error generating metadata:', error);
+    return {
+      title: 'TouchGrass - Chain',
+      description: 'View photo submissions in this TouchGrass chain.',
+    };
   }
+}
 
-  if (error) {
-    return (
-      <div className={styles.error}>
-        <p>Error: {error}</p>
-        <GrassyButton variant="primary" onClick={() => window.location.reload()}>
-          Try Again
-        </GrassyButton>
-      </div>
-    );
-  }
+export default async function ChainDetailPage({ params, searchParams }: PageProps) {
+  const resolvedSearchParams = await searchParams;
+  const initialSubmissionId = resolvedSearchParams.submission;
 
-  return (
-    <div className={styles.container}>
-      <div className={styles.wrapper}>
-        <div className={styles.header}>
-          <BackButton onClick={() => router.push(`/challenge/${chain?.challengeId}`)} />
-          <h1 className={styles.pageTitle}>{chain?.name}</h1>
-        </div>
-
-      {chain && (
-        <SubmissionCard centered>
-          <div className={styles.statsGrid}>
-            <StatBox value={chain.length} label="Images" />
-            <StatBox value={submissions.length} label="Submissions" />
-          </div>
-          <GrassyButton variant="primary" onClick={() => router.push(`/submit?chainId=${chainId}`)}>
-            Extend Chain
-          </GrassyButton>
-        </SubmissionCard>
-      )}
-
-      <div className={styles.submissions}>
-        <h2>Chain Images ({submissions.length})</h2>
-        {submissions.length === 0 ? (
-          <p>No submissions yet</p>
-        ) : (
-          <div className={styles.grid}>
-            {submissions.map((submission) => (
-              <SubmissionCard
-                key={submission.id}
-                onClick={() => router.push(`/submission/${submission.id}`)}
-                className={styles.submissionCard}
-              >
-                <div className={styles.likeButtonContainer}>
-                  <LikeButton
-                    submissionId={submission.id}
-                    initialCount={submission.likeCount}
-                    size="small"
-                  />
-                </div>
-                <div className={styles.position}>#{submission.chainPosition}</div>
-                <img
-                  src={getImageUrl(submission.id)}
-                  alt={submission.tagline || `Position ${submission.chainPosition}`}
-                  className={styles.image}
-                  crossOrigin="anonymous"
-                  loading="lazy"
-                  decoding="async"
-                />
-                {submission.tagline && <p className={styles.tagline}>{submission.tagline}</p>}
-              </SubmissionCard>
-            ))}
-          </div>
-        )}
-      </div>
-      </div>
-    </div>
-  );
+  return <ChainDetailClient params={params} initialSubmissionId={initialSubmissionId} />;
 }

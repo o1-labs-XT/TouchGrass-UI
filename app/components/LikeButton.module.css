@@ -3,6 +3,14 @@
   display: inline-block;
 }
 
+.container.carousel {
+  position: absolute;
+  bottom: -70px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 50;
+}
+
 .likeButton {
   display: flex;
   align-items: center;
@@ -41,6 +49,108 @@
 
 .likeButton.loading {
   opacity: 0.7;
+}
+
+/* Variant: Floating (for carousel below center card) */
+.likeButton.floating {
+  background-color: rgba(77, 77, 77, 0.1);
+  border: 1px solid rgba(77, 77, 77, 0.2);
+  border-radius: 50%;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  width: 2rem;
+  height: 2rem;
+  min-width: 2rem;
+  min-height: 2rem;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.likeButton.floating .heart {
+  width: 1rem !important;
+  height: 1rem !important;
+}
+
+.likeButton.floating .count {
+  display: none;
+}
+
+.likeButton.floating .heartFilled {
+  fill: var(--brand-chlorophyll-green);
+  stroke: var(--brand-chlorophyll-green);
+}
+
+.likeButton.floating .heartUnfilled {
+  stroke: #4D4D4D;
+}
+
+.likeButton.floating:hover:not(:disabled) .heartUnfilled {
+  stroke: var(--brand-chlorophyll-green);
+}
+
+.likeButton.floating .floatingHeart svg {
+  fill: var(--brand-chlorophyll-green);
+  stroke: var(--brand-chlorophyll-green);
+}
+
+/* Variant: Inline (for modal details row) */
+.likeButton.inline {
+  padding: 0;
+  min-width: auto;
+  min-height: auto;
+}
+
+.likeButton.inline .heartFilled {
+  fill: #ef4444;
+  stroke: #ef4444;
+}
+
+.likeButton.inline .heartUnfilled {
+  stroke: #4D4D4D;
+}
+
+.likeButton.inline:hover:not(:disabled) .heartUnfilled {
+  stroke: #ef4444;
+}
+
+/* Variant: Carousel (for 3D carousel below center card) */
+.likeButton.carousel {
+  background-color: rgba(77, 77, 77, 0.1);
+  border: 1px solid rgba(77, 77, 77, 0.2);
+  border-radius: 50%;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  padding: 12px;
+  width: 44px;
+  height: 44px;
+  pointer-events: auto;
+  gap: 0;
+}
+
+.likeButton.carousel .heart {
+  width: 20px;
+  height: 20px;
+}
+
+.likeButton.carousel .count {
+  display: none;
+}
+
+.likeButton.carousel .heartUnfilled {
+  stroke: #4D4D4D;
+}
+
+.likeButton.carousel:hover:not(:disabled) .heartUnfilled {
+  stroke: var(--brand-chlorophyll-green);
+}
+
+.container.carousel .errorToast {
+  top: auto;
+  bottom: 100%;
+  margin-top: 0;
+  margin-bottom: 0.5rem;
 }
 
 /* Heart Icon */
@@ -100,8 +210,7 @@
 .errorToast {
   position: absolute;
   top: 100%;
-  left: 50%;
-  transform: translateX(-50%);
+  right: 0;
   margin-top: 0.5rem;
   background: #DC2626;
   color: white;
@@ -110,7 +219,9 @@
   font-size: 0.875rem;
   font-family: var(--font-figtree);
   font-weight: 500;
-  white-space: nowrap;
+  white-space: normal;
+  width: min(240px, 80vw);
+  text-align: center;
   z-index: 1000;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   animation: fadeIn 0.2s ease;
@@ -119,11 +230,11 @@
 @keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateX(-50%) translateY(-4px);
+    transform: translateY(-4px);
   }
   to {
     opacity: 1;
-    transform: translateX(-50%) translateY(0);
+    transform: translateY(0);
   }
 }
 

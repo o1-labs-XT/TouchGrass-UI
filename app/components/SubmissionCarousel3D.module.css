@@ -1,0 +1,389 @@
+/* Container */
+.container {
+  position: relative;
+  width: 100%;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.heading {
+  text-align: center;
+  margin: 0 0 -5vh 0;
+  color: #003712;
+  font-family: Figtree, sans-serif;
+  font-weight: bold;
+  font-size: 13pt;
+  flex-shrink: 0;
+}
+
+/* Carousel Scene */
+.carouselWrapper {
+  position: relative;
+  width: 100%;
+  flex: 1;
+  min-height: 400px;
+  perspective: 1200px;
+  perspective-origin: 50% 40%;
+}
+
+.carouselTrack {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+}
+
+.carouselTrack.grabbing {
+  cursor: grabbing;
+}
+
+.carouselTrack.grab {
+  cursor: grab;
+}
+
+/* Card positioning wrapper */
+.cardPositioner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-left: -150px;
+  margin-top: -210px;
+  transform-style: preserve-3d;
+}
+
+/* Card container */
+.card {
+  position: relative;
+  width: 300px;
+  height: 420px;
+  border-radius: 1rem;
+  overflow: hidden;
+  background-color: #18181b;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  border: 1px solid #E6E6E6;
+}
+
+.cardImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  user-select: none;
+  pointer-events: none;
+}
+
+.gradientOverlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.3), transparent);
+  pointer-events: none;
+}
+
+.activeOverlay {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(255,255,255,0);
+  transition: background-color 0.3s;
+  pointer-events: none;
+}
+
+/* Like button on card - positioned top right */
+.likeButtonOnCard {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  z-index: 10;
+  pointer-events: auto;
+}
+
+/* Indicators */
+.indicators {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  border-radius: 9999px;
+  backdrop-filter: blur(4px);
+  background-color: rgba(153, 153, 153, 0.1);
+  border: 1px solid rgba(153, 153, 153, 0.2);
+  width: fit-content;
+  margin: 2rem auto calc(1rem + env(safe-area-inset-bottom));
+  transform: scale(0.8);
+}
+
+.indicator {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 9999px;
+  background-color: rgba(153, 153, 153, 0.3);
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s;
+  padding: 0;
+}
+
+.indicatorActive {
+  width: 2rem;
+  border-radius: 0.25rem;
+  background-color: #999999;
+}
+
+/* Status Icon */
+.statusButton {
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  cursor: pointer;
+  pointer-events: auto;
+  transition: all 0.3s;
+}
+
+.statusButton:hover {
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+.clockIcon {
+  width: 1rem;
+  height: 1rem;
+  stroke: rgba(255, 255, 255, 0.9);
+}
+
+/* Modal Overlay */
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Modal Content */
+.modalContent {
+  position: relative;
+  width: 100%;
+  max-width: 28rem;
+  max-height: 90vh;
+  background-color: #F7F4EF;
+  border: 1px solid #E6E6E6;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  animation: zoomIn 0.2s ease;
+  transform: scale(0.81);
+  color: #4D4D4D;
+}
+
+@keyframes zoomIn {
+  from {
+    transform: scale(0.71);
+    opacity: 0;
+  }
+  to {
+    transform: scale(0.81);
+    opacity: 1;
+  }
+}
+
+.modalContent::-webkit-scrollbar {
+  width: 8px;
+}
+
+.modalContent::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.modalContent::-webkit-scrollbar-thumb {
+  background: rgba(77, 77, 77, 0.2);
+  border-radius: 4px;
+}
+
+/* Close Button */
+.closeButton {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  padding: 8px;
+  border-radius: 4px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  z-index: 10;
+  opacity: 0.7;
+  transition: opacity 0.3s;
+  color: #4D4D4D;
+  pointer-events: auto;
+}
+
+.closeButton:hover {
+  opacity: 1;
+  background-color: rgba(77, 77, 77, 0.1);
+}
+
+/* Share Button Top */
+.shareButtonTop {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  padding: 8px;
+  border-radius: 50%;
+  background-color: rgba(77, 77, 77, 0.1);
+  border: 1px solid rgba(77, 77, 77, 0.2);
+  cursor: pointer;
+  z-index: 10;
+  transition: background-color 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #4D4D4D;
+  pointer-events: auto;
+}
+
+.shareButtonTop:hover {
+  background-color: rgba(77, 77, 77, 0.15);
+}
+
+/* Modal Header */
+.modalHeader {
+  padding: 24px;
+  padding-bottom: 8px;
+  padding-top: 48px;
+}
+
+.modalTitle {
+  font-size: 20px;
+  color: #003712;
+  margin: 0;
+  font-weight: 600;
+  font-family: Figtree, sans-serif;
+}
+
+.modalSubtitle {
+  color: #4D4D4D;
+  margin: 4px 0 0 0;
+  font-size: 14px;
+  font-family: Figtree, sans-serif;
+}
+
+/* Modal Body */
+.modalBody {
+  padding: 16px 24px 24px;
+  overflow-y: auto;
+  flex: 1;
+}
+
+/* Image Preview */
+.imagePreview {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  border-radius: 12px;
+  overflow: hidden;
+  background-color: #E6E6E6;
+  margin-bottom: 24px;
+}
+
+.imagePreview > div {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+}
+
+.imagePreview button span {
+  display: none;
+}
+
+.imagePreview button svg {
+  stroke: var(--brand-chlorophyll-green);
+}
+
+.previewImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Tagline */
+.tagline {
+  font-style: italic;
+  color: #003712;
+  margin-bottom: 24px;
+  padding: 0 4px;
+  font-family: Figtree, sans-serif;
+  font-size: 16px;
+}
+
+/* Details Grid */
+.detailsGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin-bottom: 24px;
+}
+
+.detailRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid #E6E6E6;
+}
+
+.detailRow:last-child {
+  border-bottom: none;
+}
+
+.detailLabel {
+  color: #4D4D4D;
+  font-size: 14px;
+  font-family: Figtree, sans-serif;
+}
+
+.detailValue {
+  font-weight: 500;
+  color: #003712;
+  font-size: 14px;
+  font-family: Figtree, sans-serif;
+}
+
+/* Progress Section */
+.progressSection {
+  margin-top: 32px;
+  padding-top: 8px;
+}
+
+.progressTitle {
+  color: #003712;
+  margin: 0 0 16px 0;
+  font-size: 16px;
+  font-weight: 600;
+  font-family: Figtree, sans-serif;
+}
+
+/* Grassy Button Container */
+.grassyButtonContainer {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  z-index: 50;
+}
+
+@media (min-width: 768px) {
+  .grassyButtonContainer {
+    bottom: 4vh;
+  }
+}

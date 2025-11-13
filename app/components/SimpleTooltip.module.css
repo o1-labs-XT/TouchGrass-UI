@@ -1,0 +1,102 @@
+.container {
+  position: relative;
+  display: inline-block;
+}
+
+.trigger {
+  pointer-events: auto;
+  touch-action: manipulation;
+  cursor: pointer;
+}
+
+.tooltip {
+  position: absolute;
+  z-index: 50;
+  animation: fadeIn 0.2s ease;
+}
+
+.content {
+  width: fit-content;
+  min-width: 180px;
+  border-radius: 0.375rem;
+  padding: 0.375rem 0.75rem;
+  font-size: 0.75rem;
+  line-height: 1rem;
+  background-color: #18181b;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: white;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.arrow {
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-style: solid;
+}
+
+/* Positioning for different sides */
+.right {
+  left: calc(100% + 8px);
+  top: 0;
+}
+
+.left {
+  right: calc(100% + 8px);
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.top {
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.bottom {
+  top: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* Arrow positioning */
+.arrowRight {
+  right: 100%;
+  top: 50%;
+  transform: translateY(-50%);
+  border-width: 5px 5px 5px 0;
+  border-color: transparent #18181b transparent transparent;
+}
+
+.arrowLeft {
+  left: 100%;
+  top: 50%;
+  transform: translateY(-50%);
+  border-width: 5px 0 5px 5px;
+  border-color: transparent transparent transparent #18181b;
+}
+
+.arrowTop {
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 5px 5px 0 5px;
+  border-color: #18181b transparent transparent transparent;
+}
+
+.arrowBottom {
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 0 5px 5px 5px;
+  border-color: transparent transparent #18181b transparent;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

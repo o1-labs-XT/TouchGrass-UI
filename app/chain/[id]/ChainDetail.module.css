@@ -1,12 +1,18 @@
 .container {
-  min-height: 100vh;
-  padding: 1rem;
+  height: 100vh;
+  height: 100dvh; /* Dynamic viewport height accounts for mobile browser UI */
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
   background: linear-gradient(to bottom, var(--mina-light-gray), var(--mina-white));
+  padding-top: env(safe-area-inset-top);
 }
 
 .wrapper {
   max-width: 640px;
-  margin: 0 auto;
+  margin: 0;
+  padding: 0.5rem 1rem;
+  flex-shrink: 0;
 }
 
 .header {
