@@ -96,13 +96,34 @@ export default function WelcomePage() {
 
           <ul className={styles.features}>
             <li>
-              📸 VERIFIED REAL PHOTOS
+              <Image
+                src="/assets/verified.svg"
+                alt=""
+                width={18}
+                height={18}
+                className={styles.featureIcon}
+              />
+              <span>VERIFIED REAL PHOTOS</span>
             </li>
             <li>
-              👍 EARN LIKES
+              <Image
+                src="/assets/likes.svg"
+                alt=""
+                width={18}
+                height={18}
+                className={styles.featureIcon}
+              />
+              <span>EARN LIKES</span>
             </li>
             <li>
-              💰 GET MINA REWARDS
+              <Image
+                src="/assets/rewards.svg"
+                alt=""
+                width={18}
+                height={18}
+                className={styles.featureIcon}
+              />
+              <span>GET MINA REWARDS</span>
             </li>
           </ul>
 
