@@ -438,8 +438,10 @@ export default function SubmissionCarousel3D({
             <button
               className={styles.closeButton}
               onClick={() => setSelectedSubmission(null)}
-              onTouchStart={(e) => e.stopPropagation()}
-              onTouchEnd={(e) => e.stopPropagation()}
+              onTouchEnd={(e) => {
+                e.stopPropagation();
+                setSelectedSubmission(null);
+              }}
               aria-label="Close"
             >
               <X size={20} />
@@ -448,8 +450,10 @@ export default function SubmissionCarousel3D({
             <button
               className={styles.shareButtonTop}
               onClick={() => handleShare(selectedSubmission)}
-              onTouchStart={(e) => e.stopPropagation()}
-              onTouchEnd={(e) => e.stopPropagation()}
+              onTouchEnd={(e) => {
+                e.stopPropagation();
+                handleShare(selectedSubmission);
+              }}
               aria-label="Share submission"
             >
               <Share2 size={16} />
