@@ -82,14 +82,16 @@ export default function WelcomePage() {
             className={styles.logo}
             priority
           />
-          <Image
-            src="/assets/logotype.svg"
-            alt="TouchGrass"
-            width={200}
-            height={40}
-            className={styles.logotype}
-            priority
-          />
+          <div className={styles.logotype}>
+            <Image
+              src="/assets/logotype.svg"
+              alt="TouchGrass"
+              width={300}
+              height={60}
+              style={{ width: '100%', height: 'auto' }}
+              priority
+            />
+          </div>
           <p className={styles.subtitle}>
             Authentic image challenges powered by Mina Protocol
           </p>

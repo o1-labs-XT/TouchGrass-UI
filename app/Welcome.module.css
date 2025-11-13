@@ -38,8 +38,8 @@
 }
 
 .logotype {
-  width: auto;
-  height: 2.5rem;
+  width: 100%;
+  max-width: 259px;
   margin: 0 auto 0.5rem;
   display: block;
 }
