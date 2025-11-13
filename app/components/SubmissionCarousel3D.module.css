@@ -108,7 +108,7 @@
   background-color: rgba(153, 153, 153, 0.1);
   border: 1px solid rgba(153, 153, 153, 0.2);
   width: fit-content;
-  margin: 2rem auto 0;
+  margin: 2rem auto calc(1rem + env(safe-area-inset-bottom));
   transform: scale(0.8);
 }
 
@@ -372,4 +372,18 @@
   font-size: 16px;
   font-weight: 600;
   font-family: Figtree, sans-serif;
+}
+
+/* Grassy Button Container */
+.grassyButtonContainer {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  z-index: 50;
+}
+
+@media (min-width: 768px) {
+  .grassyButtonContainer {
+    bottom: 4vh;
+  }
 }
