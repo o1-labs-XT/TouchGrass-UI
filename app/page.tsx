@@ -82,7 +82,14 @@ export default function WelcomePage() {
             className={styles.logo}
             priority
           />
-          <h1 className={styles.title}>TouchGrass</h1>
+          <Image
+            src="/assets/logotype.svg"
+            alt="TouchGrass"
+            width={200}
+            height={40}
+            className={styles.logotype}
+            priority
+          />
           <p className={styles.subtitle}>
             Authentic image challenges powered by Mina Protocol
           </p>
