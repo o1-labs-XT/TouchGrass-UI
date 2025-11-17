@@ -1,17 +1,20 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { getAllChallenges, getActiveChallenges, getChainsByChallenge } from '../lib/backendClient';
-import type { Challenge } from '../lib/backendClient';
+import type { Challenge, Chain } from '../lib/backendClient';
 import GrassyButton from '../components/GrassyButton';
 import SubmissionCard from '../components/SubmissionCard';
 import StatBox from '../components/StatBox';
 import styles from './challenges.module.css';
 
 export default function ChallengesPage() {
+  const router = useRouter();
   const [activeChallenges, setActiveChallenges] = useState<Challenge[]>([]);
   const [completedChallenges, setCompletedChallenges] = useState<Challenge[]>([]);
+  const [challengeChains, setChallengeChains] = useState<Map<string, Chain | null>>(new Map());
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [showCompleted, setShowCompleted] = useState(false);
@@ -40,6 +43,19 @@ export default function ChallengesPage() {
 
         setActiveChallenges(active);
         setCompletedChallenges(completed);
+
+        const chainsMap = new Map<string, Chain | null>();
+        await Promise.all(
+          active.map(async (challenge) => {
+            try {
+              const chains = await getChainsByChallenge(challenge.id);
+              chainsMap.set(challenge.id, chains.length > 0 ? chains[0] : null);
+            } catch {
+              chainsMap.set(challenge.id, null);
+            }
+          })
+        );
+        setChallengeChains(chainsMap);
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Failed to load challenges');
       } finally {
@@ -94,13 +110,11 @@ export default function ChallengesPage() {
             </SubmissionCard>
           ) : (
             <div className={styles.challengesGrid}>
-              {activeChallenges.map((challenge) => (
-                <Link
-                  key={challenge.id}
-                  href={`/challenge/${challenge.id}`}
-                  style={{ textDecoration: 'none', color: 'inherit' }}
-                >
+              {activeChallenges.map((challenge) => {
+                const chain = challengeChains.get(challenge.id);
+                return (
                   <SubmissionCard
+                    key={challenge.id}
                     className={styles.challengeCard}
                   >
                     <div className={styles.challengeIcon}>🌱</div>
@@ -117,9 +131,29 @@ export default function ChallengesPage() {
                         🟢 Active until {new Date(challenge.endTime).toLocaleDateString()}
                       </p>
                     </div>
+
+                    <div className={styles.buttonGroup}>
+                      <GrassyButton
+                        variant="primary"
+                        size="short"
+                        onClick={() => router.push(`/submit?chainId=${chain?.id || "1"}`)}
+                      >
+                        Join Challenge
+                      </GrassyButton>
+
+                      {chain && (
+                        <GrassyButton
+                          variant="secondary"
+                          size="short"
+                          onClick={() => router.push(`/chain/${chain.id}`)}
+                        >
+                          View Chain
+                        </GrassyButton>
+                      )}
+                    </div>
                   </SubmissionCard>
-                </Link>
-              ))}
+                );
+              })}
             </div>
           )}
         </section>
@@ -150,7 +184,7 @@ export default function ChallengesPage() {
                     style={{ textDecoration: 'none', color: 'inherit' }}
                   >
                     <SubmissionCard
-                      className={`${styles.challengeCard} ${styles.completedCard}`}
+                      className={`${styles.challengeCard} ${styles.completedCard} ${styles.clickable}`}
                     >
                       <div className={styles.challengeIcon}>✅</div>
                       <h3 className={styles.challengeTitle}>{challenge.title}</h3>
