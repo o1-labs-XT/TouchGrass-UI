@@ -87,15 +87,18 @@
 
 .challengeCard {
   transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.challengeCard.clickable {
   cursor: pointer;
 }
 
-.challengeCard:hover {
+.challengeCard.clickable:hover {
   transform: translateY(-4px);
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
 }
 
-.challengeCard:active {
+.challengeCard.clickable:active {
   transform: translateY(-2px);
 }
 
@@ -161,7 +164,18 @@
   display: inline-block;
 }
 
+.buttonGroup {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+  padding: 0 1rem;
+  max-width: 320px;
+  margin: 0 auto;
+}
 
+.buttonGroup button {
+  flex: 0 0 auto;
+}
 
 .emptyState {
   padding: 3rem 2rem;
