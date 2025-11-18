@@ -372,20 +372,30 @@ export default function SubmitPage() {
               </h1>
               {challenge && (
                 <div className={styles.challengeInfo}>
-                  <h2 className={styles.challengeTitle}>{challenge.title}</h2>
-                  <p className={styles.challengeDescription}>
-                    {challenge.description}
-                  </p>
-                  <p className={styles.challengeTimeRemaining}>
+                  <div className={styles.challengeImageWrapper}>
                     <Image
-                      src="/assets/clock-icon.svg"
-                      alt="Time"
-                      width={16}
-                      height={16}
-                      style={{ marginRight: '0.25rem' }}
+                      src="/assets/landing-page-y2k.webp"
+                      alt={challenge.title}
+                      fill
+                      className={styles.challengeImage}
                     />
-                    {getTimeRemaining(challenge.endTime)}
-                  </p>
+                  </div>
+                  <div className={styles.challengeContent}>
+                    <h2 className={styles.challengeTitle}>{challenge.title}</h2>
+                    <p className={styles.challengeDescription}>
+                      {challenge.description}
+                    </p>
+                    <p className={styles.challengeTimeRemaining}>
+                      <Image
+                        src="/assets/clock-icon.svg"
+                        alt="Time"
+                        width={16}
+                        height={16}
+                        style={{ marginRight: '0.25rem' }}
+                      />
+                      {getTimeRemaining(challenge.endTime)}
+                    </p>
+                  </div>
                 </div>
               )}
 
