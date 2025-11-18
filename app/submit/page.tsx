@@ -377,6 +377,7 @@ export default function SubmitPage() {
                       src="/assets/landing-page-y2k.webp"
                       alt={challenge.title}
                       fill
+                      priority
                       className={styles.challengeImage}
                     />
                   </div>
