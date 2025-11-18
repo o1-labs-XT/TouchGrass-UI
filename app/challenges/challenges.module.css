@@ -151,8 +151,9 @@
   color: #27ae60;
   font-weight: 500;
   margin: 0;
-  padding: 0.5rem 1rem;
-  border-radius: 1rem;
+  padding: 2px;
+  border-radius: 6.643px;
+  border: 0.83px solid #E6E6E6;
   display: inline-block;
 }
 
