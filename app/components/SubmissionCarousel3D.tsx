@@ -254,8 +254,8 @@ export default function SubmissionCarousel3D({
     return distance <= visibleRange;
   };
 
-  // Helper function to determine loading strategy (eager vs lazy)
-  const getLoadingStrategy = (index: number): 'eager' | 'lazy' => {
+  // Helper function to determine if image should be prioritized (preloaded)
+  const shouldPrioritizeImage = (index: number): boolean => {
     let distance = Math.abs(index - currentIndex);
 
     // Handle circular wrapping
@@ -263,9 +263,9 @@ export default function SubmissionCarousel3D({
       distance = submissions.length - distance;
     }
 
-    // Eager load front center images (main visible area)
+    // Priority load front center images (main visible area)
     // Lazy load peripheral/side images
-    return distance <= 2 ? 'eager' : 'lazy';
+    return distance <= 2;
   };
 
   const getCardStyle = (index: number) => {
@@ -402,7 +402,7 @@ export default function SubmissionCarousel3D({
                     fill
                     className={styles.cardImage}
                     draggable={false}
-                    loading={getLoadingStrategy(index)}
+                    priority={shouldPrioritizeImage(index)}
                     style={{ objectFit: 'cover' }}
                     unoptimized={false}
                   />
