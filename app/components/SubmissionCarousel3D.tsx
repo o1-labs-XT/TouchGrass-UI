@@ -361,20 +361,20 @@ export default function SubmissionCarousel3D({
             isDragging ? styles.grabbing : styles.grab
           }`}
         >
-          {submissions.map((submission, index) => (
-            <div
-              key={submission.id}
-              className={styles.cardPositioner}
-              style={getCardStyle(index)}
-            >
+          {submissions.map((submission, index) =>
+            shouldRenderImage(index) ? (
               <div
-                className={styles.card}
-                style={{
-                  cursor: index === currentIndex ? "pointer" : "default"
-                }}
-                onClick={() => handleCardClick(submission, index)}
+                key={submission.id}
+                className={styles.cardPositioner}
+                style={getCardStyle(index)}
               >
-                {shouldRenderImage(index) && (
+                <div
+                  className={styles.card}
+                  style={{
+                    cursor: index === currentIndex ? "pointer" : "default"
+                  }}
+                  onClick={() => handleCardClick(submission, index)}
+                >
                   <img
                     src={getImageUrl(submission.id)}
                     alt={
@@ -385,8 +385,7 @@ export default function SubmissionCarousel3D({
                     draggable="false"
                     loading="lazy"
                   />
-                )}
-                <div className={styles.gradientOverlay} />
+                  <div className={styles.gradientOverlay} />
 
                 {submission.status !== 'complete' && (
                   <div style={{ position: 'absolute', top: '0.75rem', left: '0.75rem', zIndex: 10 }}>
@@ -429,7 +428,8 @@ export default function SubmissionCarousel3D({
                 )}
               </div>
             </div>
-          ))}
+            ) : null
+          )}
         </div>
 
         <div className={styles.grassyButtonContainer}>
@@ -444,21 +444,31 @@ export default function SubmissionCarousel3D({
       </div>
 
       <div className={styles.indicators}>
-        {submissions.map((_, index) => (
-          <button
-            key={index}
-            onClick={() => {
-              if (isTransitioning) return;
-              setIsTransitioning(true);
-              setCurrentIndex(index);
-              setTimeout(() => setIsTransitioning(false), 600);
-            }}
-            className={`${styles.indicator} ${
-              index === currentIndex ? styles.indicatorActive : ""
-            }`}
-            aria-label={`Go to slide ${index + 1}`}
-          />
-        ))}
+        {submissions.map((_, index) => {
+          // On mobile (>20 items), show only nearby indicators to prevent overflow
+          if (submissions.length > 20) {
+            const distance = Math.abs(index - currentIndex);
+            const circularDistance = Math.min(distance, submissions.length - distance);
+            // Show current +/- 3 positions
+            if (circularDistance > 3) return null;
+          }
+
+          return (
+            <button
+              key={index}
+              onClick={() => {
+                if (isTransitioning) return;
+                setIsTransitioning(true);
+                setCurrentIndex(index);
+                setTimeout(() => setIsTransitioning(false), 600);
+              }}
+              className={`${styles.indicator} ${
+                index === currentIndex ? styles.indicatorActive : ""
+              }`}
+              aria-label={`Go to slide ${index + 1}`}
+            />
+          );
+        })}
       </div>
 
       {/* Modal */}
