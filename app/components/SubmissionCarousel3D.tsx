@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 import type { Submission } from "../lib/backendClient";
 import { getImageUrl } from "../lib/backendClient";
 import LikeButton from "./LikeButton";
@@ -237,6 +238,36 @@ export default function SubmissionCarousel3D({
     }
   }, [initialSubmissionId, submissions]);
 
+  // Helper function to determine if image should be rendered
+  const shouldRenderImage = (index: number) => {
+    // Mobile-first: More cards on desktop, balanced for mobile
+    const isMobile = typeof window !== 'undefined' && window.innerWidth < 1024;
+    const visibleRange = isMobile ? 6 : 8;
+
+    let distance = Math.abs(index - currentIndex);
+
+    // Handle circular wrapping
+    if (distance > submissions.length / 2) {
+      distance = submissions.length - distance;
+    }
+
+    return distance <= visibleRange;
+  };
+
+  // Helper function to determine if image should be prioritized (preloaded)
+  const shouldPrioritizeImage = (index: number): boolean => {
+    let distance = Math.abs(index - currentIndex);
+
+    // Handle circular wrapping
+    if (distance > submissions.length / 2) {
+      distance = submissions.length - distance;
+    }
+
+    // Priority load front center images (main visible area)
+    // Lazy load peripheral/side images
+    return distance <= 3;
+  };
+
   const getCardStyle = (index: number) => {
     let position = index - currentIndex;
 
@@ -348,29 +379,34 @@ export default function SubmissionCarousel3D({
             isDragging ? styles.grabbing : styles.grab
           }`}
         >
-          {submissions.map((submission, index) => (
-            <div
-              key={submission.id}
-              className={styles.cardPositioner}
-              style={getCardStyle(index)}
-            >
+          {submissions.map((submission, index) =>
+            shouldRenderImage(index) ? (
               <div
-                className={styles.card}
-                style={{
-                  cursor: index === currentIndex ? "pointer" : "default"
-                }}
-                onClick={() => handleCardClick(submission, index)}
+                key={submission.id}
+                className={styles.cardPositioner}
+                style={getCardStyle(index)}
               >
-                <img
-                  src={getImageUrl(submission.id)}
-                  alt={
-                    submission.tagline ||
-                    `Submission #${submission.chainPosition}`
-                  }
-                  className={styles.cardImage}
-                  draggable="false"
-                />
-                <div className={styles.gradientOverlay} />
+                <div
+                  className={styles.card}
+                  style={{
+                    cursor: index === currentIndex ? "pointer" : "default"
+                  }}
+                  onClick={() => handleCardClick(submission, index)}
+                >
+                  <Image
+                    src={getImageUrl(submission.id)}
+                    alt={
+                      submission.tagline ||
+                      `Submission #${submission.chainPosition}`
+                    }
+                    fill
+                    className={styles.cardImage}
+                    draggable={false}
+                    priority={shouldPrioritizeImage(index)}
+                    style={{ objectFit: 'cover' }}
+                    unoptimized={false}
+                  />
+                  <div className={styles.gradientOverlay} />
 
                 {submission.status !== 'complete' && (
                   <div style={{ position: 'absolute', top: '0.75rem', left: '0.75rem', zIndex: 10 }}>
@@ -413,7 +449,8 @@ export default function SubmissionCarousel3D({
                 )}
               </div>
             </div>
-          ))}
+            ) : null
+          )}
         </div>
 
         <div className={styles.grassyButtonContainer}>
@@ -428,21 +465,31 @@ export default function SubmissionCarousel3D({
       </div>
 
       <div className={styles.indicators}>
-        {submissions.map((_, index) => (
-          <button
-            key={index}
-            onClick={() => {
-              if (isTransitioning) return;
-              setIsTransitioning(true);
-              setCurrentIndex(index);
-              setTimeout(() => setIsTransitioning(false), 600);
-            }}
-            className={`${styles.indicator} ${
-              index === currentIndex ? styles.indicatorActive : ""
-            }`}
-            aria-label={`Go to slide ${index + 1}`}
-          />
-        ))}
+        {submissions.map((_, index) => {
+          // On mobile (>20 items), show only nearby indicators to prevent overflow
+          if (submissions.length > 20) {
+            const distance = Math.abs(index - currentIndex);
+            const circularDistance = Math.min(distance, submissions.length - distance);
+            // Show current +/- 3 positions
+            if (circularDistance > 3) return null;
+          }
+
+          return (
+            <button
+              key={index}
+              onClick={() => {
+                if (isTransitioning) return;
+                setIsTransitioning(true);
+                setCurrentIndex(index);
+                setTimeout(() => setIsTransitioning(false), 600);
+              }}
+              className={`${styles.indicator} ${
+                index === currentIndex ? styles.indicatorActive : ""
+              }`}
+              aria-label={`Go to slide ${index + 1}`}
+            />
+          );
+        })}
       </div>
 
       {/* Modal */}
