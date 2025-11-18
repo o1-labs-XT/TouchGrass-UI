@@ -10,6 +10,15 @@ import SubmissionCard from '../components/SubmissionCard';
 import StatBox from '../components/StatBox';
 import styles from './challenges.module.css';
 
+function getTimeRemaining(endTime: string): string {
+  const now = new Date();
+  const end = new Date(endTime);
+  const hoursLeft = Math.floor((end.getTime() - now.getTime()) / (1000 * 60 * 60));
+  const daysLeft = Math.floor(hoursLeft / 24);
+
+  return hoursLeft >= 24 ? `${daysLeft} Days left` : `${hoursLeft} H left`;
+}
+
 export default function ChallengesPage() {
   const router = useRouter();
   const [activeChallenges, setActiveChallenges] = useState<Challenge[]>([]);
@@ -119,7 +128,7 @@ export default function ChallengesPage() {
                   >
                     <div className={styles.challengeStatus}>
                       <p className={styles.activeStatus}>
-                        Active until {new Date(challenge.endTime).toLocaleDateString()}
+                        {getTimeRemaining(challenge.endTime)}
                       </p>
                     </div>
 

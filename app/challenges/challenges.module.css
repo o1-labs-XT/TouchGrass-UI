@@ -142,17 +142,29 @@
 
 .challengeStatus {
   position: absolute;
-  top: 1rem;
-  right: 1rem;
+  top: 1.5rem;
+  right: 2rem;
   margin: 0;
 }
 
+@media (min-width: 768px) {
+  .challengeStatus {
+    right: 3rem;
+  }
+}
+
 .activeStatus {
-  color: #27ae60;
+  color: var(--brand-primary);
+  font-family: var(--font-figtree);
+  font-size: 10px;
   font-weight: 500;
+  line-height: normal;
+  letter-spacing: 0.2px;
+  text-transform: uppercase;
+  text-align: center;
   margin: 0;
-  padding: 2px;
-  border-radius: 6.643px;
+  padding: 4px 12px;
+  border-radius: 6px;
   border: 0.83px solid #E6E6E6;
   display: inline-block;
 }
