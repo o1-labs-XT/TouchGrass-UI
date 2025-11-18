@@ -351,29 +351,31 @@ export default function SubmitPage() {
               <WalletStatus />
             </header>
 
-            {challenge && (
-              <SubmissionCard className={styles.challengeCard}>
-                <h2 className={styles.challengeTitle}>{challenge.title}</h2>
-                <p className={styles.challengeDescription}>
-                  {challenge.description}
-                </p>
-              </SubmissionCard>
-            )}
-
             <SubmissionCard centered className={styles.cameraCard}>
-              <Image
-                src="/assets/grassy-camera.svg"
-                alt="Camera"
-                width={80}
-                height={80}
-                className={styles.cameraIcon}
-              />
-              <h2 className={styles.cameraTitle}>Take Your Photo</h2>
-              <p className={styles.cameraDescription}>
-                Use your device's camera to capture an authentic photo for this
-                challenge
-              </p>
-              <CameraCapture onCapture={handleCapture} />
+              {challenge && (
+                <div className={styles.challengeInfo}>
+                  <h2 className={styles.challengeTitle}>{challenge.title}</h2>
+                  <p className={styles.challengeDescription}>
+                    {challenge.description}
+                  </p>
+                </div>
+              )}
+
+              <div className={styles.cameraSection}>
+                <Image
+                  src="/assets/grassy-camera.svg"
+                  alt="Camera"
+                  width={80}
+                  height={80}
+                  className={styles.cameraIcon}
+                />
+                <h2 className={styles.cameraTitle}>Take Your Photo</h2>
+                <p className={styles.cameraDescription}>
+                  Use your device's camera to capture an authentic photo for this
+                  challenge
+                </p>
+                <CameraCapture onCapture={handleCapture} />
+              </div>
             </SubmissionCard>
           </div>
         </main>

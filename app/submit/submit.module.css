@@ -43,6 +43,24 @@
   margin-bottom: 2rem;
 }
 
+.challengeInfo {
+  background: rgba(82, 132, 249, 0.06);
+  border: 0.954px solid var(--brand-horizon-blue);
+  border-radius: 6px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.9375rem;
+}
+
+.cameraSection {
+  border: 2px dashed var(--mina-light-gray);
+  border-radius: 8px;
+  padding: 2rem 1.5rem;
+}
+
 .cameraIcon {
   width: 80px;
   height: 80px;
