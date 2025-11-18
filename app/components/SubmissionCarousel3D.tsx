@@ -239,7 +239,10 @@ export default function SubmissionCarousel3D({
 
   // Helper function to determine if image should be rendered
   const shouldRenderImage = (index: number) => {
-    const visibleRange = 5;
+    // Mobile-first: More cards on desktop, balanced for mobile
+    const isMobile = typeof window !== 'undefined' && window.innerWidth < 1024;
+    const visibleRange = isMobile ? 6 : 8;
+
     let distance = Math.abs(index - currentIndex);
 
     // Handle circular wrapping
