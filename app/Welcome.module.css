@@ -56,7 +56,7 @@
   font-family: var(--font-figtree);
   font-size: 0.8125rem;
   font-weight: 500;
-  color: var(--color-text-muted);
+  color: var(--brand-secondary-text);
   text-align: center;
   line-height: normal;
   margin: 0 auto 1.5rem;
@@ -75,7 +75,7 @@
 .features li {
   font-family: var(--font-figtree);
   font-size: 0.75rem;
-  color: var(--color-text-muted);
+  color: var(--brand-secondary-text);
   padding: 0.5rem 0;
   padding-left: 1.5rem;
   position: relative;

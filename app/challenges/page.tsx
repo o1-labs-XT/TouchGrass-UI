@@ -10,6 +10,15 @@ import SubmissionCard from '../components/SubmissionCard';
 import StatBox from '../components/StatBox';
 import styles from './challenges.module.css';
 
+function getTimeRemaining(endTime: string): string {
+  const now = new Date();
+  const end = new Date(endTime);
+  const hoursLeft = Math.floor((end.getTime() - now.getTime()) / (1000 * 60 * 60));
+  const daysLeft = Math.floor(hoursLeft / 24);
+
+  return hoursLeft >= 24 ? `${daysLeft} Days left` : `${hoursLeft} H left`;
+}
+
 export default function ChallengesPage() {
   const router = useRouter();
   const [activeChallenges, setActiveChallenges] = useState<Challenge[]>([]);
@@ -117,19 +126,27 @@ export default function ChallengesPage() {
                     key={challenge.id}
                     className={styles.challengeCard}
                   >
+                    <div className={styles.challengeStatus}>
+                      <p className={styles.activeStatus}>
+                        {getTimeRemaining(challenge.endTime)}
+                      </p>
+                    </div>
+
                     <div className={styles.challengeIcon}>🌱</div>
                     <h3 className={styles.challengeTitle}>{challenge.title}</h3>
                     <p className={styles.challengeDescription}>{challenge.description}</p>
 
                     <div className={styles.statsGrid}>
-                      <StatBox value={challenge.participantCount} label="Participants" />
-                      <StatBox value={challenge.chainCount} label="Chains" />
-                    </div>
-
-                    <div className={styles.challengeStatus}>
-                      <p className={styles.activeStatus}>
-                        🟢 Active until {new Date(challenge.endTime).toLocaleDateString()}
-                      </p>
+                      <StatBox
+                        value={challenge.participantCount}
+                        label="Participants"
+                        icon="/assets/participants-icon.svg"
+                      />
+                      <StatBox
+                        value={challenge.chainCount}
+                        label="Chains"
+                        icon="/assets/chains-icon.svg"
+                      />
                     </div>
 
                     <div className={styles.buttonGroup}>

@@ -11,15 +11,24 @@
 }
 
 .header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   margin-bottom: 1rem;
   padding: 0 0.5rem;
 }
 
 .pageTitle {
-  font-size: 1.25rem;
-  font-weight: 600;
+  display: flex;
+  align-items: center;
+  font-family: var(--font-figtree);
+  font-size: 1rem;
+  font-weight: 700;
+  font-style: normal;
+  line-height: normal;
   color: var(--brand-primary);
-  margin-top: 0.5rem;
+  margin: 0 0 1rem 0;
+  text-align: left;
 }
 
 .challengeCard {
@@ -27,42 +36,90 @@
 }
 
 .challengeTitle {
-  font-size: 1.5rem;
+  font-family: var(--font-alegreya);
+  font-size: 1.75rem;
   font-weight: 600;
+  font-style: normal;
+  line-height: 116%;
   color: var(--brand-primary);
-  margin-bottom: 0.75rem;
+  text-align: left;
+  margin: 0;
 }
 
 .challengeDescription {
+  font-family: var(--font-figtree);
   font-size: 1rem;
-  color: var(--color-text-muted);
-  line-height: 1.5;
+  font-weight: 500;
+  font-style: normal;
+  line-height: normal;
+  color: var(--brand-horizon-blue);
+  text-align: left;
+  margin: 0;
+}
+
+.challengeTimeRemaining {
+  align-self: flex-start;
+  display: flex;
+  align-items: center;
+  color: var(--brand-primary);
+  font-family: var(--font-figtree);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  line-height: normal;
+  margin: 0;
 }
 
 .cameraCard {
   margin-bottom: 2rem;
 }
 
+.challengeInfo {
+  background: rgba(82, 132, 249, 0.06);
+  border: 0.954px solid var(--brand-horizon-blue);
+  border-radius: 6px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.9375rem;
+}
+
+.cameraSection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.9375rem;
+  border: 1.908px dashed #D1D5DC;
+  border-radius: 6px;
+  padding: 1.625rem;
+}
+
 .cameraIcon {
   width: 80px;
   height: 80px;
-  margin: 2rem auto 1.5rem;
-  display: block;
 }
 
 .cameraTitle {
+  font-family: var(--font-figtree);
   font-size: 1.25rem;
-  font-weight: 600;
+  font-weight: 700;
+  font-style: normal;
+  line-height: normal;
   color: var(--brand-primary);
-  margin-bottom: 0.75rem;
+  text-align: center;
+  margin: 0;
 }
 
 .cameraDescription {
-  font-size: 0.875rem;
-  color: var(--color-text-muted);
-  line-height: 1.5;
-  margin-bottom: 1.5rem;
+  font-family: var(--font-figtree);
+  font-size: 1rem;
+  font-weight: 500;
+  font-style: normal;
+  line-height: normal;
+  color: var(--brand-secondary-text);
   text-align: center;
+  margin: 0;
 }
 
 .title {

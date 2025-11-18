@@ -4,6 +4,7 @@
   --border-radius: 12px;
   --font-figtree: 'Figtree', sans-serif;
   --font-figtree-mono: 'Figtree', monospace;
+  --font-alegreya: 'Alegreya', serif;
   --foreground-rgb: 0, 55, 18;
 
   /* Updated Brand Colors  */
@@ -12,6 +13,7 @@
   --brand-white: #ffffff;
   --brand-light-gray: #eff4f6;
   --brand-chlorophyll-green: #7DC14A;
+  --brand-horizon-blue: #5284F9;
 
   /* Legacy Mina Colors for compatibility */
   --mina-orange: #ff603b;

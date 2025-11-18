@@ -92,7 +92,7 @@ export default function ChainDetailClient({ params, initialSubmissionId }: Chain
   return (
     <div className={styles.container}>
       <div className={styles.wrapper}>
-        <BackButton onClick={() => router.push(`/challenge/${chain?.challengeId}`)} />
+        <BackButton onClick={() => router.push('/challenges')} />
       </div>
 
       <SubmissionCarousel3D submissions={submissions} initialSubmissionId={initialSubmissionId} chainId={chainId} />

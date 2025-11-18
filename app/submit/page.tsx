@@ -20,6 +20,15 @@ import { useWallet } from "../contexts/WalletContext";
 import styles from "./submit.module.css";
 import { STATIC_ECDSA_PUBLIC_KEY } from "../lib/staticEcdsaKeys";
 
+function getTimeRemaining(endTime: string): string {
+  const now = new Date();
+  const end = new Date(endTime);
+  const hoursLeft = Math.floor((end.getTime() - now.getTime()) / (1000 * 60 * 60));
+  const daysLeft = Math.floor(hoursLeft / 24);
+
+  return hoursLeft >= 24 ? `${daysLeft} Days left` : `${hoursLeft} H left`;
+}
+
 export default function SubmitPage() {
   const router = useRouter();
   const {
@@ -347,33 +356,54 @@ export default function SubmitPage() {
           <div className={styles.wrapper}>
             <header className={styles.header}>
               <BackButton onClick={() => router.back()} />
-              <h1 className={styles.pageTitle}>Capture Your Challenge Photo</h1>
               <WalletStatus />
             </header>
 
-            {challenge && (
-              <SubmissionCard className={styles.challengeCard}>
-                <h2 className={styles.challengeTitle}>{challenge.title}</h2>
-                <p className={styles.challengeDescription}>
-                  {challenge.description}
-                </p>
-              </SubmissionCard>
-            )}
-
             <SubmissionCard centered className={styles.cameraCard}>
-              <Image
-                src="/assets/grassy-camera.svg"
-                alt="Camera"
-                width={80}
-                height={80}
-                className={styles.cameraIcon}
-              />
-              <h2 className={styles.cameraTitle}>Take Your Photo</h2>
-              <p className={styles.cameraDescription}>
-                Use your device's camera to capture an authentic photo for this
-                challenge
-              </p>
-              <CameraCapture onCapture={handleCapture} />
+              <h1 className={styles.pageTitle}>
+                <Image
+                  src="/assets/camera-icon-small.svg"
+                  alt="Camera"
+                  width={20}
+                  height={20}
+                  style={{ marginRight: '0.5rem' }}
+                />
+                Capture Your Challenge Photo
+              </h1>
+              {challenge && (
+                <div className={styles.challengeInfo}>
+                  <h2 className={styles.challengeTitle}>{challenge.title}</h2>
+                  <p className={styles.challengeDescription}>
+                    {challenge.description}
+                  </p>
+                  <p className={styles.challengeTimeRemaining}>
+                    <Image
+                      src="/assets/clock-icon.svg"
+                      alt="Time"
+                      width={16}
+                      height={16}
+                      style={{ marginRight: '0.25rem' }}
+                    />
+                    {getTimeRemaining(challenge.endTime)}
+                  </p>
+                </div>
+              )}
+
+              <div className={styles.cameraSection}>
+                <Image
+                  src="/assets/grassy-camera.svg"
+                  alt="Camera"
+                  width={80}
+                  height={80}
+                  className={styles.cameraIcon}
+                />
+                <h2 className={styles.cameraTitle}>Take Your Photo</h2>
+                <p className={styles.cameraDescription}>
+                  Use your device's camera to capture an authentic photo for this
+                  challenge
+                </p>
+                <CameraCapture onCapture={handleCapture} />
+              </div>
             </SubmissionCard>
           </div>
         </main>
