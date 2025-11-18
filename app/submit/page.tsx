@@ -5,6 +5,8 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import {
   getCurrentChallenge,
+  getChain,
+  getChallenge,
   getChainsByChallenge,
   BACKEND_URL
 } from "../lib/backendClient";
@@ -72,11 +74,16 @@ export default function SubmitPage() {
 
     async function fetchChallengeAndChain() {
       try {
-        const challengeData = await getCurrentChallenge();
-        setChallenge(challengeData);
+        if (chainIdParam) {
+          // Fetch the chain to get its associated challengeId
+          const chainData = await getChain(chainIdParam);
+          const challengeData = await getChallenge(chainData.challengeId);
+          setChallenge(challengeData);
+        } else {
+          // No chainId from URL, get the current challenge and its first chain
+          const challengeData = await getCurrentChallenge();
+          setChallenge(challengeData);
 
-        // If no chainId from URL, fetch the default chain for this challenge
-        if (!chainIdParam && challengeData) {
           const chains = await getChainsByChallenge(challengeData.id);
           if (chains.length > 0) {
             setChainId(chains[0].id);
