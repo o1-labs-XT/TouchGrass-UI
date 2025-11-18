@@ -364,7 +364,7 @@ export default function SubmitPage() {
         <main className={styles.container}>
           <div className={styles.wrapper}>
             <header className={styles.header}>
-              <BackButton onClick={() => router.back()} />
+              <BackButton onClick={() => router.push('/challenges')} />
               <WalletStatus />
             </header>
 
