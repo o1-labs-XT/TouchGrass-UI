@@ -287,7 +287,7 @@ export default function SubmissionCarousel3D({
       try {
         await navigator.share({
           title: `TouchGrass - ${submission.tagline || `Submission #${submission.chainPosition}`}`,
-          text: submission.tagline || 'Check out this TouchGrass submission!',
+          text: submission.tagline || 'I touched grass at @EFDevcon, verified on-chain by @MinaProtocol 🌱✨ #touchgrass #devconnect',
           url: url,
         });
         return;
@@ -309,6 +309,18 @@ export default function SubmissionCarousel3D({
 
     // Final fallback
     alert(`Please copy: ${url}`);
+  };
+
+  const handleXShare = (submission: Submission) => {
+    const url = `${window.location.origin}/chain/${submission.chainId}?submission=${submission.id}`;
+    let text = 'I touched grass at @EFDevcon, verified on-chain by @MinaProtocol 🌱✨ #touchgrass #devconnect';
+    if (submission.tagline) {
+      text += `\n${submission.tagline}\n`;
+    } else {
+      text += '\n';
+    }
+    const tweetUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`;
+    window.open(tweetUrl, '_blank', 'noopener,noreferrer');
   };
 
   return (
@@ -445,6 +457,21 @@ export default function SubmissionCarousel3D({
               aria-label="Close"
             >
               <X size={20} />
+            </button>
+
+            <button
+              className={styles.xShareButtonTop}
+              onClick={() => handleXShare(selectedSubmission)}
+              onTouchEnd={(e) => {
+                e.stopPropagation();
+                handleXShare(selectedSubmission);
+              }}
+              aria-label="Share on X (Twitter)"
+              title="Share on X"
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+              </svg>
             </button>
 
             <button

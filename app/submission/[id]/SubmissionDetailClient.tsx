@@ -18,7 +18,7 @@ interface ShareIconProps {
 
 function ShareIcon({ onClick, className }: ShareIconProps) {
   return (
-    <button 
+    <button
       onClick={onClick}
       className={`${styles.shareButton} ${className || ''}`}
       title="Share submission"
@@ -30,6 +30,21 @@ function ShareIcon({ onClick, className }: ShareIconProps) {
         <circle cx="18" cy="19" r="3"/>
         <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/>
         <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
+      </svg>
+    </button>
+  );
+}
+
+function XShareIcon({ onClick, className }: ShareIconProps) {
+  return (
+    <button
+      onClick={onClick}
+      className={`${styles.shareButton} ${styles.xShareButton} ${className || ''}`}
+      title="Share on X (Twitter)"
+      aria-label="Share on X (Twitter)"
+    >
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
       </svg>
     </button>
   );
@@ -90,7 +105,7 @@ export default function SubmissionDetailClient({ params }: SubmissionDetailClien
       try {
         await navigator.share({
           title: `TouchGrass`,
-          text: submission?.tagline || 'Check out this authentic image on TouchGrass!',
+          text: submission?.tagline || 'I touched grass at @EFDevcon, verified on-chain by @MinaProtocol 🌱✨ #touchgrass #devconnect',
           url: url,
         });
         return;
@@ -176,6 +191,18 @@ export default function SubmissionDetailClient({ params }: SubmissionDetailClien
     }
   };
 
+  const handleXShare = () => {
+    const url = window.location.href;
+    let text = 'I touched grass at @EFDevcon, verified on-chain by @MinaProtocol 🌱✨ #touchgrass #devconnect';
+    if (submission?.tagline) {
+      text += `\n${submission.tagline}\n`;
+    } else {
+      text += '\n';
+    }
+    const tweetUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`;
+    window.open(tweetUrl, '_blank', 'noopener,noreferrer');
+  };
+
   if (loading) {
     return <div className={styles.loading}><p>Loading submission...</p></div>;
   }
@@ -207,7 +234,10 @@ export default function SubmissionDetailClient({ params }: SubmissionDetailClien
           <h1 className={styles.pageTitle}>
             Submission #{submission.chainPosition}
           </h1>
-          <ShareIcon onClick={handleShare} />
+          <div className={styles.shareButtons}>
+            <XShareIcon onClick={handleXShare} />
+            <ShareIcon onClick={handleShare} />
+          </div>
         </div>
 
         {copyFeedback && (
