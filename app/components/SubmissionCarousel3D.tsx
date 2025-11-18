@@ -237,6 +237,19 @@ export default function SubmissionCarousel3D({
     }
   }, [initialSubmissionId, submissions]);
 
+  // Helper function to determine if image should be rendered
+  const shouldRenderImage = (index: number) => {
+    const visibleRange = 5;
+    let distance = Math.abs(index - currentIndex);
+
+    // Handle circular wrapping
+    if (distance > submissions.length / 2) {
+      distance = submissions.length - distance;
+    }
+
+    return distance <= visibleRange;
+  };
+
   const getCardStyle = (index: number) => {
     let position = index - currentIndex;
 
@@ -361,16 +374,18 @@ export default function SubmissionCarousel3D({
                 }}
                 onClick={() => handleCardClick(submission, index)}
               >
-                <img
-                  src={getImageUrl(submission.id)}
-                  alt={
-                    submission.tagline ||
-                    `Submission #${submission.chainPosition}`
-                  }
-                  className={styles.cardImage}
-                  draggable="false"
-                  loading="lazy"
-                />
+                {shouldRenderImage(index) && (
+                  <img
+                    src={getImageUrl(submission.id)}
+                    alt={
+                      submission.tagline ||
+                      `Submission #${submission.chainPosition}`
+                    }
+                    className={styles.cardImage}
+                    draggable="false"
+                    loading="lazy"
+                  />
+                )}
                 <div className={styles.gradientOverlay} />
 
                 {submission.status !== 'complete' && (
