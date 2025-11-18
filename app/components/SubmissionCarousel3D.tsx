@@ -369,6 +369,7 @@ export default function SubmissionCarousel3D({
                   }
                   className={styles.cardImage}
                   draggable="false"
+                  loading="lazy"
                 />
                 <div className={styles.gradientOverlay} />
 
