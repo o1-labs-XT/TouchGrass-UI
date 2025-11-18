@@ -25,7 +25,7 @@ export default function WelcomePage() {
       // Include wallet=auro in URL so it survives the redirect to Auro browser
       const returnUrl = window.location.origin + "/challenges?wallet=auro";
       const encodedUrl = encodeURIComponent(returnUrl);
-      const networkId = encodeURIComponent("mina:devnet");
+      const networkId = encodeURIComponent("mina:mainnet");
       const appLinksUrl = `https://applinks.aurowallet.com/applinks?action=openurl&&networkid=${networkId}&url=${encodedUrl}`;
 
       console.log('[WelcomePage] Redirecting to Auro AppLinks with wallet=auro in return URL');
