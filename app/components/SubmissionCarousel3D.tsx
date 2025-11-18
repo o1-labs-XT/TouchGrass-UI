@@ -542,10 +542,14 @@ export default function SubmissionCarousel3D({
 
             <div className={styles.modalBody}>
               <div className={styles.imagePreview}>
-                <img
+                <Image
                   src={getImageUrl(selectedSubmission.id)}
                   alt={selectedSubmission.tagline || `Submission ${selectedSubmission.chainPosition}`}
+                  fill
                   className={styles.previewImage}
+                  priority={true}
+                  unoptimized={false}
+                  style={{ objectFit: 'cover' }}
                 />
                 <LikeButton
                   submissionId={selectedSubmission.id}
