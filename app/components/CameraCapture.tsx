@@ -24,8 +24,8 @@ const isMobileDevice = (): boolean => {
 
 const compressImage = async (
   blob: Blob,
-  maxDimension: number = 1200,
-  quality: number = 0.85
+  maxDimension: number = 800,
+  quality: number = 0.70
 ): Promise<Blob> => {
   return new Promise((resolve, reject) => {
     const img = new Image();
