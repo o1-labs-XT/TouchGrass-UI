@@ -386,6 +386,7 @@ export default function SubmitPage() {
                     alt={challenge?.title || "Challenge"}
                     fill
                     priority
+                    unoptimized
                     className={styles.challengeImage}
                   />
                 </div>
