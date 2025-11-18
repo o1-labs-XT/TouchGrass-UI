@@ -5,6 +5,8 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import {
   getCurrentChallenge,
+  getChain,
+  getChallenge,
   getChainsByChallenge,
   BACKEND_URL
 } from "../lib/backendClient";
@@ -63,20 +65,27 @@ export default function SubmitPage() {
   }, [walletChoice, isConnected, isConnecting, reconnect]);
 
   useEffect(() => {
-    // Get chainId from URL params
     const params = new URLSearchParams(window.location.search);
     const chainIdParam = params.get("chainId");
+    const challengeIdParam = params.get("challengeId");
+
     if (chainIdParam) {
       setChainId(chainIdParam);
     }
 
     async function fetchChallengeAndChain() {
       try {
-        const challengeData = await getCurrentChallenge();
-        setChallenge(challengeData);
+        if (challengeIdParam) {
+          const challengeData = await getChallenge(challengeIdParam);
+          setChallenge(challengeData);
+        } else if (chainIdParam) {
+          const chainData = await getChain(chainIdParam);
+          const challengeData = await getChallenge(chainData.challengeId);
+          setChallenge(challengeData);
+        } else {
+          const challengeData = await getCurrentChallenge();
+          setChallenge(challengeData);
 
-        // If no chainId from URL, fetch the default chain for this challenge
-        if (!chainIdParam && challengeData) {
           const chains = await getChainsByChallenge(challengeData.id);
           if (chains.length > 0) {
             setChainId(chains[0].id);
@@ -355,7 +364,7 @@ export default function SubmitPage() {
         <main className={styles.container}>
           <div className={styles.wrapper}>
             <header className={styles.header}>
-              <BackButton onClick={() => router.back()} />
+              <BackButton onClick={() => router.push('/challenges')} />
               <WalletStatus />
             </header>
 
@@ -370,24 +379,36 @@ export default function SubmitPage() {
                 />
                 Capture Your Challenge Photo
               </h1>
-              {challenge && (
-                <div className={styles.challengeInfo}>
-                  <h2 className={styles.challengeTitle}>{challenge.title}</h2>
-                  <p className={styles.challengeDescription}>
-                    {challenge.description}
-                  </p>
-                  <p className={styles.challengeTimeRemaining}>
-                    <Image
-                      src="/assets/clock-icon.svg"
-                      alt="Time"
-                      width={16}
-                      height={16}
-                      style={{ marginRight: '0.25rem' }}
-                    />
-                    {getTimeRemaining(challenge.endTime)}
-                  </p>
+              <div className={styles.challengeInfo}>
+                <div className={styles.challengeImageWrapper}>
+                  <Image
+                    src="/assets/landing-page-y2k.webp"
+                    alt={challenge?.title || "Challenge"}
+                    fill
+                    priority
+                    unoptimized
+                    className={styles.challengeImage}
+                  />
                 </div>
-              )}
+                {challenge && (
+                  <div className={styles.challengeContent}>
+                    <h2 className={styles.challengeTitle}>{challenge.title}</h2>
+                    <p className={styles.challengeDescription}>
+                      {challenge.description}
+                    </p>
+                    <p className={styles.challengeTimeRemaining}>
+                      <Image
+                        src="/assets/clock-icon.svg"
+                        alt="Time"
+                        width={16}
+                        height={16}
+                        style={{ marginRight: '0.25rem' }}
+                      />
+                      {getTimeRemaining(challenge.endTime)}
+                    </p>
+                  </div>
+                )}
+              </div>
 
               <div className={styles.cameraSection}>
                 <Image
