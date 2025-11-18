@@ -119,7 +119,7 @@ export default function ChallengesPage() {
                   >
                     <div className={styles.challengeStatus}>
                       <p className={styles.activeStatus}>
-                        🟢 Active until {new Date(challenge.endTime).toLocaleDateString()}
+                        Active until {new Date(challenge.endTime).toLocaleDateString()}
                       </p>
                     </div>
 
