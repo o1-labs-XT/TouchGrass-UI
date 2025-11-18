@@ -17,17 +17,25 @@
 }
 
 .pageTitle {
-  font-size: 2.5rem;
+  font-family: var(--font-figtree);
+  font-size: 1.875rem;
   font-weight: 700;
+  font-style: normal;
+  line-height: normal;
+  color: var(--brand-primary);
+  text-align: center;
   margin: 0 0 1rem 0;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .subtitle {
-  font-size: 1.25rem;
+  font-family: var(--font-figtree);
+  font-size: 1rem;
+  font-weight: 500;
+  font-style: normal;
+  line-height: normal;
+  color: var(--brand-secondary-text);
+  text-align: center;
   margin: 0;
-  opacity: 0.9;
-  font-weight: 300;
 }
 
 .section {
@@ -35,9 +43,12 @@
 }
 
 .sectionTitle {
+  font-family: var(--font-figtree);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  font-style: normal;
+  line-height: normal;
   color: var(--brand-primary);
-  font-size: 1.75rem;
-  font-weight: 600;
   margin: 0 0 1.5rem 0;
   display: flex;
   align-items: center;
@@ -115,7 +126,7 @@
 
 .challengeTitle {
   font-family: var(--font-alegreya);
-  font-size: 26px;
+  font-size: 2rem;
   font-weight: 600;
   font-style: normal;
   line-height: 116%;
@@ -125,10 +136,14 @@
 }
 
 .challengeDescription {
-  color: #666;
-  line-height: 1.6;
-  margin: 0 0 1.5rem 0;
+  font-family: var(--font-figtree);
+  font-size: 1rem;
+  font-weight: 500;
+  font-style: normal;
+  line-height: normal;
+  color: var(--brand-secondary-text);
   text-align: center;
+  margin: 0 0 1.5rem 0;
 }
 
 .statsGrid {
@@ -159,7 +174,7 @@
 .activeStatus {
   color: var(--brand-primary);
   font-family: var(--font-figtree);
-  font-size: 10px;
+  font-size: 0.75rem;
   font-weight: 500;
   line-height: normal;
   letter-spacing: 0.2px;
