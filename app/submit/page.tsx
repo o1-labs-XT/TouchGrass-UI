@@ -356,11 +356,20 @@ export default function SubmitPage() {
           <div className={styles.wrapper}>
             <header className={styles.header}>
               <BackButton onClick={() => router.back()} />
-              <h1 className={styles.pageTitle}>Capture Your Challenge Photo</h1>
               <WalletStatus />
             </header>
 
             <SubmissionCard centered className={styles.cameraCard}>
+              <h1 className={styles.pageTitle}>
+                <Image
+                  src="/assets/camera-icon-small.svg"
+                  alt="Camera"
+                  width={20}
+                  height={20}
+                  style={{ marginRight: '0.5rem' }}
+                />
+                Capture Your Challenge Photo
+              </h1>
               {challenge && (
                 <div className={styles.challengeInfo}>
                   <h2 className={styles.challengeTitle}>{challenge.title}</h2>

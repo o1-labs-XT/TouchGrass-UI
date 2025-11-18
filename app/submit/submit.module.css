@@ -16,10 +16,16 @@
 }
 
 .pageTitle {
-  font-size: 1.25rem;
-  font-weight: 600;
+  display: flex;
+  align-items: center;
+  font-family: var(--font-figtree);
+  font-size: 1rem;
+  font-weight: 700;
+  font-style: normal;
+  line-height: normal;
   color: var(--brand-primary);
-  margin-top: 0.5rem;
+  margin: 0 0 1rem 0;
+  text-align: left;
 }
 
 .challengeCard {
