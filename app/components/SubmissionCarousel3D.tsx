@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 import type { Submission } from "../lib/backendClient";
 import { getImageUrl } from "../lib/backendClient";
 import LikeButton from "./LikeButton";
@@ -392,15 +393,18 @@ export default function SubmissionCarousel3D({
                   }}
                   onClick={() => handleCardClick(submission, index)}
                 >
-                  <img
+                  <Image
                     src={getImageUrl(submission.id)}
                     alt={
                       submission.tagline ||
                       `Submission #${submission.chainPosition}`
                     }
+                    fill
                     className={styles.cardImage}
-                    draggable="false"
+                    draggable={false}
                     loading={getLoadingStrategy(index)}
+                    style={{ objectFit: 'cover' }}
+                    unoptimized={false}
                   />
                   <div className={styles.gradientOverlay} />
 
