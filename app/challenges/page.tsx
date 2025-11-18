@@ -137,8 +137,16 @@ export default function ChallengesPage() {
                     <p className={styles.challengeDescription}>{challenge.description}</p>
 
                     <div className={styles.statsGrid}>
-                      <StatBox value={challenge.participantCount} label="Participants" />
-                      <StatBox value={challenge.chainCount} label="Chains" />
+                      <StatBox
+                        value={challenge.participantCount}
+                        label="Participants"
+                        icon="/assets/participants-icon.svg"
+                      />
+                      <StatBox
+                        value={challenge.chainCount}
+                        label="Chains"
+                        icon="/assets/chains-icon.svg"
+                      />
                     </div>
 
                     <div className={styles.buttonGroup}>

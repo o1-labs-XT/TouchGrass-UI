@@ -5,6 +5,10 @@
   text-align: center;
 }
 
+.icon {
+  margin-bottom: 0.5rem;
+}
+
 .value {
   font-size: 1.5rem;
   font-weight: 600;
