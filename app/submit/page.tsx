@@ -261,9 +261,7 @@ export default function SubmitPage() {
       console.error("Submission failed:", err);
       const errorMessage =
         err instanceof Error ? err.message : "Submission failed";
-      const stackTrace =
-        err instanceof Error && err.stack ? `\n\nStack:\n${err.stack}` : "";
-      setError(errorMessage + stackTrace);
+      setError(errorMessage);
       setStatus("");
     } finally {
       setIsProcessing(false);

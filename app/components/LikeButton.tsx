@@ -115,11 +115,17 @@ export default function LikeButton({
         onCountChange?.(previousCount); // Notify parent of rollback
 
         // User-friendly error messages
-        if (errorMessage.includes('403') || errorMessage.includes('approved submission')) {
-          setError('You need an approved submission before you can like others');
-        } else if (errorMessage.includes('404')) {
-          setError('This submission could not be found');
+        if (errorMessage.includes('upload at least one image')) {
+          // 403: Show backend's actionable message
+          setError(errorMessage);
+        } else if (errorMessage.includes('User not found')) {
+          // 404: User has never submitted - same action required as 403
+          setError('You must upload an image before you can like others');
+        } else if (errorMessage.includes('not found')) {
+          // 404: Submission deleted or doesn't exist
+          setError('This submission is no longer available');
         } else {
+          // Network errors, server errors, etc.
           setError('Something went wrong. Please try again');
         }
 
