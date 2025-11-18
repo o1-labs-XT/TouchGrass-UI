@@ -25,10 +25,10 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
     return {
       title: `TouchGrass`,
-      description: `Check out this authentic image on TouchGrass! ${submission.tagline || 'A verified photo submission on the Mina blockchain.'}`,
+      description: `I touched grass at @EFDevcon, verified on-chain by @MinaProtocol 🌱✨ #touchgrass #devconnect ${submission.tagline || ''}`,
       openGraph: {
         title: `TouchGrass`,
-        description: `Check out this authentic image on TouchGrass!`,
+        description: `I touched grass at @EFDevcon, verified on-chain by @MinaProtocol 🌱✨ #touchgrass #devconnect`,
         url: pageUrl,
         siteName: 'TouchGrass',
         images: [
@@ -45,7 +45,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       twitter: {
         card: 'summary_large_image',
         title: `TouchGrass`,
-        description: `Check out this authentic image on TouchGrass!`,
+        description: `I touched grass at @EFDevcon, verified on-chain by @MinaProtocol 🌱✨ #touchgrass #devconnect`,
         images: [absoluteImageUrl],
       },
     };

@@ -257,6 +257,29 @@
   background-color: rgba(77, 77, 77, 0.15);
 }
 
+.xShareButtonTop {
+  position: absolute;
+  top: 16px;
+  right: 60px;
+  padding: 8px;
+  border-radius: 50%;
+  background-color: #000000;
+  border: 1px solid #000000;
+  cursor: pointer;
+  z-index: 10;
+  transition: background-color 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  pointer-events: auto;
+}
+
+.xShareButtonTop:hover {
+  background-color: #1a1a1a;
+  border-color: #1a1a1a;
+}
+
 /* Modal Header */
 .modalHeader {
   padding: 24px;

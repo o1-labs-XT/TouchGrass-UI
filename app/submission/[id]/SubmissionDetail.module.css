@@ -26,6 +26,12 @@
   text-align: center;
 }
 
+.shareButtons {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
 .shareButton {
   background: var(--mina-white);
   border: 1px solid var(--brand-primary);
@@ -47,6 +53,18 @@
 
 .shareButton:active {
   transform: translateY(0);
+}
+
+.xShareButton {
+  background: #000000;
+  border: 1px solid #000000;
+  color: #ffffff;
+}
+
+.xShareButton:hover {
+  background: #1a1a1a;
+  border-color: #1a1a1a;
+  color: #ffffff;
 }
 
 .copyFeedback {
