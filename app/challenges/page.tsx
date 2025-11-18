@@ -153,7 +153,7 @@ export default function ChallengesPage() {
                       <GrassyButton
                         variant="primary"
                         size="short"
-                        onClick={() => router.push(`/submit?chainId=${chain?.id || "1"}`)}
+                        onClick={() => router.push(`/submit?chainId=${chain?.id || "1"}&challengeId=${challenge.id}`)}
                       >
                         Join Challenge
                       </GrassyButton>

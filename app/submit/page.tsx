@@ -65,22 +65,24 @@ export default function SubmitPage() {
   }, [walletChoice, isConnected, isConnecting, reconnect]);
 
   useEffect(() => {
-    // Get chainId from URL params
     const params = new URLSearchParams(window.location.search);
     const chainIdParam = params.get("chainId");
+    const challengeIdParam = params.get("challengeId");
+
     if (chainIdParam) {
       setChainId(chainIdParam);
     }
 
     async function fetchChallengeAndChain() {
       try {
-        if (chainIdParam) {
-          // Fetch the chain to get its associated challengeId
+        if (challengeIdParam) {
+          const challengeData = await getChallenge(challengeIdParam);
+          setChallenge(challengeData);
+        } else if (chainIdParam) {
           const chainData = await getChain(chainIdParam);
           const challengeData = await getChallenge(chainData.challengeId);
           setChallenge(challengeData);
         } else {
-          // No chainId from URL, get the current challenge and its first chain
           const challengeData = await getCurrentChallenge();
           setChallenge(challengeData);
 
