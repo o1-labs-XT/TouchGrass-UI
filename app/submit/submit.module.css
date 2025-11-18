@@ -27,16 +27,32 @@
 }
 
 .challengeTitle {
-  font-size: 1.5rem;
+  font-family: var(--font-alegreya);
+  font-size: 1.75rem;
   font-weight: 600;
+  font-style: normal;
+  line-height: 116%;
   color: var(--brand-primary);
-  margin-bottom: 0.75rem;
+  text-align: center;
+  margin: 0;
 }
 
 .challengeDescription {
   font-size: 1rem;
   color: var(--color-text-muted);
   line-height: 1.5;
+}
+
+.challengeTimeRemaining {
+  align-self: flex-start;
+  color: var(--brand-primary);
+  font-family: var(--font-figtree);
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: normal;
+  letter-spacing: 0.2px;
+  text-transform: uppercase;
+  margin: 0;
 }
 
 .cameraCard {

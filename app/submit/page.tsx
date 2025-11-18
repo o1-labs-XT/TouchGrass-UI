@@ -20,6 +20,15 @@ import { useWallet } from "../contexts/WalletContext";
 import styles from "./submit.module.css";
 import { STATIC_ECDSA_PUBLIC_KEY } from "../lib/staticEcdsaKeys";
 
+function getTimeRemaining(endTime: string): string {
+  const now = new Date();
+  const end = new Date(endTime);
+  const hoursLeft = Math.floor((end.getTime() - now.getTime()) / (1000 * 60 * 60));
+  const daysLeft = Math.floor(hoursLeft / 24);
+
+  return hoursLeft >= 24 ? `${daysLeft} Days left` : `${hoursLeft} H left`;
+}
+
 export default function SubmitPage() {
   const router = useRouter();
   const {
@@ -357,6 +366,9 @@ export default function SubmitPage() {
                   <h2 className={styles.challengeTitle}>{challenge.title}</h2>
                   <p className={styles.challengeDescription}>
                     {challenge.description}
+                  </p>
+                  <p className={styles.challengeTimeRemaining}>
+                    {getTimeRemaining(challenge.endTime)}
                   </p>
                 </div>
               )}
