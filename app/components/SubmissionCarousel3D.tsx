@@ -29,6 +29,8 @@ function getStatusInfo(status: Submission['status'], hasTransactionId: boolean) 
       return { stage: 'Rejected', description: 'Submission rejected' };
     case 'complete':
       return { stage: 'Complete', description: 'Completed' };
+    default:
+      return { stage: 'Unknown', description: 'Status unknown' };
   }
 }
 
