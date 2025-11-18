@@ -368,6 +368,13 @@ export default function SubmitPage() {
                     {challenge.description}
                   </p>
                   <p className={styles.challengeTimeRemaining}>
+                    <Image
+                      src="/assets/clock-icon.svg"
+                      alt="Time"
+                      width={16}
+                      height={16}
+                      style={{ marginRight: '0.25rem' }}
+                    />
                     {getTimeRemaining(challenge.endTime)}
                   </p>
                 </div>
