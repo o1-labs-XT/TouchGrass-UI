@@ -117,6 +117,12 @@ export default function ChallengesPage() {
                     key={challenge.id}
                     className={styles.challengeCard}
                   >
+                    <div className={styles.challengeStatus}>
+                      <p className={styles.activeStatus}>
+                        🟢 Active until {new Date(challenge.endTime).toLocaleDateString()}
+                      </p>
+                    </div>
+
                     <div className={styles.challengeIcon}>🌱</div>
                     <h3 className={styles.challengeTitle}>{challenge.title}</h3>
                     <p className={styles.challengeDescription}>{challenge.description}</p>
@@ -124,12 +130,6 @@ export default function ChallengesPage() {
                     <div className={styles.statsGrid}>
                       <StatBox value={challenge.participantCount} label="Participants" />
                       <StatBox value={challenge.chainCount} label="Chains" />
-                    </div>
-
-                    <div className={styles.challengeStatus}>
-                      <p className={styles.activeStatus}>
-                        🟢 Active until {new Date(challenge.endTime).toLocaleDateString()}
-                      </p>
                     </div>
 
                     <div className={styles.buttonGroup}>
