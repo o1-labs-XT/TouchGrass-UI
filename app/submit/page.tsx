@@ -377,17 +377,17 @@ export default function SubmitPage() {
                 />
                 Capture Your Challenge Photo
               </h1>
-              {challenge && (
-                <div className={styles.challengeInfo}>
-                  <div className={styles.challengeImageWrapper}>
-                    <Image
-                      src="/assets/landing-page-y2k.webp"
-                      alt={challenge.title}
-                      fill
-                      priority
-                      className={styles.challengeImage}
-                    />
-                  </div>
+              <div className={styles.challengeInfo}>
+                <div className={styles.challengeImageWrapper}>
+                  <Image
+                    src="/assets/landing-page-y2k.webp"
+                    alt={challenge?.title || "Challenge"}
+                    fill
+                    priority
+                    className={styles.challengeImage}
+                  />
+                </div>
+                {challenge && (
                   <div className={styles.challengeContent}>
                     <h2 className={styles.challengeTitle}>{challenge.title}</h2>
                     <p className={styles.challengeDescription}>
@@ -404,8 +404,8 @@ export default function SubmitPage() {
                       {getTimeRemaining(challenge.endTime)}
                     </p>
                   </div>
-                </div>
-              )}
+                )}
+              </div>
 
               <div className={styles.cameraSection}>
                 <Image
