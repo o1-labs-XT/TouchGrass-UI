@@ -265,7 +265,7 @@ export default function SubmissionCarousel3D({
 
     // Priority load front center images (main visible area)
     // Lazy load peripheral/side images
-    return distance <= 2;
+    return distance <= 3;
   };
 
   const getCardStyle = (index: number) => {
