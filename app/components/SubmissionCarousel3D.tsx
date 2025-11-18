@@ -253,6 +253,20 @@ export default function SubmissionCarousel3D({
     return distance <= visibleRange;
   };
 
+  // Helper function to determine loading strategy (eager vs lazy)
+  const getLoadingStrategy = (index: number): 'eager' | 'lazy' => {
+    let distance = Math.abs(index - currentIndex);
+
+    // Handle circular wrapping
+    if (distance > submissions.length / 2) {
+      distance = submissions.length - distance;
+    }
+
+    // Eager load front center images (main visible area)
+    // Lazy load peripheral/side images
+    return distance <= 2 ? 'eager' : 'lazy';
+  };
+
   const getCardStyle = (index: number) => {
     let position = index - currentIndex;
 
@@ -386,7 +400,7 @@ export default function SubmissionCarousel3D({
                     }
                     className={styles.cardImage}
                     draggable="false"
-                    loading="eager"
+                    loading={getLoadingStrategy(index)}
                   />
                   <div className={styles.gradientOverlay} />
 
