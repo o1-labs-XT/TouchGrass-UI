@@ -346,12 +346,7 @@ export default function SubmissionCarousel3D({
 
   const handleXShare = (submission: Submission) => {
     const url = `${window.location.origin}/chain/${submission.chainId}?submission=${submission.id}`;
-    let text = 'I touched grass at @EFDevcon, verified on-chain by @MinaProtocol 🌱✨ #touchgrass #devconnect';
-    if (submission.tagline) {
-      text += `\n${submission.tagline}\n`;
-    } else {
-      text += '\n';
-    }
+    let text = 'I touched grass at @EFDevcon, verified on-chain by @MinaProtocol 🌱✨ #touchgrass #devconnect\n\ngrass touched\n\n';
     const tweetUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`;
     window.open(tweetUrl, '_blank', 'noopener,noreferrer');
   };
