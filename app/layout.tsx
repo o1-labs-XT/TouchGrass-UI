@@ -1,13 +1,20 @@
 import "../styles/globals.css";
-import { IBM_Plex_Sans, IBM_Plex_Mono } from 'next/font/google';
+import { Figtree, Alegreya, IBM_Plex_Mono } from 'next/font/google';
 import ServiceWorkerRegistration from './components/ServiceWorkerRegistration';
 import ErrorBoundary from './components/ErrorBoundary';
 import { WalletProvider } from './contexts/WalletContext';
 
-const ibmPlexSans = IBM_Plex_Sans({
+const figtree = Figtree({
   subsets: ['latin'],
   weight: ['300', '400', '500', '600', '700'],
-  variable: '--font-ibm-plex',
+  variable: '--font-figtree',
+  display: 'swap',
+});
+
+const alegreya = Alegreya({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700'],
+  variable: '--font-alegreya',
   display: 'swap',
 });
 
@@ -39,7 +46,7 @@ export const viewport = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className={`${ibmPlexSans.variable} ${ibmPlexMono.variable}`}>
+      <body className={`${figtree.variable} ${alegreya.variable} ${ibmPlexMono.variable}`}>
         <ServiceWorkerRegistration />
         <ErrorBoundary>
           <WalletProvider>
