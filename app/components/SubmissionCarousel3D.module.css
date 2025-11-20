@@ -12,7 +12,7 @@
   text-align: center;
   margin: 0 0 -5vh 0;
   color: #003712;
-  font-family: Figtree, sans-serif;
+  font-family: var(--font-figtree), sans-serif;
   font-weight: bold;
   font-size: 13pt;
   flex-shrink: 0;
@@ -292,14 +292,14 @@
   color: #003712;
   margin: 0;
   font-weight: 600;
-  font-family: Figtree, sans-serif;
+  font-family: var(--font-figtree), sans-serif;
 }
 
 .modalSubtitle {
   color: #4D4D4D;
   margin: 4px 0 0 0;
   font-size: 14px;
-  font-family: Figtree, sans-serif;
+  font-family: var(--font-figtree), sans-serif;
 }
 
 /* Modal Body */
@@ -346,7 +346,7 @@
   color: #003712;
   margin-bottom: 24px;
   padding: 0 4px;
-  font-family: Figtree, sans-serif;
+  font-family: var(--font-figtree), sans-serif;
   font-size: 16px;
 }
 
@@ -373,14 +373,14 @@
 .detailLabel {
   color: #4D4D4D;
   font-size: 14px;
-  font-family: Figtree, sans-serif;
+  font-family: var(--font-figtree), sans-serif;
 }
 
 .detailValue {
   font-weight: 500;
   color: #003712;
   font-size: 14px;
-  font-family: Figtree, sans-serif;
+  font-family: var(--font-figtree), sans-serif;
 }
 
 /* Progress Section */
@@ -394,7 +394,7 @@
   margin: 0 0 16px 0;
   font-size: 16px;
   font-weight: 600;
-  font-family: Figtree, sans-serif;
+  font-family: var(--font-figtree), sans-serif;
 }
 
 /* Grassy Button Container */
